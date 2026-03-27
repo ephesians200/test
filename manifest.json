@@ -1,0 +1,20 @@
+{
+  "name": "PredictPro Football Betting Tips",
+  "short_name": "PredictPro",
+  "description": "AI-powered football betting predictions",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d1117",
+  "theme_color": "#00c853",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='96' fill='%230d1117'/><circle cx='256' cy='256' r='180' fill='none' stroke='%2300c853' stroke-width='20'/><circle cx='256' cy='256' r='120' fill='none' stroke='%2300c853' stroke-width='8' opacity='.3'/><line x1='136' y1='256' x2='376' y2='256' stroke='%2300c853' stroke-width='8' opacity='.5'/><line x1='256' y1='136' x2='256' y2='376' stroke='%2300c853' stroke-width='8' opacity='.5'/><circle cx='256' cy='256' r='36' fill='%2300c853'/></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["sports", "entertainment"],
+  "lang": "en"
+}
