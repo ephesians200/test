@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>PredictPro – Football Betting Tips</title>
+<meta name="description" content="AI-powered football betting predictions. Over/Under, BTTS, Correct Score, HT/FT and more.">
+<meta name="theme-color" content="#0d1117">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%23111' stroke='%2300c853' stroke-width='2'/><circle cx='16' cy='16' r='3' fill='%2300c853'/></svg>">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#0d1117;--card:#161b22;--card2:#1c2333;--accent:#00c853;--accent2:#00e676;
+--text:#e6edf3;--text2:#8b949e;--border:#30363d;--red:#f85149;--gold:#f0b429;
+--vip:#ff6d00;--blue:#58a6ff;--header:#010409;--success:#238636;--warn:#d29922
+}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;min-height:100dvh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* ── HEADER ── */
+.header{background:var(--header);border-bottom:2px solid var(--accent);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(12px)}
+.logo{display:flex;align-items:center;gap:8px}
+.logo svg{width:32px;height:32px;flex-shrink:0}
+.logo h1{font-size:18px;font-weight:800;letter-spacing:-.5px}
+.logo h1 span{color:var(--accent)}
+.header-right{display:flex;align-items:center;gap:10px;font-size:11px;color:var(--text2)}
+.status-dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex-shrink:0}
+.status-dot.online{background:var(--accent);box-shadow:0 0 6px var(--accent)}
+.status-dot.offline{background:var(--red);box-shadow:0 0 6px var(--red)}
+.refresh-btn{background:none;border:1px solid var(--border);color:var(--text2);width:30px;height:30px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:.2s}
+.refresh-btn:hover{border-color:var(--accent);color:var(--accent)}
+.refresh-btn.spinning{animation:spin .8s linear infinite}
+
+/* ── DATE NAV ── */
+.date-nav{background:var(--card);padding:12px 16px;display:flex;align-items:center;justify-content:center;gap:12px;border-bottom:1px solid var(--border)}
+.date-nav button{background:none;border:1px solid var(--border);color:var(--text);width:36px;height:36px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;transition:.2s;-webkit-tap-highlight-color:transparent}
+.date-nav button:hover,.date-nav button:active{border-color:var(--accent);color:var(--accent)}
+.date-display{text-align:center;min-width:160px}
+.date-display .day{font-size:16px;font-weight:700}
+.date-display .full{font-size:11px;color:var(--text2);margin-top:2px}
+
+/* ── CATEGORY TABS ── */
+.cats-wrap{background:var(--card);border-bottom:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.cats-wrap::-webkit-scrollbar{display:none}
+.cats{display:flex;padding:8px 12px;gap:6px;min-width:max-content}
+.cat-btn{padding:8px 16px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--text2);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;transition:.2s;display:flex;align-items:center;gap:4px;-webkit-tap-highlight-color:transparent}
+.cat-btn:hover{border-color:var(--accent);color:var(--text)}
+.cat-btn.active{background:var(--accent);color:#000;border-color:var(--accent);font-weight:700}
+.cat-btn .vip-badge{background:var(--vip);color:#fff;font-size:9px;padding:1px 5px;border-radius:8px;font-weight:800}
+.cat-btn.active .vip-badge{background:#000;color:var(--accent)}
+
+/* ── MAIN CONTENT ── */
+.main{max-width:800px;margin:0 auto;padding:12px}
+.section-header{display:flex;align-items:center;justify-content:space-between;padding:12px 4px 8px;margin-bottom:4px}
+.section-header h2{font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px}
+.section-header .count{background:var(--accent);color:#000;font-size:11px;padding:2px 8px;border-radius:10px;font-weight:800}
+
+/* ── MATCH CARD ── */
+.match-card{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:12px;overflow:hidden;transition:.2s}
+.match-card:hover{border-color:rgba(0,200,83,.4)}
+.match-head{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid var(--border);background:var(--card2)}
+.match-league{font-size:11px;color:var(--text2);display:flex;align-items:center;gap:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:60%}
+.match-time{font-size:11px;color:var(--accent);font-weight:700;flex-shrink:0}
+.match-teams{padding:16px;display:flex;align-items:center;justify-content:space-between}
+.team{flex:1;display:flex;align-items:center;gap:10px;min-width:0}
+.team.away{flex-direction:row-reverse;text-align:right}
+.team-icon{width:36px;height:36px;border-radius:50%;background:var(--card2);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:var(--accent);border:2px solid var(--border);flex-shrink:0}
+.team-name{font-size:13px;font-weight:600;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vs{color:var(--text2);font-size:12px;font-weight:700;padding:0 8px;flex-shrink:0}
+
+/* ── PREDICTION ROW ── */
+.prediction-area{padding:10px 14px;border-top:1px solid var(--border)}
+.pred-row{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--card2);border-radius:10px;margin-bottom:6px;cursor:pointer;transition:.15s;border:1px solid transparent;-webkit-tap-highlight-color:transparent}
+.pred-row:hover,.pred-row:active{border-color:rgba(0,200,83,.3)}
+.pred-left{flex:1;min-width:0}
+.pred-name{font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px}
+.pred-tag{font-size:10px;color:var(--text2);margin-top:2px}
+.conf-bar-wrap{width:100px;display:flex;align-items:center;gap:8px;flex-shrink:0}
+.conf-bar{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.conf-fill{height:100%;border-radius:3px;transition:width .5s ease}
+.conf-num{font-size:13px;font-weight:800;min-width:34px;text-align:right}
+.conf-high .conf-fill{background:linear-gradient(90deg,#00c853,#00e676)}
+.conf-high .conf-num{color:var(--accent)}
+.conf-med .conf-fill{background:linear-gradient(90deg,#f0b429,#fdd835)}
+.conf-med .conf-num{color:var(--gold)}
+.conf-low .conf-fill{background:linear-gradient(90deg,#f85149,#ff7043)}
+.conf-low .conf-num{color:var(--red)}
+
+/* ── PREDICTION DETAIL ── */
+.pred-detail{max-height:0;overflow:hidden;transition:max-height .3s ease,padding .3s ease;padding:0 14px;background:rgba(0,200,83,.03);border-radius:0 0 10px 10px;margin-top:-6px;margin-bottom:6px;border:1px solid transparent;border-top:none}
+.pred-detail.open{max-height:300px;padding:12px 14px;border-color:rgba(0,200,83,.12)}
+.pred-analysis{font-size:12px;color:var(--text);line-height:1.6;margin-bottom:8px}
+.pred-reasons{list-style:none}
+.pred-reasons li{font-size:11px;color:var(--text2);padding:3px 0 3px 18px;position:relative}
+.pred-reasons li::before{content:"✓";position:absolute;left:0;color:var(--accent);font-weight:700;font-size:12px}
+
+/* ── LOADING / EMPTY ── */
+.loading{text-align:center;padding:60px 20px}
+.loading .spin{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading p{color:var(--text2);font-size:13px}
+.empty{text-align:center;padding:60px 20px}
+.empty .icon{font-size:48px;margin-bottom:12px}
+.empty p{color:var(--text2);font-size:13px;line-height:1.6}
+.empty button{margin-top:16px;padding:10px 24px;border-radius:8px;border:1px solid var(--accent);background:transparent;color:var(--accent);font-size:13px;font-weight:600;cursor:pointer;transition:.2s}
+.empty button:hover{background:var(--accent);color:#000}
+
+/* ── FOOTER ── */
+.footer{text-align:center;padding:24px 16px;color:var(--text2);font-size:11px;border-top:1px solid var(--border);margin-top:24px}
+.cache-info{font-size:10px;color:var(--text2);text-align:center;padding:8px 4px}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--card2);border:1px solid var(--accent);color:var(--text);padding:10px 20px;border-radius:10px;font-size:12px;z-index:200;opacity:0;transition:.3s;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+/* ── RESPONSIVE ── */
+@media(max-width:480px){
+  .team-name{font-size:12px}
+  .pred-name{font-size:12px}
+  .match-teams{padding:12px}
+  .conf-bar-wrap{width:85px}
+  .logo h1{font-size:16px}
+  .match-head{padding:8px 12px}
+  .prediction-area{padding:8px 10px}
+  .pred-row{padding:8px 10px}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<div class="header">
+  <div class="logo">
+    <svg viewBox="0 0 32 32" fill="none">
+      <circle cx="16" cy="16" r="15" stroke="#00c853" stroke-width="2"/>
+      <path d="M16 4a12 12 0 110 24 12 12 0 010-24zm0 3a9 9 0 100 18 9 9 0 000-18z" fill="#00c853" opacity=".3"/>
+      <path d="M10 16h12M16 10v12M11 11l10 10M21 11l-10 10" stroke="#00c853" stroke-width="1.2" opacity=".5"/>
+      <circle cx="16" cy="16" r="3" fill="#00c853"/>
+    </svg>
+    <h1>Predict<span>Pro</span></h1>
+  </div>
+  <div class="header-right">
+    <span class="status-dot online" id="statusDot"></span>
+    <span id="statusText">Online</span>
+    <button class="refresh-btn" id="refreshBtn" onclick="refreshData()" title="Refresh">↻</button>
+  </div>
+</div>
+
+<!-- ═══ DATE NAV ═══ -->
+<div class="date-nav">
+  <button onclick="changeDate(-1)" aria-label="Previous day">‹</button>
+  <div class="date-display">
+    <div class="day" id="dateDay">Today</div>
+    <div class="full" id="dateFull"></div>
+  </div>
+  <button onclick="changeDate(1)" aria-label="Next day">›</button>
+</div>
+
+<!-- ═══ CATEGORY TABS ═══ -->
+<div class="cats-wrap"><div class="cats" id="catTabs"></div></div>
+
+<!-- ═══ MAIN ═══ -->
+<div class="main" id="mainContent">
+  <div class="loading"><div class="spin"></div><p>Loading predictions…</p></div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<div class="footer">
+  <p>⚽ PredictPro Football Betting Tips © 2025</p>
+  <p style="margin-top:6px">AI-powered predictions • Always bet responsibly</p>
+</div>
+
+<!-- ═══ TOAST ═══ -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   CONFIG & STATE
+   ═══════════════════════════════════════════════════════════ */
+const API = 'https://football-ai-backend.ephesians2004.workers.dev';
+const CACHE_NAME = 'predictpro-v4';
+let currentDate = new Date();
+let currentCategory = 'DAILY_5PLUS';
+let bundleData = null;
+let predCache = {};
+
+/* ═══════════════════════════════════════════════════════════
+   POISSON ENGINE  (ported from Kotlin)
+   ═══════════════════════════════════════════════════════════ */
+function clamp(v,lo,hi){return Math.min(Math.max(v,lo),hi)}
+function hashCode(s){let h=0;for(let i=0;i<(s||'').length;i++)h=((h<<5)-h+s.charCodeAt(i))|0;return h}
+function seededRand(seed){let s=seed|0;return()=>{s=(s*1664525+1013904223)|0;return(s>>>0)/4294967296}}
+function noise(seed,id,range){const r=seededRand((seed+hashCode(id))^0xDEADBEEF);return Math.floor(r()*(range*2+1))-range}
+
+const Poisson={
+  pmf(k,l){if(l<=0)return k===0?1:0;if(k<0)return 0;let f=0;for(let i=2;i<=k;i++)f+=Math.log(i);return clamp(Math.exp(k*Math.log(l)-l-f),0,1)},
+  cdf(n,l){let s=0;for(let i=0;i<=n;i++)s+=this.pmf(i,l);return clamp(s,0,1)},
+  ccdf(n,l){return clamp(1-this.cdf(n,l),0,1)},
+  joint(h,a,lH,lA){return this.pmf(h,lH)*this.pmf(a,lA)},
+  pHW(lH,lA){let p=0;for(let h=1;h<=8;h++)for(let a=0;a<h;a++)p+=this.joint(h,a,lH,lA);return clamp(p,0,1)},
+  pDr(lH,lA){let p=0;for(let g=0;g<=8;g++)p+=this.joint(g,g,lH,lA);return clamp(p,0,1)},
+  pAW(lH,lA){let p=0;for(let a=1;a<=8;a++)for(let h=0;h<a;h++)p+=this.joint(h,a,lH,lA);return clamp(p,0,1)},
+  pBtts(lH,lA){return(1-this.pmf(0,lH))*(1-this.pmf(0,lA))},
+  lambdas(hA,hD,aA,aD,adv){return{home:clamp(hA*aD*(adv||1.1),.2,5),away:clamp(aA*hD,.1,5)}}
+};
+
+/* ═══════════════════════════════════════════════════════════
+   CATEGORY FILTERS
+   ═══════════════════════════════════════════════════════════ */
+const CF={
+  PRIME_SAFE:{ids:new Set(["HOME_WIN","AWAY_WIN","HOME_WIN_OR_DRAW","AWAY_WIN_OR_DRAW"]),min:48,n:2,vip:0},
+  DAILY_5PLUS:{ids:new Set(["HOME_WIN","AWAY_WIN","HOME_WIN_OR_DRAW","AWAY_WIN_OR_DRAW","OVER_1.5","OVER_2.5","UNDER_3.5"]),min:50,n:3,vip:0},
+  DAILY_10PLUS:{ids:new Set(["HOME_WIN","AWAY_WIN","HOME_WIN_OR_DRAW","AWAY_WIN_OR_DRAW","OVER_1.5","UNDER_3.5"]),min:48,n:4,vip:0},
+  OVER_UNDER:{ids:new Set(["OVER_1.5","UNDER_2.5","UNDER_3.5","UNDER_4.5"]),min:50,n:2,vip:0},
+  DOUBLE_TIPS:{ids:new Set(["HOME_WIN_BTTS","AWAY_WIN_BTTS","HOME_WIN_OR_DRAW","AWAY_WIN_OR_DRAW"]),min:48,n:2,vip:0},
+  SINGLE_GAME:{ids:new Set(["HOME_WIN","AWAY_WIN","HOME_WIN_OR_DRAW","AWAY_WIN_OR_DRAW"]),min:50,n:1,vip:0},
+  DAILY_2_2_5:{ids:new Set(["HOME_WIN_OR_DRAW","AWAY_WIN_OR_DRAW","UNDER_2.5","UNDER_3.5"]),min:50,n:5,vip:0},
+  ELITE_VIP:{ids:new Set(["HOME_WIN_OR_DRAW","AWAY_WIN_OR_DRAW","HOME_OVER_0.5","AWAY_OVER_0.5","OVER_1.5","UNDER_3.5","UNDER_4.5"]),min:58,n:5,vip:1},
+  CORRECT_SCORE:{ids:new Set(["EXACT_1_1","EXACT_2_1_HOME","EXACT_3_1_HOME","EXACT_0_1_AWAY","EXACT_0_2_AWAY","EXACT_0_3_AWAY"]),min:10,n:6,vip:1},
+  HT_FT_VIP:{ids:new Set(["HT_FT_HOME_HOME","HT_FT_DRAW_HOME","HT_FT_AWAY_AWAY","HT_FT_DRAW_AWAY"]),min:10,n:6,vip:1},
+  DAILY_50_ODDS:{ids:new Set(["HOME_WIN","AWAY_WIN","HOME_WIN_OR_DRAW","AWAY_WIN_OR_DRAW","OVER_1.5","OVER_2.5","OVER_3.5","UNDER_3.5","UNDER_4.5","HOME_OVER_0.5","AWAY_OVER_0.5","HOME_WIN_BTTS","AWAY_WIN_BTTS"]),min:45,n:10,vip:1},
+  PRIME_PLUS:{ids:new Set(["HOME_WIN","AWAY_WIN","HOME_WIN_OR_DRAW","AWAY_WIN_OR_DRAW","HOME_OVER_0.5","AWAY_OVER_0.5"]),min:48,n:6,vip:1},
+  FIXED_VIP:{ids:new Set(["HOME_WIN_BY_1","HOME_WIN_BY_2_PLUS","OVER_0.5"]),min:30,n:3,vip:1},
+  PREMIUM_VIP:{ids:new Set(["HOME_WIN_BTTS","AWAY_WIN_BTTS","OVER_1.5","UNDER_3.5","HOME_WIN_OR_DRAW","AWAY_WIN_OR_DRAW"]),min:48,n:5,vip:1},
+  SINGLE_VIP:{ids:new Set(["HOME_OVER_0.5","AWAY_OVER_0.5","UNDER_4.5"]),min:60,n:1,vip:1},
+  OVER_UNDER_VIP:{ids:new Set(["OVER_2.5","OVER_3.5","UNDER_3.5","UNDER_4.5","OVER_1.5"]),min:45,n:6,vip:1},
+  HIGH_VALUE_1:{ids:new Set(["HOME_WIN_OR_DRAW","AWAY_WIN_OR_DRAW","OVER_1.5","UNDER_3.5","UNDER_4.5","HOME_OVER_0.5","AWAY_OVER_0.5","OVER_0.5"]),min:70,n:6,vip:0},
+  HIGH_VALUE_2:{ids:new Set(["HOME_WIN","AWAY_WIN","DRAW","OVER_2.5","UNDER_2.5","BTTS_YES","HOME_CLEAN_SHEET"]),min:55,n:6,vip:0}
+};
+const CL={PRIME_SAFE:"Prime Safe",DAILY_5PLUS:"Daily 5+",DAILY_10PLUS:"Daily 10+",OVER_UNDER:"Over/Under",DOUBLE_TIPS:"Double Tips",SINGLE_GAME:"Single Game",DAILY_2_2_5:"Daily 2-2.5",ELITE_VIP:"Elite VIP",CORRECT_SCORE:"Correct Score",HT_FT_VIP:"HT/FT VIP",DAILY_50_ODDS:"50+ Odds",PRIME_PLUS:"Prime Plus",FIXED_VIP:"Fixed VIP",PREMIUM_VIP:"Premium VIP",SINGLE_VIP:"Single VIP",OVER_UNDER_VIP:"O/U VIP",HIGH_VALUE_1:"High Value 1",HIGH_VALUE_2:"High Value 2"};
+
+/* ═══════════════════════════════════════════════════════════
+   PREDICTION ENGINE  (full port)
+   ═══════════════════════════════════════════════════════════ */
+const PE={
+  rel(n){return[0,.15,.3,.45,.55,.65,.72,.79,.85,.93,1][Math.min(n,10)]||0},
+
+  h2h(data){
+    const ms=data?.response?.matches||[];
+    if(!ms.length)return{n:0,hW:0,aW:0,dr:0,avg:2.7,hAvg:1.51,aAvg:1.19,btts:0,o15:0,o25:0,o35:0,hSc:0,aSc:0,hCS:0,aCS:0,base:true};
+    let hW=0,aW=0,dr=0,tG=0,tH=0,tA=0,bt=0,o1=0,o2=0,o3=0,hs=0,as=0,hc=0,ac=0;
+    for(const m of ms){
+      const h=m.home?.score??m.homeScore??0,a=m.away?.score??m.awayScore??0,t=h+a;
+      tG+=t;tH+=h;tA+=a;
+      h>a?hW++:a>h?aW++:dr++;
+      if(t>=2)o1++;if(t>=3)o2++;if(t>=4)o3++;
+      if(h>0&&a>0)bt++;if(h>0)hs++;if(a>0)as++;
+      if(a===0)hc++;if(h===0)ac++;
+    }
+    const n=ms.length;
+    return{n,hW,aW,dr,avg:tG/n,hAvg:tH/n,aAvg:tA/n,btts:bt,o15:o1,o25:o2,o35:o3,hSc:hs,aSc:as,hCS:hc,aCS:ac,base:false};
+  },
+
+  season(det,isH){
+    const td=isH?det?.stats?.response?.home:det?.stats?.response?.away;
+    const s=td?.stats;if(!s)return null;
+    const w=isH?s.homeWins:s.awayWins,l=isH?s.homeLosses:s.awayLosses,d=isH?s.homeDraws:s.awayDraws;
+    const gs=isH?s.homeGoalsScored:s.awayGoalsScored,gc=isH?s.homeGoalsConceded:s.awayGoalsConceded;
+    const g=Math.max((w||0)+(l||0)+(d||0),1),fm=td?.form||'';
+    const rW=fm.slice(-5).split('').filter(c=>c==='W').length;
+    return{atk:clamp((gs||0)/g,.1,4),def:clamp((gc||0)/g,.1,4),wr:clamp((w||0)/g,0,1),form:fm,rW,ff:(rW-2)*.05};
+  },
+
+  implied(det){
+    const no={hW:.4,dr:.28,aW:.32,has:false};
+    const o=det?.odds?.response?.odds;if(!o)return no;
+    let rH=o.home_win??o.homeWin??o['1']??0,rD=o.draw??o['X']??o.x??0,rA=o.away_win??o.awayWin??o['2']??0;
+    if(rH<=1)rH=0;if(rD<=1)rD=0;if(rA<=1)rA=0;
+    if(!rH&&!rD&&!rA)return no;
+    const iH=rH>1?1/rH:0,iD=rD>1?1/rD:0,iA=rA>1?1/rA:0,s=iH+iD+iA;
+    if(s<=0)return no;
+    return{hW:clamp(iH/s,.01,.98),dr:clamp(iD/s,.01,.98),aW:clamp(iA/s,.01,.98),has:true};
+  },
+
+  lam(h,hC,aC,r){
+    const bH=1.51,bA=1.19;let sH,sA;
+    if(hC&&aC){const l=Poisson.lambdas(hC.atk,hC.def,aC.atk,aC.def,1.1);sH=l.home;sA=l.away}else{sH=bH;sA=bA}
+    const hH=h.n>0?h.hAvg:bH,hA=h.n>0?h.aAvg:bA;
+    const w=r*.4,sw=1-w;let bh=sH*sw+hH*w,ba=sA*sw+hA*w;
+    if(hC)bh*=(1+hC.ff);if(aC)ba*=(1+aC.ff);
+    return{home:clamp(bh,.2,5),away:clamp(ba,.1,5),get total(){return this.home+this.away}};
+  },
+
+  blend(h2s,ps,r,ip,adv,sn,lo,hi){
+    const bl=h2s*r+ps*(1-r);
+    const oa=ip!=null?bl*.6+ip*100*.4:bl;
+    return clamp(Math.round(oa+(adv||0)+(sn||0)),lo,hi);
+  },
+
+  gen(match,det){
+    const P=[];
+    const sd=hashCode(match.id||'')^(hashCode(match.home?.name||'')*31)^(hashCode(match.away?.name||'')*17)^(hashCode(match.time||'')*7);
+    const h=this.h2h(det?.h2h),r=this.rel(h.n),ip=this.implied(det),hC=this.season(det,true),aC=this.season(det,false),L=this.lam(h,hC,aC,r);
+    const t=Math.max(h.n,1),mk=(id,nm,c,an,re)=>({id,name:nm,confidence:c,analysis:an,reasons:re.filter(Boolean),matchItem:match});
+
+    // ── RESULT ──
+    const pHW=Poisson.pHW(L.home,L.away),pDr=Poisson.pDr(L.home,L.away),pAW=Poisson.pAW(L.home,L.away);
+    const hHW=h.base?45:h.hW/t*100,hAW=h.base?32:h.aW/t*100,hDr=h.base?26:h.dr/t*100;
+    const hn=h.base?"General home advantage applies":`${h.hW}W/${h.dr}D/${h.aW}L in last ${h.n} meetings`;
+
+    P.push(mk("HOME_WIN","Home Win",this.blend(hHW,pHW*100,r,ip.has?ip.hW:null,3,noise(sd,"HW",4),36,93),pHW>=.5?"Home side strong at home — form book strongly suggests a home win.":"Home advantage could be the deciding factor.",[hn]));
+    P.push(mk("AWAY_WIN","Away Win",this.blend(hAW,pAW*100,r,ip.has?ip.aW:null,0,noise(sd,"AW",4),28,88),pAW>=.4?"Away quality and form suggest they can win on the road.":"Away win possible — visitors have enough quality.",[hn]));
+    P.push(mk("DRAW","Draw",this.blend(hDr,pDr*100,r,ip.has?ip.dr:null,0,noise(sd,"DR",4),24,72),"Evenly matched — a share of the spoils looks fair.",[hn]));
+    const h1X=h.base?68:(h.hW+h.dr)/t*100;
+    P.push(mk("HOME_WIN_OR_DRAW","Home Win or Draw (1X)",this.blend(h1X,(pHW+pDr)*100,r,ip.has?ip.hW+ip.dr:null,2,noise(sd,"1X",4),40,88),"Home team rarely lose here — covers win and draw.",[h.base?"Home sides win or draw in most matches":`${h.hW+h.dr} of ${h.n} H2H ended home win or draw`]));
+    const hX2=h.base?57:(h.aW+h.dr)/t*100;
+    P.push(mk("AWAY_WIN_OR_DRAW","Away Win or Draw (X2)",this.blend(hX2,(pDr+pAW)*100,r,ip.has?ip.aW+ip.dr:null,0,noise(sd,"X2",4),36,82),"Away team have enough quality to avoid defeat.",[h.base?"Away sides competitive":`${h.aW+h.dr} of ${h.n} H2H ended away win or draw`]));
+
+    // ── GOALS ──
+    const lT=L.total;
+    const gc=(pP,hR,id,lo,hi)=>this.blend(hR*100,pP*100,r*.3,null,0,noise(sd,id,5),lo,hi);
+    P.push(mk("OVER_0.5","Over 0.5 Goals",clamp(Math.round(Poisson.ccdf(0,lT)*100+noise(sd,"O05",2)),82,97),"Almost every match produces at least one goal.",["Goals expected from both attacks"]));
+    const pO15=Poisson.ccdf(1,lT),hO15=h.base?.74:h.o15/t;
+    P.push(mk("OVER_1.5","Over 1.5 Goals",gc(pO15,hO15,"O15",55,93),lT>=2.5?"Both attacks in form — 2+ goals almost certain.":"Enough quality for at least two goals.",[h.base?"Both teams finding the net":`${h.o15} of ${h.n} H2H had 2+ goals`]));
+    const pO25=Poisson.ccdf(2,lT),hO25=h.base?.52:h.o25/t;
+    P.push(mk("OVER_2.5","Over 2.5 Goals",gc(pO25,hO25,"O25",34,88),lT>=3?"High-scoring record — three goals looks a minimum.":"Both attacks capable.",[h.base?"Both attacks in form":`${h.o25} of ${h.n} H2H had 3+ goals`]));
+    const pO35=Poisson.ccdf(3,lT),hO35=h.base?.28:h.o35/t;
+    P.push(mk("OVER_3.5","Over 3.5 Goals",gc(pO35,hO35,"O35",22,76),lT>=3?"Both in excellent form — high-scoring game likely.":"Would need both sides firing.",[h.base?"Attacking styles possible":`${h.o35} of ${h.n} H2H had 4+ goals`]));
+    const pU25=Poisson.cdf(2,lT),hU25=h.base?.48:(t-h.o25)/t;
+    P.push(mk("UNDER_2.5","Under 2.5 Goals",gc(pU25,hU25,"U25",28,86),lT<2.2?"Defensively solid — tight, low-scoring affair.":"Defences likely to stay on top.",[h.base?"Defensively solid sides":`${t-h.o25} of ${h.n} H2H had <3 goals`]));
+    const pU35=Poisson.cdf(3,lT),hU35=h.base?.72:(t-h.o35)/t;
+    P.push(mk("UNDER_3.5","Under 3.5 Goals",gc(pU35,hU35,"U35",42,92),"Fewer than four goals — the most common range.",[h.base?"Unlikely to run away with goals":`${t-h.o35} of ${h.n} H2H had ≤3 goals`]));
+    P.push(mk("UNDER_4.5","Under 4.5 Goals",clamp(Math.round(Poisson.cdf(4,lT)*100+noise(sd,"U45",3)),68,96),"Fewer than five goals is an overwhelming statistical favourite.",["Very few matches produce 5+ goals"]));
+    const pBt=Poisson.pBtts(L.home,L.away),hBt=h.base?.48:h.btts/t;
+    P.push(mk("BTTS_YES","Both Teams To Score - Yes",gc(pBt,hBt,"BTTS",36,88),L.home>=1.3&&L.away>=1?"Both have genuine scoring threat — goals at both ends.":"Both sides scoring regularly — BTTS is strong.",[h.base?"Both scoring consistently":`${h.btts} of ${h.n} H2H saw both score`]));
+    P.push(mk("BTTS_NO","Both Teams To Score - No",gc(1-pBt,1-hBt,"BTNO",24,76),"At least one side likely to be kept quiet.",["Strong defensive records"]));
+
+    // ── CORRECT SCORE ──
+    const cs=(hg,ag,id,fl,cl)=>{const raw=Poisson.joint(hg,ag,L.home,L.away);const b=Math.floor(raw*280);const nd=r>=.5&&h.n>=5?noise(sd,id,2):0;return clamp(b+nd,fl,cl)};
+    const csA=(hg,ag)=>hg===ag&&hg===1?"Closely matched — 1-1 the most likely single scoreline.":hg>ag?`A ${hg}-${ag} home win — home side take control.`:`A ${hg}-${ag} away win — visitors are clinical.`;
+    P.push(mk("EXACT_1_1","Correct Score: 1-1",cs(1,1,"CS11",18,52),csA(1,1),["Even sides often settle for a share"]));
+    P.push(mk("EXACT_2_1_HOME","Correct Score: 2-1 (Home)",cs(2,1,"CS21",15,48),csA(2,1),["Most common winning margin"]));
+    P.push(mk("EXACT_3_1_HOME","Correct Score: 3-1 (Home)",cs(3,1,"CS31",12,40),csA(3,1),["Home dominance could pull clear"]));
+    P.push(mk("EXACT_0_1_AWAY","Correct Score: 0-1 (Away)",cs(0,1,"CS01",12,42),csA(0,1),["Away side grind out a result"]));
+    P.push(mk("EXACT_0_2_AWAY","Correct Score: 0-2 (Away)",cs(0,2,"CS02",10,36),csA(0,2),["Clinical away display"]));
+    P.push(mk("EXACT_0_3_AWAY","Correct Score: 0-3 (Away)",cs(0,3,"CS03",10,28),csA(0,3),["Long-shot but not impossible"]));
+
+    // ── HT/FT ──
+    const htLH=L.home*.45,htLA=L.away*.45;
+    const pHtHW=Poisson.pHW(htLH,htLA),pHtAW=Poisson.pAW(htLH,htLA),pHtDr=Poisson.pDr(htLH,htLA);
+    const pFtHW=Poisson.pHW(L.home,L.away),pFtAW=Poisson.pAW(L.home,L.away);
+    P.push(mk("HT_FT_HOME_HOME","HT/FT: Home/Home",this.blend(hHW,pHtHW*pFtHW*100,r,ip.has?ip.hW*.6:null,0,noise(sd,"HTHH",6),16,65),"Home lead at break and see the game out.",["Leading at HT strongly predicts FT result"]));
+    P.push(mk("HT_FT_DRAW_HOME","HT/FT: Draw/Home",this.blend((hHW+hDr)/2,pHtDr*pFtHW*100,r,null,0,noise(sd,"HTDH",6),12,55),"All square at break — home find a way in second half.",["Home sides improve after the break"]));
+    P.push(mk("HT_FT_AWAY_AWAY","HT/FT: Away/Away",this.blend(hAW,pHtAW*pFtAW*100,r,ip.has?ip.aW*.6:null,0,noise(sd,"HTAA",6),12,60),"Away take control early and hold on.",["Away teams who lead at HT convert at a high rate"]));
+    P.push(mk("HT_FT_DRAW_AWAY","HT/FT: Draw/Away",this.blend((hAW+hDr)/2,pHtDr*pFtAW*100,r,null,0,noise(sd,"HTDA",6),10,50),"Away absorb pressure then strike after the break.",["Counter-attacking sides thrive here"]));
+
+    // ── SCORER / TEAM GOALS ──
+    const pHS=1-Poisson.pmf(0,L.home),pAS=1-Poisson.pmf(0,L.away);
+    const hHS=h.base?.8:h.hSc/t,hAS=h.base?.72:h.aSc/t;
+    P.push(mk("HOME_OVER_0.5","Home Team Over 0.5 Goals",this.blend(hHS*100,pHS*100,r*.3,null,0,noise(sd,"HO05",4),60,94),"Home team expected to get on the scoresheet.",[h.base?"Home sides score in vast majority":`${h.hSc} of ${h.n} H2H — home scored`]));
+    P.push(mk("HOME_OVER_1.5","Home Team Over 1.5 Goals",this.blend(clamp(h.hAvg,0,3)/3*100,Poisson.ccdf(1,L.home)*100,r*.3,null,0,noise(sd,"HO15",5),28,80),"Home side to score at least twice.",["Home attack capable of a multi-goal haul"]));
+    P.push(mk("AWAY_OVER_0.5","Away Team Over 0.5 Goals",this.blend(hAS*100,pAS*100,r*.3,null,0,noise(sd,"AO05",4),54,92),"Away side will get at least one goal.",[h.base?"Away attacks score in most matches":`${h.aSc} of ${h.n} H2H — away scored`]));
+    P.push(mk("AWAY_OVER_1.5","Away Team Over 1.5 Goals",this.blend(clamp(h.aAvg,0,3)/3*100,Poisson.ccdf(1,L.away)*100,r*.3,null,0,noise(sd,"AO15",5),22,75),"Away side to bag two or more.",["Away attack capable on their day"]));
+    const pHCS=Poisson.pmf(0,L.away),hHCS=h.base?.32:h.hCS/t;
+    P.push(mk("HOME_CLEAN_SHEET","Home Clean Sheet",this.blend(hHCS*100,pHCS*100,r*.3,null,0,noise(sd,"HCS",5),22,78),"Home side to keep a clean sheet.",["Home defences well-organised"]));
+    const pACS=Poisson.pmf(0,L.home),hACS=h.base?.22:h.aCS/t;
+    P.push(mk("AWAY_CLEAN_SHEET","Away Clean Sheet",this.blend(hACS*100,pACS*100,r*.3,null,0,noise(sd,"ACS",5),16,72),"Away clean sheet — tougher on the road.",["Away sides can keep it tight"]));
+
+    // ── COMBINED ──
+    const pBtts2=Poisson.pBtts(L.home,L.away),pO252=Poisson.ccdf(2,lT);
+    const hHW2=h.base?.45:h.hW/t,hAW2=h.base?.32:h.aW/t,hBt2=h.base?.48:h.btts/t,hO252=h.base?.52:h.o25/t;
+    P.push(mk("HOME_WIN_BTTS","Home Win & BTTS",this.blend(hHW2*hBt2*100,pHW*pBtts2*100,r,ip.has?ip.hW*.55:null,0,noise(sd,"HWB",5),34,76),"Home win while both sides score.",["Both attacks capable"]));
+    P.push(mk("AWAY_WIN_BTTS","Away Win & BTTS",this.blend(hAW2*hBt2*100,pAW*pBtts2*100,r,ip.has?ip.aW*.55:null,0,noise(sd,"AWB",5),28,70),"Away win but home score a consolation.",["Both sides can score"]));
+    P.push(mk("HOME_WIN_OVER_2.5","Home Win & Over 2.5",this.blend(hHW2*hO252*100,pHW*pO252*100,r,ip.has?ip.hW*.6:null,0,noise(sd,"HWO",5),30,74),"Home win in a game with plenty of goals.",["Home dominance in an open game"]));
+    P.push(mk("AWAY_WIN_OVER_2.5","Away Win & Over 2.5",this.blend(hAW2*hO252*100,pAW*pO252*100,r,ip.has?ip.aW*.6:null,0,noise(sd,"AWO",5),24,70),"Away win in a goal-filled encounter.",["Away strength in attack"]));
+
+    let pHw1=0;for(let a=0;a<=8;a++)pHw1+=Poisson.joint(a+1,a,L.home,L.away);
+    P.push(mk("HOME_WIN_BY_1","Home Win by 1 Goal",this.blend(hHW2*100*.6,pHw1*100,r,null,0,noise(sd,"HW1",5),28,68),"Tight home win by a single goal.",["One-goal margins most frequent"]));
+    let pHw2=0;for(let a=0;a<=6;a++)for(let hh=a+2;hh<=8;hh++)pHw2+=Poisson.joint(hh,a,L.home,L.away);
+    P.push(mk("HOME_WIN_BY_2_PLUS","Home Win by 2+ Goals",this.blend(hHW2*100*.4,pHw2*100,r,null,0,noise(sd,"HW2",5),18,64),"Home side to win comfortably.",["Genuine quality gap needed"]));
+    let pAw1=0;for(let hh=0;hh<=8;hh++)pAw1+=Poisson.joint(hh,hh+1,L.home,L.away);
+    P.push(mk("AWAY_WIN_BY_1","Away Win by 1 Goal",this.blend(hAW2*100*.6,pAw1*100,r,null,0,noise(sd,"AW1",5),22,64),"Away side nick it with a single goal.",["Close away wins common"]));
+    let pAw2=0;for(let hh=0;hh<=6;hh++)for(let a=hh+2;a<=8;a++)pAw2+=Poisson.joint(hh,a,L.home,L.away);
+    P.push(mk("AWAY_WIN_BY_2_PLUS","Away Win by 2+ Goals",this.blend(hAW2*100*.4,pAw2*100,r,null,0,noise(sd,"AW2",5),14,58),"Away team to win by two or more.",["Dominant away display required"]));
+
+    // ── MEDIUM ──
+    const htL2=L.home*.45+L.away*.45,shL=L.home*.55+L.away*.55;
+    P.push(mk("FIRST_HALF_OVER_0.5","1st Half Over 0.5 Goals",clamp(Math.round((1-Poisson.pmf(0,htL2))*100+noise(sd,"1H05",5)),52,82),"At least one goal before half-time.",["Fast starts typical"]));
+    P.push(mk("FIRST_HALF_OVER_1.5","1st Half Over 1.5 Goals",clamp(Math.round(Poisson.ccdf(1,htL2)*100+noise(sd,"1H15",5)),28,68),"Two or more first-half goals.",["Attacking starts"]));
+    P.push(mk("SECOND_HALF_OVER_0.5","2nd Half Over 0.5 Goals",clamp(Math.round((1-Poisson.pmf(0,shL))*100+noise(sd,"2H05",4)),62,88),"At least one second-half goal.",["Teams open up chasing goals"]));
+    P.push(mk("GOAL_RANGE_0_1","Total Goals 0-1",clamp(Math.round(Poisson.cdf(1,lT)*100+noise(sd,"R01",5)),18,68),"Very low-scoring — defences dominate.",["Defensive sides"]));
+    P.push(mk("GOAL_RANGE_2_3","Total Goals 2-3",clamp(Math.round((Poisson.cdf(3,lT)-Poisson.cdf(1,lT))*100+noise(sd,"R23",5)),36,74),"Most common scoring band.",["Sweet spot for competitive matches"]));
+    P.push(mk("OVER_8.5_CORNERS","Over 8.5 Corners",clamp(62+noise(sd,"CRN",6),52,74),"Nine or more corners.",["High-tempo football produces corners"]));
+    P.push(mk("OVER_3.5_CARDS","Over 3.5 Cards",clamp(55+noise(sd,"CRD",7),46,68),"Four or more cards — feisty encounter.",["Physical match expected"]));
+
+    // ── LOW CONFIDENCE ──
+    const lo=(id,nm,b,rng,l,hh,an,re)=>mk(id,nm,clamp(b+noise(sd,id,rng),l,hh),an,[re]);
+    P.push(lo("EARLY_GOAL_0_15","Goal in First 15 Min",45,8,32,55,"A goal inside the first quarter.","Fast-starting forwards"));
+    P.push(lo("LATE_GOAL_75_PLUS","Goal After 75 Min",48,6,38,58,"Late drama as teams chase the game.","Teams push men forward late"));
+    P.push(lo("HOME_SCORE_FIRST","Home Scores First",52,6,42,62,"Home side draw first blood.","Home advantage early"));
+    P.push(lo("AWAY_SCORE_FIRST","Away Scores First",46,6,36,56,"Away catch the home side cold.","Counter-attacks"));
+    P.push(lo("GOAL_BOTH_HALVES","Goal in Both Halves",50,6,40,62,"Goals spread across both halves.",["Consistently goal-active sides"]));
+    return P;
+  },
+
+  filter(cat,pool,dMap){
+    const f=CF[cat];if(!f)return[];
+    const used=new Set();
+    const cands=pool.map(m=>{
+      const ps=this.gen(m,dMap[m.id]).filter(p=>f.ids.has(p.id)&&p.confidence>=f.min).sort((a,b)=>b.confidence-a.confidence);
+      return ps.length?{match:m,ranked:ps.map(p=>({...p,matchItem:m}))}:null;
+    }).filter(Boolean).sort((a,b)=>b.ranked[0].confidence-a.ranked[0].confidence);
+    const res=[];
+    for(const mc of cands){
+      if(res.length>=f.n)break;
+      const ch=mc.ranked.find(p=>!used.has(p.id))||mc.ranked[0];
+      res.push(ch);used.add(ch.id);
+    }
+    return res;
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   CACHE LAYER
+   ═══════════════════════════════════════════════════════════ */
+async function cachedFetch(url,forceRefresh=false){
+  try{
+    const cache=await caches.open(CACHE_NAME);
+    if(!forceRefresh){
+      try{
+        const resp=await fetch(url,{signal:AbortSignal.timeout(12000)});
+        if(resp.ok){cache.put(url,resp.clone());return await resp.json();}
+      }catch(e){/* network fail */}
+    } else {
+      try{
+        const resp=await fetch(url,{signal:AbortSignal.timeout(12000),cache:'no-store'});
+        if(resp.ok){cache.put(url,resp.clone());return await resp.json();}
+      }catch(e){/* network fail */}
+    }
+    const cached=await cache.match(url);
+    if(cached){showToast('📦 Loaded from cache (offline)');return await cached.json();}
+    return null;
+  }catch(e){console.error('Cache error:',e);return null;}
+}
+
+/* ═══════════════════════════════════════════════════════════
+   UI
+   ═══════════════════════════════════════════════════════════ */
+function fmtDate(d){return d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0')}
+
+function dispDate(d){
+  const today=new Date();today.setHours(0,0,0,0);
+  const c=new Date(d);c.setHours(0,0,0,0);
+  const diff=Math.round((c-today)/864e5);
+  const lbl=diff===0?'Today':diff===1?'Tomorrow':diff===-1?'Yesterday':d.toLocaleDateString('en',{weekday:'long'});
+  document.getElementById('dateDay').textContent=lbl;
+  document.getElementById('dateFull').textContent=d.toLocaleDateString('en',{day:'numeric',month:'long',year:'numeric'});
+}
+
+function changeDate(off){currentDate.setDate(currentDate.getDate()+off);dispDate(currentDate);loadData()}
+
+function buildTabs(){
+  const el=document.getElementById('catTabs');el.innerHTML='';
+  for(const[k,f]of Object.entries(CF)){
+    const b=document.createElement('button');
+    b.className='cat-btn'+(k===currentCategory?' active':'');
+    b.innerHTML=(CL[k]||k)+(f.vip?' <span class="vip-badge">VIP</span>':'');
+    b.onclick=()=>{currentCategory=k;document.querySelectorAll('.cat-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderPreds()};
+    el.appendChild(b);
+  }
+}
+
+function getPool(){if(!bundleData)return[];return bundleData.matches||bundleData.fixtures||bundleData.data?.matches||bundleData.data?.fixtures||[]}
+function getDetails(){if(!bundleData)return{};return bundleData.details||bundleData.matchDetails||bundleData.data?.details||{}}
+
+async function loadData(force=false){
+  const main=document.getElementById('mainContent');
+  main.innerHTML='<div class="loading"><div class="spin"></div><p>Loading predictions…</p></div>';
+  bundleData=await cachedFetch(`${API}/v2/bundle?date=${fmtDate(currentDate)}`,force);
+  predCache={};
+  if(!bundleData){main.innerHTML='<div class="empty"><div class="icon">📡</div><p>No data available.<br>Check your connection and try again.</p><button onclick="loadData(true)">Retry</button></div>';return}
+  updateStatus();renderPreds();
+}
+
+function refreshData(){
+  const btn=document.getElementById('refreshBtn');
+  btn.classList.add('spinning');
+  loadData(true).finally(()=>setTimeout(()=>btn.classList.remove('spinning'),500));
+}
+
+function renderPreds(){
+  const main=document.getElementById('mainContent'),pool=getPool(),det=getDetails(),f=CF[currentCategory];
+  if(!pool.length){main.innerHTML='<div class="empty"><div class="icon">⚽</div><p>No matches found for this date.</p></div>';return}
+  const ck=currentCategory+'_'+fmtDate(currentDate);
+  if(!predCache[ck])predCache[ck]=PE.filter(currentCategory,pool,det);
+  const preds=predCache[ck];
+  let html=`<div class="section-header"><h2>⚡ ${CL[currentCategory]||currentCategory} ${f.vip?'<span class="vip-badge" style="font-size:10px;background:var(--vip);color:#fff;padding:2px 6px;border-radius:6px">VIP</span>':''}</h2><span class="count">${preds.length} tip${preds.length!==1?'s':''}</span></div>`;
+  if(!preds.length){html+='<div class="empty"><div class="icon">🔍</div><p>No predictions meet the criteria for this category today.</p></div>';main.innerHTML=html;return}
+
+  for(let i=0;i<preds.length;i++){
+    const pr=preds[i],m=pr.matchItem||{};
+    const home=m.home?.name||m.homeTeam?.name||m.homeName||'Home';
+    const away=m.away?.name||m.awayTeam?.name||m.awayName||'Away';
+    const time=m.time||m.kickoff||m.startTime||'';
+    const league=m.league?.name||m.competition?.name||m.leagueName||'';
+    const country=m.league?.country||m.competition?.country||'';
+    const cc=pr.confidence>=65?'conf-high':pr.confidence>=45?'conf-med':'conf-low';
+    const uid='p'+i+'_'+Math.abs(hashCode(pr.id+(m.id||'')));
+    html+=`<div class="match-card">
+      <div class="match-head"><span class="match-league">${country?country+' · ':''}${league}</span><span class="match-time">🕐 ${time}</span></div>
+      <div class="match-teams">
+        <div class="team home"><div class="team-icon">${home[0]}</div><div class="team-name">${home}</div></div>
+        <div class="vs">VS</div>
+        <div class="team away"><div class="team-name">${away}</div><div class="team-icon">${away[0]}</div></div>
+      </div>
+      <div class="prediction-area">
+        <div class="pred-row ${cc}" onclick="toggle('${uid}')">
+          <div class="pred-left"><div class="pred-name">🎯 ${pr.name}</div><div class="pred-tag">${pr.id.replace(/_/g,' ')}</div></div>
+          <div class="conf-bar-wrap"><div class="conf-bar"><div class="conf-fill" style="width:${pr.confidence}%"></div></div><div class="conf-num">${pr.confidence}%</div></div>
+        </div>
+        <div class="pred-detail" id="${uid}">
+          <div class="pred-analysis">📊 ${pr.analysis||''}</div>
+          <ul class="pred-reasons">${(pr.reasons||[]).map(r=>`<li>${r}</li>`).join('')}</ul>
+        </div>
+      </div>
+    </div>`;
+  }
+  html+=`<div class="cache-info">⚡ Predictions generated offline • Cached at ${new Date().toLocaleTimeString()}</div>`;
+  main.innerHTML=html;
+}
+
+function toggle(id){const el=document.getElementById(id);if(el)el.classList.toggle('open')}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000)}
+function updateStatus(){const d=document.getElementById('statusDot'),t=document.getElementById('statusText');if(navigator.onLine){d.className='status-dot online';t.textContent='Online'}else{d.className='status-dot offline';t.textContent='Offline'}}
+
+/* ═══════════════════════════════════════════════════════════
+   SERVICE WORKER REGISTRATION
+   ═══════════════════════════════════════════════════════════ */
+if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js').catch(()=>{})}
+window.addEventListener('online',updateStatus);
+window.addEventListener('offline',updateStatus);
+
+/* ═══════════════════════════════════════════════════════════
+   INIT
+   ═══════════════════════════════════════════════════════════ */
+dispDate(currentDate);buildTabs();loadData();
+</script>
+</body>
+</html>
