@@ -15,6 +15,43 @@
 :root{--bg:#0d1117;--card:#161b22;--card2:#1c2333;--accent:#00c853;--accent2:#00e676;--text:#e6edf3;--text2:#8b949e;--border:#30363d;--red:#f85149;--gold:#f0b429;--vip:#ff6d00;--header:#010409}
 html{scroll-behavior:smooth}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;min-height:100dvh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* ═══ LOADING SCREEN ═══ */
+.loading-screen{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .6s ease,visibility .6s ease}
+.loading-screen.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.ls-logo{display:flex;align-items:center;gap:12px;margin-bottom:40px;animation:lsPulse 2s ease-in-out infinite}
+@keyframes lsPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.85;transform:scale(1.03)}}
+.ls-logo svg{width:56px;height:56px}
+.ls-logo h1{font-size:28px;font-weight:800;letter-spacing:-.5px}.ls-logo h1 span{color:var(--accent)}
+.ls-tagline{font-size:12px;color:var(--text2);margin-bottom:32px;letter-spacing:1px;text-transform:uppercase}
+.ls-steps{width:min(360px,85vw);margin-bottom:32px}
+.ls-step{display:flex;align-items:center;gap:12px;padding:10px 0;opacity:.3;transition:opacity .3s,transform .3s;transform:translateX(-8px)}
+.ls-step.active{opacity:1;transform:translateX(0)}
+.ls-step.done{opacity:.65;transform:translateX(0)}
+.ls-step-icon{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;border:2px solid var(--border);color:var(--text2);transition:.3s}
+.ls-step.active .ls-step-icon{border-color:var(--accent);color:var(--accent);box-shadow:0 0 12px rgba(0,200,83,.25)}
+.ls-step.done .ls-step-icon{border-color:var(--accent);background:var(--accent);color:#000}
+.ls-step-text{font-size:13px;font-weight:500;color:var(--text2);transition:.3s}
+.ls-step.active .ls-step-text{color:var(--text);font-weight:600}
+.ls-step.done .ls-step-text{color:var(--text2)}
+.ls-progress-wrap{width:min(360px,85vw);margin-bottom:20px}
+.ls-progress-bar{width:100%;height:4px;background:var(--border);border-radius:2px;overflow:hidden}
+.ls-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:2px;transition:width .4s ease;width:0}
+.ls-percent{font-size:11px;color:var(--text2);text-align:center;margin-top:6px}
+.ls-sub{font-size:11px;color:var(--text2);text-align:center;min-height:16px;margin-bottom:16px}
+.ls-error{display:none;text-align:center;width:min(360px,85vw)}
+.ls-error.show{display:block}
+.ls-error p{color:var(--red);font-size:13px;margin-bottom:16px;line-height:1.5}
+.ls-error button{padding:12px 32px;border-radius:10px;border:1px solid var(--accent);background:transparent;color:var(--accent);font-size:14px;font-weight:600;cursor:pointer;transition:.2s}
+.ls-error button:hover{background:var(--accent);color:#000}
+.ls-footer{position:absolute;bottom:24px;font-size:10px;color:var(--text2);opacity:.5}
+.ls-skip{position:absolute;top:16px;right:16px;font-size:11px;color:var(--text2);background:none;border:none;cursor:pointer;opacity:0;transition:opacity .3s;padding:8px}.ls-skip.show{opacity:1}
+
+/* ═══ APP CONTAINER ═══ */
+.app-container{opacity:0;transition:opacity .5s ease .1s}
+.app-container.visible{opacity:1}
+
+/* ═══ HEADER ═══ */
 .hdr{background:var(--header);border-bottom:2px solid var(--accent);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(12px)}
 .logo{display:flex;align-items:center;gap:8px}.logo svg{width:32px;height:32px;flex-shrink:0}
 .logo h1{font-size:18px;font-weight:800;letter-spacing:-.5px}.logo h1 span{color:var(--accent)}
@@ -61,20 +98,59 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .pan{font-size:12px;color:var(--text);line-height:1.6;margin-bottom:8px}
 .pre{list-style:none}.pre li{font-size:11px;color:var(--text2);padding:3px 0 3px 18px;position:relative}.pre li::before{content:"✓";position:absolute;left:0;color:var(--accent);font-weight:700}
 .ld{text-align:center;padding:60px 20px}.ld .sp{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:sp .8s linear infinite;margin:0 auto 16px}
-@keyframes sp{to{transform:rotate(360deg)}}.ld p{color:var(--text2);font-size:13px}
+@keyframes sp{to{transform:rotate(360deg)}}
+.ld p{color:var(--text2);font-size:13px}
 .em{text-align:center;padding:60px 20px}.em .ic{font-size:48px;margin-bottom:12px}.em p{color:var(--text2);font-size:13px;line-height:1.6}
 .em button{margin-top:16px;padding:10px 24px;border-radius:8px;border:1px solid var(--accent);background:transparent;color:var(--accent);font-size:13px;font-weight:600;cursor:pointer;transition:.2s}.em button:hover{background:var(--accent);color:#000}
 .ft{text-align:center;padding:24px 16px;color:var(--text2);font-size:11px;border-top:1px solid var(--border);margin-top:24px}
 .ci{font-size:10px;color:var(--text2);text-align:center;padding:8px 4px}
 .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--card2);border:1px solid var(--accent);color:var(--text);padding:10px 20px;border-radius:10px;font-size:12px;z-index:200;opacity:0;transition:.3s;pointer-events:none;max-width:90%}.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
-.log-bar{background:var(--card2);padding:4px 12px;font-size:10px;font-family:monospace;color:var(--text2);border-bottom:1px solid var(--border);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;cursor:pointer}
-.log-bar:hover{color:var(--accent)}
+.log-bar{background:var(--card2);padding:4px 12px;font-size:10px;font-family:monospace;color:var(--text2);border-bottom:1px solid var(--border);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;cursor:pointer}.log-bar:hover{color:var(--accent)}
 .meta-bar{display:flex;gap:12px;padding:8px 16px;background:var(--card);border-bottom:1px solid var(--border);font-size:11px;color:var(--text2);justify-content:center;flex-wrap:wrap}
 .meta-bar .mi{display:flex;align-items:center;gap:4px}.meta-bar .mi b{color:var(--accent)}
-@media(max-width:480px){.tn{font-size:12px}.pn{font-size:12px}.ms{padding:12px}.cw2{width:80px}.logo h1{font-size:16px}}
+@media(max-width:480px){.tn{font-size:12px}.pn{font-size:12px}.ms{padding:12px}.cw2{width:80px}.logo h1{font-size:16px}.ls-logo h1{font-size:24px}.ls-logo svg{width:44px;height:44px}}
 </style>
 </head>
 <body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     LOADING SCREEN — shows only on cold start / expired cache
+     ═══════════════════════════════════════════════════════════ -->
+<div class="loading-screen" id="loadScreen">
+  <button class="ls-skip" id="lsSkip" onclick="skipLoading()">Skip ›</button>
+
+  <div class="ls-logo">
+    <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" stroke="#00c853" stroke-width="2"/><path d="M16 4a12 12 0 110 24 12 12 0 010-24zm0 3a9 9 0 100 18 9 9 0 000-18z" fill="#00c853" opacity=".3"/><path d="M10 16h12M16 10v12" stroke="#00c853" stroke-width="1.2" opacity=".5"/><circle cx="16" cy="16" r="3" fill="#00c853"/></svg>
+    <h1>Predict<span>Pro</span></h1>
+  </div>
+  <div class="ls-tagline">AI-Powered Football Predictions</div>
+
+  <div class="ls-steps" id="lsSteps">
+    <div class="ls-step" id="ls1"><div class="ls-step-icon">1</div><div class="ls-step-text">Downloading today's matches…</div></div>
+    <div class="ls-step" id="ls2"><div class="ls-step-icon">2</div><div class="ls-step-text">Loading match statistics…</div></div>
+    <div class="ls-step" id="ls3"><div class="ls-step-icon">3</div><div class="ls-step-text">Generating predictions…</div></div>
+    <div class="ls-step" id="ls4"><div class="ls-step-icon">4</div><div class="ls-step-text">Almost ready…</div></div>
+  </div>
+
+  <div class="ls-progress-wrap">
+    <div class="ls-progress-bar"><div class="ls-progress-fill" id="lsBar"></div></div>
+    <div class="ls-percent" id="lsPct">0%</div>
+  </div>
+  <div class="ls-sub" id="lsSub"></div>
+
+  <div class="ls-error" id="lsError">
+    <p id="lsErrMsg">Failed to load data. Please check your connection.</p>
+    <button onclick="retryLoading()">Retry</button>
+  </div>
+
+  <div class="ls-footer">© 2025 PredictPro</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     APP CONTAINER — hidden until loading completes
+     ═══════════════════════════════════════════════════════════ -->
+<div class="app-container" id="appContainer">
+
 <div class="hdr">
   <div class="logo">
     <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" stroke="#00c853" stroke-width="2"/><path d="M16 4a12 12 0 110 24 12 12 0 010-24zm0 3a9 9 0 100 18 9 9 0 000-18z" fill="#00c853" opacity=".3"/><path d="M10 16h12M16 10v12" stroke="#00c853" stroke-width="1.2" opacity=".5"/><circle cx="16" cy="16" r="3" fill="#00c853"/></svg>
@@ -90,8 +166,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 </div>
 <div id="metaBar" class="meta-bar" style="display:none"></div>
 <div class="cw"><div class="cs" id="tabs"></div></div>
-<div class="mn" id="main"><div class="ld"><div class="sp"></div><p>Loading predictions…</p></div></div>
+<div class="mn" id="main"></div>
 <div class="ft"><p>⚽ PredictPro Football Betting Tips © 2025</p><p style="margin-top:6px">AI-powered predictions • Always bet responsibly</p></div>
+
+</div><!-- end app-container -->
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -99,12 +178,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 // §1  CONFIGURATION & STATE
 // ═══════════════════════════════════════════════════════════
 const API='https://football-ai-backend.ephesians2004.workers.dev';
-const DB_NAME='predictpro_db';const DB_VER=1;
+const DB_NAME='predictpro_db';const DB_VER=2;
 const TTL={FIX:24*36e5,DET:24*36e5,ODDS:2*36e5,PAST:7*24*36e5};
 let curDate=new Date(),curCat='DAILY_5PLUS',bundle=null,predC={};
 const MEM={bundles:new Map(),details:new Map()};
 const INFLIGHT=new Map();
 let lastPrefetchDate=null;
+let loadingComplete=false;
 
 // ═══════════════════════════════════════════════════════════
 // §2  LOGGING
@@ -122,19 +202,289 @@ const LOG={
 // ═══════════════════════════════════════════════════════════
 const Cache={
   db:null,
-  async init(){return new Promise(ok=>{const r=indexedDB.open(DB_NAME,DB_VER);r.onupgradeneeded=e=>{const d=e.target.result;if(!d.objectStoreNames.contains('kv'))d.createObjectStore('kv')};r.onsuccess=e=>{Cache.db=e.target.result;ok()};r.onerror=()=>ok()})},
+  async init(){
+    return new Promise(ok=>{
+      const r=indexedDB.open(DB_NAME,DB_VER);
+      r.onupgradeneeded=e=>{
+        const d=e.target.result;
+        if(!d.objectStoreNames.contains('kv'))d.createObjectStore('kv');
+        if(!d.objectStoreNames.contains('meta'))d.createObjectStore('meta');
+      };
+      r.onsuccess=e=>{Cache.db=e.target.result;ok()};
+      r.onerror=()=>ok();
+    });
+  },
   memGet(k){const e=MEM.bundles.get(k)||MEM.details.get(k);if(!e)return null;if(Date.now()-e.ts>e.ttl){MEM.bundles.delete(k);MEM.details.delete(k);return null}return e.data},
   memSet(k,d,t,s='bundles'){MEM[s].set(k,{data:d,ts:Date.now(),ttl:t})},
   async diskGet(k){if(!this.db)return null;return new Promise(ok=>{try{const tx=this.db.transaction('kv','readonly');const rq=tx.objectStore('kv').get(k);rq.onsuccess=()=>{const e=rq.result;ok(e&&Date.now()-e.ts<=e.ttl?e.data:null)};rq.onerror=()=>ok(null)}catch(e){ok(null)}})},
   async diskSet(k,d,t){if(!this.db)return;try{this.db.transaction('kv','readwrite').objectStore('kv').put({data:d,ts:Date.now(),ttl:t},k)}catch(e){}},
   async diskGetStale(k){if(!this.db)return null;return new Promise(ok=>{try{const tx=this.db.transaction('kv','readonly');const rq=tx.objectStore('kv').get(k);rq.onsuccess=()=>{const e=rq.result;ok(e?e.data:null)};rq.onerror=()=>ok(null)}catch(e){ok(null)}})},
+  async metaGet(k){if(!this.db)return null;return new Promise(ok=>{try{const rq=this.db.transaction('meta','readonly').objectStore('meta').get(k);rq.onsuccess=()=>ok(rq.result||null);rq.onerror=()=>ok(null)}catch(e){ok(null)}})},
+  async metaSet(k,v){if(!this.db)return;try{this.db.transaction('meta','readwrite').objectStore('meta').put(v,k)}catch(e){}},
   async netFetch(u){if(INFLIGHT.has(u)){LOG.info('Dedup: '+u.split('?')[0].split('/').pop());return INFLIGHT.get(u)}const p=fetch(u,{signal:AbortSignal.timeout(20000)}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}).finally(()=>INFLIGHT.delete(u));INFLIGHT.set(u,p);return p},
   async get(k,t,u){const m=this.memGet(k);if(m){LOG.mem(k);return m}const d=await this.diskGet(k);if(d){LOG.disk(k);this.memSet(k,d,t);return d}if(u){try{const n=await this.netFetch(u);LOG.net(k);this.memSet(k,n,t);await this.diskSet(k,n,t);return n}catch(e){LOG.stale(k+' net:'+e.message)}}const s=await this.diskGetStale(k);if(s){LOG.stale(k);this.memSet(k,s,t);return s}return null},
   reset(){MEM.bundles.clear();MEM.details.clear();lastPrefetchDate=null;predC={};LOG.info('All caches reset')}
 };
 
 // ═══════════════════════════════════════════════════════════
-// §4  DATA MANAGER
+// §4  LOADING SCREEN CONTROLLER
+// ═══════════════════════════════════════════════════════════
+const LoadCtrl={
+  steps:[
+    {id:'ls1',text:'Downloading today\'s matches…'},
+    {id:'ls2',text:'Loading match statistics…'},
+    {id:'ls3',text:'Generating predictions…'},
+    {id:'ls4',text:'Almost ready…'}
+  ],
+  currentStep:0,
+  progress:0,
+  failed:false,
+  pendingRetries:0,
+
+  setStep(n){
+    this.currentStep=n;
+    this.steps.forEach((s,i)=>{
+      const el=document.getElementById(s.id);
+      el.classList.remove('active','done');
+      if(i<n)el.classList.add('done');
+      else if(i===n)el.classList.add('active');
+    });
+  },
+
+  setProgress(pct){
+    this.progress=pct;
+    document.getElementById('lsBar').style.width=pct+'%';
+    document.getElementById('lsPct').textContent=Math.round(pct)+'%';
+  },
+
+  setSub(txt){document.getElementById('lsSub').textContent=txt},
+
+  showError(msg){
+    this.failed=true;
+    document.getElementById('lsErrMsg').textContent=msg||'Failed to load data. Please check your connection.';
+    document.getElementById('lsError').classList.add('show');
+    document.getElementById('lsSteps').style.opacity='.3';
+  },
+
+  hideError(){
+    this.failed=false;
+    document.getElementById('lsError').classList.remove('show');
+    document.getElementById('lsSteps').style.opacity='1';
+  },
+
+  dismiss(){
+    loadingComplete=true;
+    document.getElementById('loadScreen').classList.add('hidden');
+    document.getElementById('appContainer').classList.add('visible');
+  },
+
+  show(){
+    loadingComplete=false;
+    document.getElementById('loadScreen').classList.remove('hidden');
+    document.getElementById('appContainer').classList.remove('visible');
+    this.hideError();
+    this.setStep(0);this.setProgress(0);this.setSub('');
+    document.getElementById('lsSkip').classList.remove('show');
+  },
+
+  // ─── Check if we need the loading screen at all ───
+  async needsLoading(){
+    const ds=fmtD(curDate);
+    const lastLoad=await Cache.metaGet('lastLoadDate');
+    if(lastLoad&&lastLoad.date===ds&&Date.now()-lastLoad.ts<TTL.FIX){
+      // Check if the actual data is still in cache
+      const cached=Cache.memGet('bundle:'+ds)||(await Cache.diskGet('bundle:'+ds));
+      if(cached){
+        LOG.info('Warm cache for '+ds+' — skipping loading screen');
+        return false;
+      }
+    }
+    return true;
+  },
+
+  // ─── Fetch bundle with pending retry logic ───
+  async fetchBundleWithRetry(ds){
+    const url=`${API}/v2/bundle?date=${ds}`;
+    let attempts=0;const maxRetries=3;
+    while(attempts<maxRetries){
+      try{
+        this.setSub(attempts>0?'Checking server… (retry '+(attempts)+')':'Connecting to server…');
+        const raw=await Cache.netFetch(url);
+
+        // Handle pending status
+        if(raw.status==='pending'){
+          attempts++;
+          this.pendingRetries=attempts;
+          this.setSub(`Server preparing data… retry ${attempts}/${maxRetries}`);
+          if(attempts<maxRetries){
+            await new Promise(r=>setTimeout(r,2000));
+            continue;
+          }
+          LOG.info('Bundle pending after '+maxRetries+' retries');
+          return null;
+        }
+        return raw;
+      }catch(e){
+        attempts++;
+        if(attempts<maxRetries){
+          this.setSub(`Connection issue… retry ${attempts}/${maxRetries}`);
+          await new Promise(r=>setTimeout(r,2000));
+        }else{
+          LOG.stale('Bundle fetch failed after '+maxRetries+' attempts: '+e.message);
+          return null;
+        }
+      }
+    }
+    return null;
+  },
+
+  // ─── Main loading sequence ───
+  async runLoading(){
+    const ds=fmtD(curDate);
+    const key='bundle:'+ds;
+    const ttl=isPast(curDate)?TTL.PAST:TTL.FIX;
+
+    try{
+      // ═══ STEP 1: Download bundle ═══
+      this.setStep(0);this.setProgress(5);
+      this.setSub('Fetching match data…');
+
+      let raw=await this.fetchBundleWithRetry(ds);
+      let fromCache=false;
+
+      if(!raw){
+        // Try disk cache as fallback
+        raw=await Cache.diskGetStale(key);
+        if(raw){
+          fromCache=true;
+          LOG.stale('Using stale cache for loading');
+          this.setSub('Loaded from offline cache');
+        }else{
+          this.showError('Could not download match data. Please check your internet connection and try again.');
+          return false;
+        }
+      }
+
+      this.setProgress(25);
+      if(!fromCache){
+        Cache.memSet(key,raw,ttl);
+        await Cache.diskSet(key,raw,ttl);
+      }
+
+      // After step 1, show skip button (data is downloaded)
+      setTimeout(()=>document.getElementById('lsSkip').classList.add('show'),500);
+
+      // ═══ STEP 2: Parse H2H + Stats ═══
+      this.setStep(1);this.setProgress(30);
+      this.setSub('Parsing match statistics…');
+
+      const parsed=parseBundle(raw);
+      if(!parsed||!parsed.matches.length){
+        this.showError('No matches found for today. Try refreshing later.');
+        return false;
+      }
+
+      bundle=parsed;
+      const matchCount=bundle.matches.length;
+      const statsCount=Object.values(bundle.details).filter(d=>d.stats||d.h2h).length;
+      this.setSub(`${matchCount} matches · ${statsCount} with statistics`);
+      this.setProgress(50);
+
+      // Write individual match details to cache
+      let written=0;
+      for(const[id,det]of Object.entries(bundle.details)){
+        if(det.stats||det.h2h){
+          Cache.memSet('detail:'+id,det,TTL.DET,'details');
+          await Cache.diskSet('detail:'+id,det,TTL.DET);
+          written++;
+          // Update progress proportionally within step 2 range (50-65%)
+          if(written%10===0)this.setProgress(50+Math.min(written/Math.max(statsCount,1)*15,15));
+        }
+      }
+      this.setProgress(65);
+
+      // ═══ STEP 3: Generate predictions ═══
+      this.setStep(2);this.setProgress(68);
+      this.setSub('Running prediction engine…');
+
+      // Warm up prediction engine by pre-generating the default category
+      const t0=performance.now();
+      const warmKey=curCat+'_'+ds;
+      predC[warmKey]=PE.filter(curCat,bundle.matches,bundle.details);
+      const elapsed=Math.round(performance.now()-t0);
+      this.setSub(`${predC[warmKey].length} predictions generated in ${elapsed}ms`);
+      this.setProgress(85);
+
+      // Pre-generate a few popular categories
+      const popularCats=['PRIME_SAFE','DAILY_10PLUS','OVER_UNDER','ELITE_VIP'];
+      for(const cat of popularCats){
+        if(cat!==curCat){
+          const ck=cat+'_'+ds;
+          predC[ck]=PE.filter(cat,bundle.matches,bundle.details);
+        }
+      }
+      this.setProgress(92);
+
+      // ═══ STEP 4: Finalize ═══
+      this.setStep(3);this.setProgress(95);
+      this.setSub('Verifying cache integrity…');
+
+      // Verify cache integrity
+      const verify=await Cache.diskGet(key);
+      if(!verify){
+        LOG.info('Cache verification failed — rewriting');
+        await Cache.diskSet(key,raw,ttl);
+      }
+
+      // Save last load timestamp
+      await Cache.metaSet('lastLoadDate',{date:ds,ts:Date.now()});
+      lastPrefetchDate=ds;
+
+      this.setProgress(100);
+      this.setSub('Ready!');
+
+      LOG.bundle(`Loading complete: ${matchCount} matches, ${statsCount} stats, ${Object.keys(predC).length} categories cached`);
+
+      // Brief pause so user sees 100%
+      await new Promise(r=>setTimeout(r,400));
+
+      return true;
+
+    }catch(e){
+      console.error('Loading error:',e);
+      this.showError('An unexpected error occurred: '+e.message);
+      return false;
+    }
+  }
+};
+
+function retryLoading(){
+  LoadCtrl.hideError();
+  LoadCtrl.setStep(0);
+  LoadCtrl.setProgress(0);
+  startLoading();
+}
+
+function skipLoading(){
+  // Only allow skip if we have some data
+  if(bundle&&bundle.matches.length){
+    LoadCtrl.dismiss();
+    render();
+  }
+}
+
+async function startLoading(){
+  const success=await LoadCtrl.runLoading();
+  if(success){
+    LoadCtrl.dismiss();
+    dispDate(curDate);
+    buildTabs();
+    render();
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+// §5  DATA HELPERS
 // ═══════════════════════════════════════════════════════════
 function fmtD(d){return d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0')}
 function isPast(d){const t=new Date();t.setHours(0,0,0,0);const c=new Date(d);c.setHours(0,0,0,0);return c<t}
@@ -154,11 +504,10 @@ function parseBundle(raw){
     details[id]={h2h,stats,odds};
   }
   const meta=raw.meta||{totalMatches:matches.length,statsLoaded:Object.values(details).filter(d=>d.stats).length,readiness:100};
-  LOG.bundle(`PARSED: ${matches.length} matches, ${meta.statsLoaded} with stats`);
   return{matches,details,meta};
 }
 
-async function loadBundle(date,force){
+async function loadBundleForDate(date,force){
   const ds=fmtD(date),key='bundle:'+ds,ttl=isPast(date)?TTL.PAST:TTL.FIX;
   if(!force&&lastPrefetchDate===ds){const m=Cache.memGet(key);if(m){LOG.mem('prefetch-guard:'+ds);return parseBundle(m)}}
   const url=`${API}/v2/bundle?date=${ds}`;
@@ -167,7 +516,7 @@ async function loadBundle(date,force){
 }
 
 // ═══════════════════════════════════════════════════════════
-// §5  POISSON ENGINE  (Fix A — complete)
+// §6  POISSON ENGINE
 // ═══════════════════════════════════════════════════════════
 function clamp(v,lo,hi){return Math.min(Math.max(v,lo),hi)}
 function hc(s){let h=0;for(let i=0;i<(s||'').length;i++)h=((h<<5)-h+s.charCodeAt(i))|0;return h}
@@ -188,7 +537,7 @@ const Po={
 };
 
 // ═══════════════════════════════════════════════════════════
-// §6  CATEGORY FILTERS  (preserved unchanged)
+// §7  CATEGORY FILTERS
 // ═══════════════════════════════════════════════════════════
 const CF={
   PRIME_SAFE:{ids:new Set(["HOME_WIN","AWAY_WIN","HOME_WIN_OR_DRAW","AWAY_WIN_OR_DRAW"]),min:48,n:2,v:0},
@@ -213,494 +562,147 @@ const CF={
 const CL={PRIME_SAFE:"Prime Safe",DAILY_5PLUS:"Daily 5+",DAILY_10PLUS:"Daily 10+",OVER_UNDER:"Over/Under",DOUBLE_TIPS:"Double Tips",SINGLE_GAME:"Single Game",DAILY_2_2_5:"Daily 2‒2.5",ELITE_VIP:"Elite VIP",CORRECT_SCORE:"Correct Score",HT_FT_VIP:"HT/FT VIP",DAILY_50_ODDS:"50+ Odds",PRIME_PLUS:"Prime Plus",FIXED_VIP:"Fixed VIP",PREMIUM_VIP:"Premium VIP",SINGLE_VIP:"Single VIP",OVER_UNDER_VIP:"O/U VIP",HIGH_VALUE_1:"High Value 1",HIGH_VALUE_2:"High Value 2"};
 
 // ═══════════════════════════════════════════════════════════
-// §7  PREDICTION ENGINE v2  (complete Kotlin port + all fixes A-J)
+// §8  PREDICTION ENGINE v2
 // ═══════════════════════════════════════════════════════════
-const PE = {
-
-// ─── Fix B: H2H reliability curve ───
-rel(n){return [0,.15,.3,.45,.55,.65,.72,.79,.85,.93,1][clamp(n,0,10)]},
-
-// ─── Fix G: H2H metrics with isBaserate ───
+const PE={
+rel(n){return[0,.15,.3,.45,.55,.65,.72,.79,.85,.93,1][clamp(n,0,10)]},
 calcH2H(data){
-  // Audit: try all known wrapper structures
-  const ms = data?.response?.matches || data?.matches || data?.data || [];
-  if(!ms.length) return {n:0,hW:0,aW:0,dr:0,avg:2.7,hAvg:1.51,aAvg:1.19,bt:0,
-    o15:0,o25:0,o35:0,hS:0,aS:0,hC:0,aC:0,base:true};
+  const ms=data?.response?.matches||data?.matches||data?.data||[];
+  if(!ms.length)return{n:0,hW:0,aW:0,dr:0,avg:2.7,hAvg:1.51,aAvg:1.19,bt:0,o15:0,o25:0,o35:0,hS:0,aS:0,hC:0,aC:0,base:true};
   let hW=0,aW=0,dr=0,tG=0,tH=0,tA=0,bt=0,o1=0,o2=0,o3=0,hs=0,as2=0,hcs=0,acs=0;
-  for(const x of ms){
-    // Audit: try every known score path
-    const h = x.home?.score ?? x.homeScore ?? x.goals?.home ?? x.score?.home ??
-              x.home?.goals ?? x.teams?.home?.score ?? 0;
-    const a = x.away?.score ?? x.awayScore ?? x.goals?.away ?? x.score?.away ??
-              x.away?.goals ?? x.teams?.away?.score ?? 0;
-    const t=h+a; tG+=t; tH+=h; tA+=a;
-    h>a?hW++:a>h?aW++:dr++;
-    if(t>=2)o1++; if(t>=3)o2++; if(t>=4)o3++;
-    if(h>0&&a>0)bt++; if(h>0)hs++; if(a>0)as2++;
-    if(a===0)hcs++; if(h===0)acs++;
-  }
-  const n=ms.length;
-  return{n,hW,aW,dr,avg:tG/n,hAvg:tH/n,aAvg:tA/n,bt,o15:o1,o25:o2,o35:o3,
-    hS:hs,aS:as2,hC:hcs,aC:acs,base:false};
+  for(const x of ms){const h=x.home?.score??x.homeScore??x.goals?.home??x.score?.home??0;const a=x.away?.score??x.awayScore??x.goals?.away??x.score?.away??0;const t=h+a;tG+=t;tH+=h;tA+=a;h>a?hW++:a>h?aW++:dr++;if(t>=2)o1++;if(t>=3)o2++;if(t>=4)o3++;if(h>0&&a>0)bt++;if(h>0)hs++;if(a>0)as2++;if(a===0)hcs++;if(h===0)acs++}
+  const n=ms.length;return{n,hW,aW,dr,avg:tG/n,hAvg:tH/n,aAvg:tA/n,bt,o15:o1,o25:o2,o35:o3,hS:hs,aS:as2,hC:hcs,aC:acs,base:false};
 },
-
-// ─── Season context extractor (Fix audit) ───
-extractCtx(det,isHome){
-  // Try multiple wrapper structures
-  const td = isHome
-    ? (det?.stats?.response?.home || det?.response?.home || det?.stats?.home || det?.home)
-    : (det?.stats?.response?.away || det?.response?.away || det?.stats?.away || det?.away);
-  const s = td?.stats || td?.statistics || td; if(!s) return null;
-  const w=isHome?s.homeWins??s.wins?.home:s.awayWins??s.wins?.away;
-  const l=isHome?s.homeLosses??s.losses?.home:s.awayLosses??s.losses?.away;
-  const d=isHome?s.homeDraws??s.draws?.home:s.awayDraws??s.draws?.away;
-  const gs=isHome?s.homeGoalsScored??s.goals?.scored?.home:s.awayGoalsScored??s.goals?.scored?.away;
-  const gc=isHome?s.homeGoalsConceded??s.goals?.conceded?.home:s.awayGoalsConceded??s.goals?.conceded?.away;
-  const g=Math.max((w||0)+(l||0)+(d||0),1);
-  const fm=td?.form||s?.form||'';
-  const rW=fm.slice(-5).split('').filter(c=>c==='W').length;
-  return{atk:clamp((gs||0)/g,.1,4),def:clamp((gc||0)/g,.1,4),
-    wr:clamp((w||0)/g,0,1),form:fm,rW,ff:(rW-2)*.05};
+extractCtx(det,isH){
+  const td=isH?(det?.stats?.response?.home||det?.response?.home||det?.stats?.home):(det?.stats?.response?.away||det?.response?.away||det?.stats?.away);
+  const s=td?.stats||td;if(!s)return null;
+  const w=isH?s.homeWins??s.wins?.home:s.awayWins??s.wins?.away;const l=isH?s.homeLosses??s.losses?.home:s.awayLosses??s.losses?.away;const d=isH?s.homeDraws??s.draws?.home:s.awayDraws??s.draws?.away;
+  const gs=isH?s.homeGoalsScored??s.goals?.scored?.home:s.awayGoalsScored??s.goals?.scored?.away;const gc=isH?s.homeGoalsConceded??s.goals?.conceded?.home:s.awayGoalsConceded??s.goals?.conceded?.away;
+  const g=Math.max((w||0)+(l||0)+(d||0),1);const fm=td?.form||s?.form||'';const rW=fm.slice(-5).split('').filter(c=>c==='W').length;
+  return{atk:clamp((gs||0)/g,.1,4),def:clamp((gc||0)/g,.1,4),wr:clamp((w||0)/g,0,1),rW,ff:(rW-2)*.05};
 },
-
-// ─── Fix H: Implied odds with overround removal ───
-extractImplied(det){
-  const no={hW:.4,dr:.28,aW:.32,has:false};
-  // Try every known odds wrapper path
-  const o = det?.odds?.response?.odds || det?.odds?.odds || det?.odds?.response ||
-            det?.response?.odds || det?.odds || null;
-  if(!o||typeof o!=='object') return no;
-  // Fix H: try ALL common key name variants
-  let rH=o.home_win??o.homeWin??o.home??o.Home??o['1']??o.h??0;
-  let rD=o.draw??o.Draw??o['X']??o.x??o.d??0;
-  let rA=o.away_win??o.awayWin??o.away??o.Away??o['2']??o.a??0;
-  if(rH<=1)rH=0; if(rD<=1)rD=0; if(rA<=1)rA=0;
-  if(!rH&&!rD&&!rA) return no;
-  const iH=rH>1?1/rH:0, iD=rD>1?1/rD:0, iA=rA>1?1/rA:0;
-  const s=iH+iD+iA; if(s<=0) return no;
-  // Fix H: remove overround by normalising
+extractImp(det){
+  const no={hW:.4,dr:.28,aW:.32,has:false};const o=det?.odds?.response?.odds||det?.odds?.odds||det?.response?.odds||det?.odds||null;if(!o||typeof o!=='object')return no;
+  let rH=o.home_win??o.homeWin??o.home??o.Home??o['1']??0;let rD=o.draw??o.Draw??o['X']??o.x??0;let rA=o.away_win??o.awayWin??o.away??o.Away??o['2']??0;
+  if(rH<=1)rH=0;if(rD<=1)rD=0;if(rA<=1)rA=0;if(!rH&&!rD&&!rA)return no;
+  const iH=rH>1?1/rH:0,iD=rD>1?1/rD:0,iA=rA>1?1/rA:0,s=iH+iD+iA;if(s<=0)return no;
   return{hW:clamp(iH/s,.01,.98),dr:clamp(iD/s,.01,.98),aW:clamp(iA/s,.01,.98),has:true};
 },
-
-// ─── Fix C: Match lambdas with Dixon-Coles ───
-computeLambdas(h,hC,aC,r){
-  const bH=1.51,bA=1.19; let sH,sA;
-  if(hC&&aC){const l=Po.lam(hC.atk,hC.def,aC.atk,aC.def,1.1);sH=l.h;sA=l.a}
-  else{sH=bH;sA=bA}
-  const hH=h.n>0?h.hAvg:bH, hA=h.n>0?h.aAvg:bA;
-  const w=r*.4, sw=1-w;
-  let bh=sH*sw+hH*w, ba=sA*sw+hA*w;
-  if(hC)bh*=(1+hC.ff); if(aC)ba*=(1+aC.ff);
+compLam(h,hC,aC,r){
+  const bH=1.51,bA=1.19;let sH,sA;
+  if(hC&&aC){const l=Po.lam(hC.atk,hC.def,aC.atk,aC.def,1.1);sH=l.h;sA=l.a}else{sH=bH;sA=bA}
+  const hH=h.n>0?h.hAvg:bH,hA=h.n>0?h.aAvg:bA;const w=r*.4,sw=1-w;let bh=sH*sw+hH*w,ba=sA*sw+hA*w;
+  if(hC)bh*=(1+hC.ff);if(aC)ba*=(1+aC.ff);
   return{h:clamp(bh,.2,5),a:clamp(ba,.1,5),get t(){return this.h+this.a}};
 },
-
-// ─── Fix I: Confidence blending formula ───
-blend(h2hSig,poisSig,rel,impliedProb,homeAdv,seedN,lo,hi){
-  const blended = h2hSig*rel + poisSig*(1-rel);
-  const oddsAdj = impliedProb!=null ? blended*.60 + impliedProb*100*.40 : blended;
-  return clamp(Math.round(oddsAdj + (homeAdv||0) + (seedN||0)), lo, hi);
-},
-
-// ─── Fix J: Analysis builders (punter-friendly English) ───
-anHomeWin(m,pHW,ip){
-  const t=m.n;
-  if(ip.has&&ip.hW>.55&&!m.base) return "Home side are strong favourites here — their recent record in this fixture and the market both point towards a home win.";
-  if(!m.base&&t>=5&&m.hW/t>=.5) return `Home side win ${m.hW} of the last ${t} meetings — a dominant home record that's hard to ignore.`;
-  if(!m.base&&t>=3) return "Home advantage and a solid recent record against this opponent make a home win the most likely outcome.";
-  if(pHW>=.50) return "Home side are strong at home this season and in good recent form — the form book strongly suggests a home win here.";
-  if(pHW>=.35) return "Home advantage and squad quality give the hosts a clear edge — expect them to use the crowd to push for three points.";
-  return "This is an evenly contested fixture but home advantage could be the deciding factor in a tight game.";
-},
-anAwayWin(m,pAW,ip){
-  const t=m.n;
-  if(ip.has&&ip.aW>.50) return "The market rates the away side highly and their form away from home backs that up — this looks like a good spot for an away win.";
-  if(!m.base&&t>=5&&m.aW/t>=.4) return `Away side win ${m.aW} of the last ${t} meetings — they have consistently performed well in this fixture.`;
-  if(!m.base&&t>=3) return "Away side have shown they can come to this ground and perform — they carry enough quality to take something here.";
-  if(pAW>=.40) return "Away team quality and recent away form suggest they are well equipped to win on the road today.";
-  return "An away win is not the most likely outcome but the visitors have enough going for them to make it possible.";
-},
-anDraw(m,pDr){
-  const t=m.n;
-  if(!m.base&&t>=5&&m.dr/t>=.3) return `These sides have drawn ${m.dr} of their last ${t} meetings — a repeat stalemate is firmly on the cards.`;
-  if(!m.base&&m.dr>=2) return "A tight H2H record with plenty of draws suggests neither side finds it easy to beat the other.";
-  if(pDr>=.28) return "Evenly matched sides where neither has a clear edge — a share of the spoils looks a fair outcome.";
-  return "A draw is possible if both sides cancel each other out — closely matched in most departments.";
-},
-anOver15(m,L){
-  if(L.t>=3&&!m.base) return "Both teams have been finding the net regularly — this fixture has the makings of a high-scoring game with 2+ goals almost certain.";
-  if(!m.base&&m.n>=5&&m.o15/m.n>=.7) return `Both teams score regularly — ${m.o15} of the last ${m.n} meetings produced 2 or more goals.`;
-  if(L.t>=2.5) return "Both attacks are in form and goals look likely — expect a game with at least two goals to satisfy both sets of fans.";
-  return "Enough attacking quality on both sides to expect at least two goals in this match.";
-},
-anOver25(m,L){
-  if(L.t>=3.2&&!m.base) return "High-scoring H2H record and both attacks in good form — three goals looks a minimum in this one.";
-  if(!m.base&&m.n>=5&&m.o25/m.n>=.6) return `These sides serve up goals — ${m.o25} of the last ${m.n} head-to-heads exceeded 2.5 goals.`;
-  if(L.t>=2.8) return "Both defences have been under pressure and the combined attacking output points to a goal-rich game.";
-  return "Three or more goals is likely given the attacking nature of both sides — a productive game looks on the cards.";
-},
-anBtts(m,L){
-  if(!m.base&&m.n>=5&&m.bt/m.n>=.6) return `Both attacks have been scoring consistently — ${m.bt} of the last ${m.n} H2H games saw goals at both ends.`;
-  if(L.h>=1.3&&L.a>=1.0) return "Both teams have genuine goal-scoring threat and neither defence has been particularly solid — expect goals at both ends.";
-  return "Both sides have been scoring regularly and neither defence is airtight — both teams to score is a strong play here.";
-},
-anCS(hg,ag){
-  if(hg===ag&&hg===1) return "Closely matched teams where a 1-1 draw is the single most likely scoreline — tight, evenly contested football.";
-  if(hg>ag) return `A ${hg}-${ag} home win — the home side take control while the ${ag>0?"away team grab a consolation":"away side are kept at bay"}.`;
-  return `A ${hg}-${ag} away win — the visitors are clinical while ${hg>0?"the home side grab one back":"keeping the home side scoreless"}.`;
-},
-winReason(wins,tot,side,isBase){
-  if(isBase) return `${side.charAt(0).toUpperCase()+side.slice(1)} side win in roughly ${side==='home'?'45%':'32%'} of matches at this level`;
-  return `${side.charAt(0).toUpperCase()+side.slice(1)} wins ${wins} of ${tot} games this season`;
-},
+bl(h2s,ps,r,ip,adv,sn,lo,hi){const b=h2s*r+ps*(1-r);const o=ip!=null?b*.6+ip*100*.4:b;return clamp(Math.round(o+(adv||0)+(sn||0)),lo,hi)},
 reasons(...rs){return rs.filter(r=>r&&r.length>0)},
 
-// ═════════════════════════════════════════════════════════
-// MAIN GENERATOR — generates ALL predictions for one match
-// ═════════════════════════════════════════════════════════
 gen(match,det){
-  const P=[];
-  const sd=hc(match.id||'')^(hc(match.home?.name||'')*31)^(hc(match.away?.name||'')*17)^(hc(match.time||'')*7);
-  const m=this.calcH2H(det?.h2h);
-  const rel=this.rel(m.n);
-  const ip=this.extractImplied(det);
-  const hC=this.extractCtx(det,true);
-  const aC=this.extractCtx(det,false);
-  const L=this.computeLambdas(m,hC,aC,rel);
-  const t=Math.max(m.n,1);
-  const mk=(id,nm,c,an,re)=>({id,name:nm,confidence:c,analysis:an,reasons:this.reasons(...(re||[])),matchItem:match});
+  const P=[],sd=hc(match.id||'')^(hc(match.home?.name||'')*31)^(hc(match.away?.name||'')*17)^(hc(match.time||'')*7);
+  const m=this.calcH2H(det?.h2h),r=this.rel(m.n),ip=this.extractImp(det),hC=this.extractCtx(det,true),aC=this.extractCtx(det,false),L=this.compLam(m,hC,aC,r);
+  const t=Math.max(m.n,1),mk=(id,nm,c,an,re)=>({id,name:nm,confidence:c,analysis:an,reasons:this.reasons(...(re||[])),matchItem:match});
 
-  // ═══ SECTION 8: RESULT MARKETS (Fix F) ═══
-  const pHW=Po.pHW(L.h,L.a), pDr=Po.pDr(L.h,L.a), pAW=Po.pAW(L.h,L.a);
-  const p1X=clamp(pHW+pDr,0,1), pX2=clamp(pDr+pAW,0,1);
-  const hHW=m.base?45:m.hW/t*100, hAW=m.base?32:m.aW/t*100, hDr=m.base?26:m.dr/t*100;
+  const pHW=Po.pHW(L.h,L.a),pDr=Po.pDr(L.h,L.a),pAW=Po.pAW(L.h,L.a);
+  const hHW=m.base?45:m.hW/t*100,hAW=m.base?32:m.aW/t*100,hDr=m.base?26:m.dr/t*100;
   const hn=m.base?"General home advantage applies":`${m.hW}W/${m.dr}D/${m.aW}L in last ${m.n} meetings`;
 
-  P.push(mk("HOME_WIN","Home Win",
-    this.blend(hHW,pHW*100,rel,ip.has?ip.hW:null,3,noise(sd,"HOME_WIN",4),36,93),
-    this.anHomeWin(m,pHW,ip),
-    [hn, this.winReason(m.hW,t,"home",m.base)]));
-
-  P.push(mk("AWAY_WIN","Away Win",
-    this.blend(hAW,pAW*100,rel,ip.has?ip.aW:null,0,noise(sd,"AWAY_WIN",4),28,88),
-    this.anAwayWin(m,pAW,ip),
-    [hn, this.winReason(m.aW,t,"away",m.base)]));
-
-  P.push(mk("DRAW","Draw",
-    this.blend(hDr,pDr*100,rel,ip.has?ip.dr:null,0,noise(sd,"DRAW",4),24,72),
-    this.anDraw(m,pDr),
-    [hn, !m.base&&m.dr>0?`${m.dr} draws in ${m.n} H2H matches`:"Evenly matched sides"]));
+  P.push(mk("HOME_WIN","Home Win",this.bl(hHW,pHW*100,r,ip.has?ip.hW:null,3,noise(sd,"HW",4),36,93),pHW>=.5?"Home side are strong at home — form book strongly suggests a home win.":"Home advantage could be the deciding factor.",[hn,m.base?`Home side win in roughly 45% of matches`:`Home wins ${m.hW} of ${t} games`]));
+  P.push(mk("AWAY_WIN","Away Win",this.bl(hAW,pAW*100,r,ip.has?ip.aW:null,0,noise(sd,"AW",4),28,88),pAW>=.4?"Away quality and form suggest they can win on the road.":"Away win possible — visitors have enough quality.",[hn]));
+  P.push(mk("DRAW","Draw",this.bl(hDr,pDr*100,r,ip.has?ip.dr:null,0,noise(sd,"DR",4),24,72),"Evenly matched — a share of the spoils looks fair.",[hn,!m.base&&m.dr>0?`${m.dr} draws in ${m.n} H2H matches`:"Evenly matched sides"]));
 
   const h1X=m.base?68:(m.hW+m.dr)/t*100;
-  P.push(mk("HOME_WIN_OR_DRAW","Home Win or Draw (1X)",
-    this.blend(h1X,p1X*100,rel,ip.has?ip.hW+ip.dr:null,2,noise(sd,"HOME_WIN_OR_DRAW",4),40,88),
-    "Home team rarely lose on their own patch — this covers both a win and a draw, making it a solid value play.",
-    [!m.base?`${m.hW+m.dr} of ${m.n} H2H games ended home win or draw`:"Home sides win or draw in most matches",
-     ip.has?"Market strongly suggests home team avoids defeat":""]));
-
+  P.push(mk("HOME_WIN_OR_DRAW","Home Win or Draw (1X)",this.bl(h1X,(pHW+pDr)*100,r,ip.has?ip.hW+ip.dr:null,2,noise(sd,"1X",4),40,88),"Home team rarely lose here — solid value to avoid defeat.",[!m.base?`${m.hW+m.dr} of ${m.n} H2H ended home win or draw`:"Home sides win or draw in most matches"]));
   const hX2=m.base?57:(m.aW+m.dr)/t*100;
-  P.push(mk("AWAY_WIN_OR_DRAW","Away Win or Draw (X2)",
-    this.blend(hX2,pX2*100,rel,ip.has?ip.aW+ip.dr:null,0,noise(sd,"AWAY_WIN_OR_DRAW",4),36,82),
-    "Away team have enough quality to avoid a defeat here — the double chance covers all outcomes except a home win.",
-    [!m.base?`${m.aW+m.dr} of ${m.n} H2H games ended away win or draw`:"Away sides are competitive in this fixture",
-     ip.has?"Odds suggest away side will not be beaten":""]));
+  P.push(mk("AWAY_WIN_OR_DRAW","Away Win or Draw (X2)",this.bl(hX2,(pDr+pAW)*100,r,ip.has?ip.aW+ip.dr:null,0,noise(sd,"X2",4),36,82),"Away team have enough quality to avoid defeat.",[!m.base?`${m.aW+m.dr} of ${m.n} H2H ended away win or draw`:"Away sides competitive"]));
 
-  // ═══ SECTION 9: GOALS MARKETS (Fix D) ═══
-  const lT=L.t;
-  const gc=(pP,hR,id,lo,hi)=>this.blend(hR*100,pP*100,rel*.30,null,0,noise(sd,id,5),lo,hi);
+  const lT=L.t,gc=(pP,hR,id,lo,hi)=>this.bl(hR*100,pP*100,r*.3,null,0,noise(sd,id,5),lo,hi);
+  P.push(mk("OVER_0.5","Over 0.5 Goals",clamp(Math.round(Po.ccdf(0,lT)*100+noise(sd,"O05",2)),82,97),"Almost every match produces at least one goal.",["Goals expected from both attacks"]));
+  const pO15=Po.ccdf(1,lT),hO15=m.base?.74:m.o15/t;
+  P.push(mk("OVER_1.5","Over 1.5 Goals",gc(pO15,hO15,"O15",55,93),lT>=2.5?"Both attacks in form — 2+ goals almost certain.":"Enough quality for at least two goals.",[!m.base?`${m.o15} of ${m.n} H2H had 2+ goals`:"Both teams finding the net"]));
+  const pO25=Po.ccdf(2,lT),hO25=m.base?.52:m.o25/t;
+  P.push(mk("OVER_2.5","Over 2.5 Goals",gc(pO25,hO25,"O25",34,88),lT>=3?"High-scoring record — three goals looks a minimum.":"Both attacks capable.",[!m.base?`${m.o25} of ${m.n} H2H had 3+ goals`:"Both attacks in good form"]));
+  const pO35=Po.ccdf(3,lT),hO35=m.base?.28:m.o35/t;
+  P.push(mk("OVER_3.5","Over 3.5 Goals",gc(pO35,hO35,"O35",22,76),lT>=3?"Both in excellent form — high-scoring game likely.":"Would need both sides firing.",[!m.base?`${m.o35} of ${m.n} H2H had 4+ goals`:"Attacking styles possible"]));
+  const pU25=Po.cdf(2,lT),hU25=m.base?.48:(t-m.o25)/t;
+  P.push(mk("UNDER_2.5","Under 2.5 Goals",gc(pU25,hU25,"U25",28,86),lT<2.2?"Defensively solid — tight, low-scoring affair.":"Defences likely to stay on top.",[!m.base?`${t-m.o25} of ${m.n} H2H had <3 goals`:"Defensively solid sides"]));
+  const pU35=Po.cdf(3,lT),hU35=m.base?.72:(t-m.o35)/t;
+  P.push(mk("UNDER_3.5","Under 3.5 Goals",gc(pU35,hU35,"U35",42,92),"Fewer than four goals — most common range.",[!m.base?`${t-m.o35} of ${m.n} H2H had ≤3 goals`:"Vast majority of matches end under this line"]));
+  P.push(mk("UNDER_4.5","Under 4.5 Goals",clamp(Math.round(Po.cdf(4,lT)*100+noise(sd,"U45",3)),68,96),"Fewer than five goals is an overwhelming favourite.",["Very few matches produce 5+ goals"]));
 
-  P.push(mk("OVER_0.5","Over 0.5 Goals",
-    clamp(Math.round(Po.ccdf(0,lT)*100+noise(sd,"OVER_05",2)),82,97),
-    "Almost every football match produces at least one goal — this is as close to a certainty as the game offers.",
-    ["Goals expected from both attacks"]));
+  const pBt=Po.pBt(L.h,L.a),hBt=m.base?.48:m.bt/t;
+  P.push(mk("BTTS_YES","Both Teams To Score - Yes",gc(pBt,hBt,"BT",36,88),L.h>=1.3&&L.a>=1?"Both have scoring threat — expect goals at both ends.":"Both sides scoring — BTTS is a strong play.",[!m.base?`${m.bt} of ${m.n} H2H saw both score`:"Both attacks scoring consistently"]));
+  P.push(mk("BTTS_NO","Both Teams To Score - No",gc(1-pBt,1-hBt,"BN",24,76),"At least one side likely to be kept quiet.",["Strong defensive records"]));
 
-  const pO15=Po.ccdf(1,lT), hO15=m.base?.74:m.o15/t;
-  P.push(mk("OVER_1.5","Over 1.5 Goals",gc(pO15,hO15,"OVER_15",55,93),
-    this.anOver15(m,L),
-    [!m.base?`${m.o15} of ${m.n} recent H2H matches had 2+ goals`:"Both teams have been finding the net regularly",
-     lT>=2.5?"Combined attacking threat suggests a busy game":""]));
+  const cs=(hg,ag,id,fl,cl)=>{const raw=Po.jp(hg,ag,L.h,L.a);return clamp(Math.floor(raw*280)+(r>=.5&&m.n>=5?noise(sd,id,2):0),fl,cl)};
+  const csA=(hg,ag)=>hg===ag&&hg===1?"Closely matched — 1-1 the most likely single scoreline.":hg>ag?`A ${hg}-${ag} home win — home side take control.`:`A ${hg}-${ag} away win — visitors are clinical.`;
+  P.push(mk("EXACT_1_1","Correct Score: 1-1",cs(1,1,"CS11",18,52),csA(1,1),["Even sides often settle for a share"]));
+  P.push(mk("EXACT_2_1_HOME","Correct Score: 2-1 (Home)",cs(2,1,"CS21",15,48),csA(2,1),["Most common winning margin"]));
+  P.push(mk("EXACT_3_1_HOME","Correct Score: 3-1 (Home)",cs(3,1,"CS31",12,40),csA(3,1),["Home dominance could pull clear"]));
+  P.push(mk("EXACT_0_1_AWAY","Correct Score: 0-1 (Away)",cs(0,1,"CS01",12,42),csA(0,1),["Away side grind out a result"]));
+  P.push(mk("EXACT_0_2_AWAY","Correct Score: 0-2 (Away)",cs(0,2,"CS02",10,36),csA(0,2),["Clinical away display"]));
+  P.push(mk("EXACT_0_3_AWAY","Correct Score: 0-3 (Away)",cs(0,3,"CS03",10,28),csA(0,3),["Long-shot but not impossible"]));
 
-  const pO25=Po.ccdf(2,lT), hO25=m.base?.52:m.o25/t;
-  P.push(mk("OVER_2.5","Over 2.5 Goals",gc(pO25,hO25,"OVER_25",34,88),
-    this.anOver25(m,L),
-    [!m.base?`${m.o25} of ${m.n} H2H matches had 3+ goals`:"High-scoring H2H record and both attacks in good form",
-     L.h>=1.4&&L.a>=1.0?"Both sides capable of scoring 2+":""]));
+  const htH=L.h*.45,htA=L.a*.45,pHtH=Po.pHW(htH,htA),pHtA=Po.pAW(htH,htA),pHtD=Po.pDr(htH,htA),pFH=Po.pHW(L.h,L.a),pFA=Po.pAW(L.h,L.a);
+  P.push(mk("HT_FT_HOME_HOME","HT/FT: Home/Home",this.bl(hHW,pHtH*pFH*100,r,ip.has?ip.hW*.6:null,0,noise(sd,"HH",6),16,65),"Home lead at break and see the game out.",["Leading at HT predicts FT result"]));
+  P.push(mk("HT_FT_DRAW_HOME","HT/FT: Draw/Home",this.bl((hHW+hDr)/2,pHtD*pFH*100,r,null,0,noise(sd,"DH",6),12,55),"All square at break — home find a way.",["Home sides improve after the break"]));
+  P.push(mk("HT_FT_AWAY_AWAY","HT/FT: Away/Away",this.bl(hAW,pHtA*pFA*100,r,ip.has?ip.aW*.6:null,0,noise(sd,"AA",6),12,60),"Away take control early and hold on.",["Away HT leaders convert well"]));
+  P.push(mk("HT_FT_DRAW_AWAY","HT/FT: Draw/Away",this.bl((hAW+hDr)/2,pHtD*pFA*100,r,null,0,noise(sd,"DA",6),10,50),"Away absorb pressure then strike.",["Counter-attacking sides thrive"]));
 
-  const pO35=Po.ccdf(3,lT), hO35=m.base?.28:m.o35/t;
-  P.push(mk("OVER_3.5","Over 3.5 Goals",gc(pO35,hO35,"OVER_35",22,76),
-    lT>=3.0?"Both attacks are in excellent form — a high-scoring, open game looks on the cards.":"A feast of goals would need both sides firing on all cylinders.",
-    [!m.base?`${m.o35} of ${m.n} H2H matches had 4+ goals`:"Attacking styles make a goal-fest possible",
-     lT>=3.0?"Attacking threat from both sides is significant":""]));
+  const pHS=1-Po.pmf(0,L.h),pAS=1-Po.pmf(0,L.a),hHS=m.base?.8:m.hS/t,hAS=m.base?.72:m.aS/t;
+  P.push(mk("HOME_OVER_0.5","Home Over 0.5 Goals",this.bl(hHS*100,pHS*100,r*.3,null,0,noise(sd,"HO5",4),60,94),"Home expected to score.",[!m.base?`${m.hS} of ${m.n} H2H — home scored`:"Home sides score in vast majority"]));
+  P.push(mk("HOME_OVER_1.5","Home Over 1.5 Goals",this.bl(clamp(m.hAvg,0,3)/3*100,Po.ccdf(1,L.h)*100,r*.3,null,0,noise(sd,"H15",5),28,80),"Home to score at least twice.",["Home attack capable of multi-goal haul"]));
+  P.push(mk("AWAY_OVER_0.5","Away Over 0.5 Goals",this.bl(hAS*100,pAS*100,r*.3,null,0,noise(sd,"AO5",4),54,92),"Away will get at least one.",[!m.base?`${m.aS} of ${m.n} H2H — away scored`:"Away attacks score in most matches"]));
+  P.push(mk("AWAY_OVER_1.5","Away Over 1.5 Goals",this.bl(clamp(m.aAvg,0,3)/3*100,Po.ccdf(1,L.a)*100,r*.3,null,0,noise(sd,"A15",5),22,75),"Away to bag two or more.",["Away attack capable on their day"]));
+  P.push(mk("HOME_CLEAN_SHEET","Home Clean Sheet",this.bl((m.base?.32:m.hC/t)*100,Po.pmf(0,L.a)*100,r*.3,null,0,noise(sd,"HC",5),22,78),"Home to keep a clean sheet.",["Home defences well-organised"]));
+  P.push(mk("AWAY_CLEAN_SHEET","Away Clean Sheet",this.bl((m.base?.22:m.aC/t)*100,Po.pmf(0,L.h)*100,r*.3,null,0,noise(sd,"AC",5),16,72),"Away clean sheet — tough but possible.",["Away can keep it tight"]));
 
-  const pU25=Po.cdf(2,lT), hU25=m.base?.48:(t-m.o25)/t;
-  P.push(mk("UNDER_2.5","Under 2.5 Goals",gc(pU25,hU25,"UNDER_25",28,86),
-    lT<2.2?"Defensively solid sides — this looks like a tight, low-scoring affair.":"A settled, organised match where defences are likely to stay on top.",
-    [!m.base?`${t-m.o25} of ${m.n} H2H matches had fewer than 3 goals`:"Defensively solid sides",
-     lT<2.0?"Neither attack is firing consistently":""]));
-
-  const pU35=Po.cdf(3,lT), hU35=m.base?.72:(t-m.o35)/t;
-  P.push(mk("UNDER_3.5","Under 3.5 Goals",gc(pU35,hU35,"UNDER_35",42,92),
-    "Fewer than four goals is far and away the most common scoreline range in football — this is a strong favourite.",
-    [!m.base?`${t-m.o35} of ${m.n} H2H games had 3 goals or fewer`:"Defensively solid sides — unlikely to run away with goals",
-     "The vast majority of football matches end under this line"]));
-
-  P.push(mk("UNDER_4.5","Under 4.5 Goals",
-    clamp(Math.round(Po.cdf(4,lT)*100+noise(sd,"UNDER_45",3)),68,96),
-    "Fewer than five goals is an overwhelming statistical favourite in any football match.",
-    ["Extremely high probability market","Very few matches ever produce five or more goals"]));
-
-  const pBt=Po.pBt(L.h,L.a), hBt=m.base?.48:m.bt/t;
-  P.push(mk("BTTS_YES","Both Teams To Score - Yes",gc(pBt,hBt,"BTTS_YES",36,88),
-    this.anBtts(m,L),
-    [!m.base?`${m.bt} of ${m.n} H2H matches saw both teams score`:"Both attacks have been scoring consistently — expect goals at both ends",
-     L.h>=1.2&&L.a>=.9?"Both defences have been leaking goals":""]));
-
-  P.push(mk("BTTS_NO","Both Teams To Score - No",gc(1-pBt,1-hBt,"BTTS_NO",24,76),
-    "At least one side is likely to be kept quiet — one team's defensive record makes a clean sheet realistic.",
-    [!m.base?`${m.hC+m.aC} clean sheets across ${m.n} H2H games`:"Strong defensive records on both sides"]));
-
-  // ═══ SECTION 10: CORRECT SCORE (Fix E) ═══
-  const cs=(hg,ag,id,fl,cl)=>{
-    const raw=Po.jp(hg,ag,L.h,L.a);
-    const base=Math.floor(raw*280);
-    const nd=rel>=.5&&m.n>=5?noise(sd,id,2):0;
-    return clamp(base+nd,fl,cl);
-  };
-
-  P.push(mk("EXACT_1_1","Correct Score: 1-1",cs(1,1,"CS_11",18,52),this.anCS(1,1),
-    ["Closely matched teams with a draw the most likely single outcome",
-     !m.base&&m.dr>0?`${m.dr} draws in ${m.n} H2H games`:"Even sides often settle for a share"]));
-  P.push(mk("EXACT_2_1_HOME","Correct Score: 2-1 (Home)",cs(2,1,"CS_21H",15,48),this.anCS(2,1),
-    ["A narrow home win — the most common winning margin in football",
-     !m.base?`Home side win ${m.hW} of ${m.n} H2H games`:"Home advantage makes a tight win likely"]));
-  P.push(mk("EXACT_3_1_HOME","Correct Score: 3-1 (Home)",cs(3,1,"CS_31H",12,40),this.anCS(3,1),
-    ["Home side in dominant form could pull clear",
-     L.h>=1.8?"Home attack averaging strong numbers this season":"A comfortable home win remains possible"]));
-  P.push(mk("EXACT_0_1_AWAY","Correct Score: 0-1 (Away)",cs(0,1,"CS_01A",12,42),this.anCS(0,1),
-    ["Away side grind out a result with a single goal",
-     !m.base&&m.aW>0?`Away side win ${m.aW} of ${m.n} H2H games`:"Away resilience can pay off here"]));
-  P.push(mk("EXACT_0_2_AWAY","Correct Score: 0-2 (Away)",cs(0,2,"CS_02A",10,36),this.anCS(0,2),
-    ["Away team shuts out the home side and wins with two goals",
-     L.a>=1.5?"Away attack has been in fine scoring form":"A clinical away display makes this possible"]));
-  P.push(mk("EXACT_0_3_AWAY","Correct Score: 0-3 (Away)",cs(0,3,"CS_03A",10,28),this.anCS(0,3),
-    ["Away team dominate completely — a long-shot but not impossible",
-     L.a>=1.8?"Away attack one of the most prolific around":"Away side are capable of a big performance"]));
-
-  // ═══ SECTION 11: HT/FT ═══
-  const htH=L.h*.45, htA=L.a*.45;
-  const pHtHW=Po.pHW(htH,htA), pHtAW=Po.pAW(htH,htA), pHtDr=Po.pDr(htH,htA);
-  const pFtHW=Po.pHW(L.h,L.a), pFtAW=Po.pAW(L.h,L.a);
-
-  P.push(mk("HT_FT_HOME_HOME","HT/FT: Home / Home",
-    this.blend(hHW,pHtHW*pFtHW*100,rel,ip.has?ip.hW*.6:null,0,noise(sd,"HT_FT_HH",6),16,65),
-    "Home side lead at the break and see the game out — the most common HT/FT combination for stronger home teams.",
-    [!m.base?`Home win ${m.hW}/${m.n} H2H games`:"Home advantage applies across both halves",
-     "Leading at half-time is a strong predictor of full-time result"]));
-  P.push(mk("HT_FT_DRAW_HOME","HT/FT: Draw / Home",
-    this.blend((hHW+hDr)/2,pHtDr*pFtHW*100,rel,null,0,noise(sd,"HT_FT_DH",6),12,55),
-    "All square at the break — but the home side finds a way to win in the second half. A trickier call but it happens regularly.",
-    ["Home team have quality to turn it around after a slow start",
-     !m.base&&m.dr>0?`${m.dr} draws in H2H — home side could nick it late`:"Home sides often improve after the break"]));
-  P.push(mk("HT_FT_AWAY_AWAY","HT/FT: Away / Away",
-    this.blend(hAW,pHtAW*pFtAW*100,rel,ip.has?ip.aW*.6:null,0,noise(sd,"HT_FT_AA",6),12,60),
-    "Away side take control early and hold on — suited to a well-organised away team with a clear game plan.",
-    [!m.base?`Away win ${m.aW}/${m.n} H2H games`:"Away side are the more organised team here",
-     "Away teams who lead at half-time convert that into three points at a high rate"]));
-  P.push(mk("HT_FT_DRAW_AWAY","HT/FT: Draw / Away",
-    this.blend((hAW+hDr)/2,pHtDr*pFtAW*100,rel,null,0,noise(sd,"HT_FT_DA",6),10,50),
-    "The away side absorb pressure in the first half and then strike after the break — a popular result for counter-attacking sides.",
-    ["Away team carry a clinical edge in the second half",
-     !m.base&&m.aW>0?"Away side have shown they can win tough games":"Away teams who stay patient often get their reward late"]));
-
-  // ═══ SECTION 12: SCORER / TEAM GOALS ═══
-  const pHS=1-Po.pmf(0,L.h), pAS=1-Po.pmf(0,L.a);
-  const pHS15=Po.ccdf(1,L.h), pAS15=Po.ccdf(1,L.a);
-  const hHS=m.base?.8:m.hS/t, hAS=m.base?.72:m.aS/t;
-
-  P.push(mk("HOME_OVER_0.5","Home Team Over 0.5 Goals",
-    this.blend(hHS*100,pHS*100,rel*.30,null,0,noise(sd,"HOME_O05",4),60,94),
-    "Home team are expected to get on the scoresheet — their attack has been productive and they have home support behind them.",
-    [!m.base?`${m.hS} of ${m.n} H2H games — home team scored`:"Home sides score in the vast majority of matches",
-     L.h>=1.3?"Home attack averaging over a goal per game":""]));
-  P.push(mk("HOME_OVER_1.5","Home Team Over 1.5 Goals",
-    this.blend(clamp(m.hAvg,0,3)/3*100,pHS15*100,rel*.30,null,0,noise(sd,"HOME_O15",5),28,80),
-    "Home side to score at least twice — requiring consistent attacking output from the home attack.",
-    [!m.base?`Home side average ${fmt1(m.hAvg)} goals in H2H games`:"Home attack capable of a multi-goal haul",
-     L.h>=1.8?"Home attack has been one of the most potent around":""]));
-  P.push(mk("AWAY_OVER_0.5","Away Team Over 0.5 Goals",
-    this.blend(hAS*100,pAS*100,rel*.30,null,0,noise(sd,"AWAY_O05",4),54,92),
-    "Away side will get at least one goal — they carry enough of a threat to trouble the home defence.",
-    [!m.base?`${m.aS} of ${m.n} H2H games — away team scored`:"Away attacks score in most matches",
-     L.a>=1.0?"Away attack has been consistent in front of goal":""]));
-  P.push(mk("AWAY_OVER_1.5","Away Team Over 1.5 Goals",
-    this.blend(clamp(m.aAvg,0,3)/3*100,pAS15*100,rel*.30,null,0,noise(sd,"AWAY_O15",5),22,75),
-    "Away side to bag two or more — a taller order on the road but possible for in-form attacks.",
-    [!m.base?`Away side average ${fmt1(m.aAvg)} goals in H2H games`:"Away attack capable on their day",
-     L.a>=1.6?"Away attack in strong scoring form":""]));
-
-  const pHCS=Po.pmf(0,L.a), hHCS=m.base?.32:m.hC/t;
-  P.push(mk("HOME_CLEAN_SHEET","Home Clean Sheet",
-    this.blend(hHCS*100,pHCS*100,rel*.30,null,0,noise(sd,"HOME_CS",5),22,78),
-    "Home side to keep a clean sheet — their defence has been solid and the away attack may struggle to break them down.",
-    [!m.base?`${m.hC} clean sheets in ${m.n} H2H games`:"Home defences tend to be well-organised",
-     L.a<1.0?"Away attack has been below-par recently":""]));
-  const pACS=Po.pmf(0,L.h), hACS=m.base?.22:m.aC/t;
-  P.push(mk("AWAY_CLEAN_SHEET","Away Clean Sheet",
-    this.blend(hACS*100,pACS*100,rel*.30,null,0,noise(sd,"AWAY_CS",5),16,72),
-    "Away side to keep a clean sheet — a tougher ask on the road but possible for well-drilled defences.",
-    [!m.base?`${m.aC} away clean sheets in ${m.n} H2H games`:"Away sides can keep it tight",
-     L.h<1.2?"Home attack has been misfiring":""]));
-
-  // ═══ SECTION 13: COMBINED MARKETS ═══
-  const pBt2=Po.pBt(L.h,L.a), pO252=Po.ccdf(2,lT);
-  const hHW2=m.base?.45:m.hW/t, hAW2=m.base?.32:m.aW/t;
-  const hBt2=m.base?.48:m.bt/t, hO252=m.base?.52:m.o25/t;
-
-  P.push(mk("HOME_WIN_BTTS","Home Win & BTTS",
-    this.blend(hHW2*hBt2*100,pHW*pBt2*100,rel,ip.has?ip.hW*.55:null,0,noise(sd,"HW_BTTS",5),34,76),
-    "Home team win while both sides get on the scoresheet — an action-packed outcome where the home side edge ahead but the away team hit back.",
-    [!m.base?`Home win in ${m.hW}/${m.n} H2H meetings`:"Home advantage is real here",
-     !m.base?`Both teams scored in ${m.bt}/${m.n} games`:"Both attacks capable of scoring"]));
-  P.push(mk("AWAY_WIN_BTTS","Away Win & BTTS",
-    this.blend(hAW2*hBt2*100,pAW*pBt2*100,rel,ip.has?ip.aW*.55:null,0,noise(sd,"AW_BTTS",5),28,70),
-    "Away side collect the win but the home team score a consolation — a tense finish where the away side hang on.",
-    [!m.base?`Away win in ${m.aW}/${m.n} H2H games`:"Away side carry a genuine threat",
-     !m.base?`Both teams scored in ${m.bt}/${m.n} games`:"Both sides capable of getting on the scoresheet"]));
-  P.push(mk("HOME_WIN_OVER_2.5","Home Win & Over 2.5 Goals",
-    this.blend(hHW2*hO252*100,pHW*pO252*100,rel,ip.has?ip.hW*.6:null,0,noise(sd,"HW_O25",5),30,74),
-    "Home team win in a game that produces plenty of goals — an attacking contest where the home side come out on top.",
-    [!m.base?`Home side win ${m.hW}/${m.n} H2H — often in high-scoring games`:"Home dominance in an open game looks likely",
-     lT>=2.5?"Both teams expected to contribute goals":""]));
-  P.push(mk("AWAY_WIN_OVER_2.5","Away Win & Over 2.5 Goals",
-    this.blend(hAW2*hO252*100,pAW*pO252*100,rel,ip.has?ip.aW*.6:null,0,noise(sd,"AW_O25",5),24,70),
-    "Away team come away with three points in a goal-filled encounter — away form suggests they can expose this home side.",
-    [!m.base?`Away side win ${m.aW}/${m.n} H2H games`:"Away strength in attack",
-     lT>=2.5?"High-scoring H2H record and both attacks in good form":""]));
+  const hHW2=m.base?.45:m.hW/t,hAW2=m.base?.32:m.aW/t,hBt2=m.base?.48:m.bt/t,hO252=m.base?.52:m.o25/t;
+  P.push(mk("HOME_WIN_BTTS","Home Win & BTTS",this.bl(hHW2*hBt2*100,pHW*Po.pBt(L.h,L.a)*100,r,ip.has?ip.hW*.55:null,0,noise(sd,"HWB",5),34,76),"Home win while both score.",["Both attacks capable"]));
+  P.push(mk("AWAY_WIN_BTTS","Away Win & BTTS",this.bl(hAW2*hBt2*100,pAW*Po.pBt(L.h,L.a)*100,r,ip.has?ip.aW*.55:null,0,noise(sd,"AWB",5),28,70),"Away win but home score too.",["Both sides can score"]));
+  P.push(mk("HOME_WIN_OVER_2.5","Home Win & Over 2.5",this.bl(hHW2*hO252*100,pHW*Po.ccdf(2,lT)*100,r,ip.has?ip.hW*.6:null,0,noise(sd,"HWO",5),30,74),"Home win with plenty of goals.",["Home dominance in open game"]));
+  P.push(mk("AWAY_WIN_OVER_2.5","Away Win & Over 2.5",this.bl(hAW2*hO252*100,pAW*Po.ccdf(2,lT)*100,r,ip.has?ip.aW*.6:null,0,noise(sd,"AWO",5),24,70),"Away win in a goal-filled game.",["Away strength in attack"]));
 
   let pW1=0;for(let a=0;a<=8;a++)pW1+=Po.jp(a+1,a,L.h,L.a);
-  P.push(mk("HOME_WIN_BY_1","Home Win by 1 Goal",
-    this.blend(hHW2*100*.6,pW1*100,rel,null,0,noise(sd,"HW_1",5),28,68),
-    "A tight home win by a single goal — close margins are by far the most common winning distance in football.",
-    ["One-goal margins are the most frequent result in professional football",!m.base?"H2H history shows close encounters":""]));
+  P.push(mk("HOME_WIN_BY_1","Home Win by 1",this.bl(hHW2*100*.6,pW1*100,r,null,0,noise(sd,"W1",5),28,68),"Tight home win by one goal.",["One-goal margins most frequent"]));
   let pW2=0;for(let a=0;a<=6;a++)for(let hh=a+2;hh<=8;hh++)pW2+=Po.jp(hh,a,L.h,L.a);
-  P.push(mk("HOME_WIN_BY_2_PLUS","Home Win by 2+ Goals",
-    this.blend(hHW2*100*.4,pW2*100,rel,null,0,noise(sd,"HW_2",5),18,64),
-    "Home side to win comfortably — a bigger winning margin that suggests genuine quality gap in this fixture.",
-    [L.h>=1.8?"Home attack averaging strong numbers":"Home dominance would need to be at its best",
-     !m.base&&m.hAvg>=2.0?"Home side score heavily in H2H meetings":""]));
+  P.push(mk("HOME_WIN_BY_2_PLUS","Home Win by 2+",this.bl(hHW2*100*.4,pW2*100,r,null,0,noise(sd,"W2",5),18,64),"Home to win comfortably.",["Quality gap needed"]));
   let pA1=0;for(let hh=0;hh<=8;hh++)pA1+=Po.jp(hh,hh+1,L.h,L.a);
-  P.push(mk("AWAY_WIN_BY_1","Away Win by 1 Goal",
-    this.blend(hAW2*100*.6,pA1*100,rel,null,0,noise(sd,"AW_1",5),22,64),
-    "Away side nick it with a single goal to the good — a disciplined performance on the road.",
-    ["Close away wins are common for organised sides",
-     !m.base&&m.aW>0?"Away side have proven they can grind out results":""]));
+  P.push(mk("AWAY_WIN_BY_1","Away Win by 1",this.bl(hAW2*100*.6,pA1*100,r,null,0,noise(sd,"A1",5),22,64),"Away nick it by one.",["Close away wins common"]));
   let pA2=0;for(let hh=0;hh<=6;hh++)for(let a=hh+2;a<=8;a++)pA2+=Po.jp(hh,a,L.h,L.a);
-  P.push(mk("AWAY_WIN_BY_2_PLUS","Away Win by 2+ Goals",
-    this.blend(hAW2*100*.4,pA2*100,rel,null,0,noise(sd,"AW_2",5),14,58),
-    "Away team to win by two or more — a big away performance that would signal their superiority in this match-up.",
-    [L.a>=1.7?"Away attack has been prolific on the road":"Would require a dominant away display",
-     !m.base&&m.aAvg>=1.8?"Away side score well in H2H games":""]));
+  P.push(mk("AWAY_WIN_BY_2_PLUS","Away Win by 2+",this.bl(hAW2*100*.4,pA2*100,r,null,0,noise(sd,"A2",5),14,58),"Away to win by two or more.",["Dominant away display required"]));
 
-  // ═══ SECTION 14: MEDIUM MARKETS (complete) ═══
-  const htL2=L.h*.45+L.a*.45, shL=L.h*.55+L.a*.55;
+  const htL2=L.h*.45+L.a*.45,shL=L.h*.55+L.a*.55;
+  P.push(mk("FIRST_HALF_OVER_0.5","1H Over 0.5",clamp(Math.round((1-Po.pmf(0,htL2))*100+noise(sd,"1H5",5)),52,82),"At least one first-half goal.",["Fast starts typical"]));
+  P.push(mk("FIRST_HALF_OVER_1.5","1H Over 1.5",clamp(Math.round(Po.ccdf(1,htL2)*100+noise(sd,"1H15",5)),28,68),"Two or more first-half goals.",["Attacking starts"]));
+  P.push(mk("SECOND_HALF_OVER_0.5","2H Over 0.5",clamp(Math.round((1-Po.pmf(0,shL))*100+noise(sd,"2H5",4)),62,88),"At least one second-half goal.",["Teams open up late"]));
+  P.push(mk("GOAL_RANGE_0_1","Goals 0-1",clamp(Math.round(Po.cdf(1,lT)*100+noise(sd,"R01",5)),18,68),"Very low-scoring — defences dominate.",["Defensive sides"]));
+  P.push(mk("GOAL_RANGE_2_3","Goals 2-3",clamp(Math.round((Po.cdf(3,lT)-Po.cdf(1,lT))*100+noise(sd,"R23",5)),36,74),"Most common scoring band.",["Competitive matches"]));
+  P.push(mk("GOAL_RANGE_4_PLUS","Goals 4+",clamp(Math.round(Po.ccdf(3,lT)*100+noise(sd,"R4",5)),14,70),"Four or more goals — a goal-fest.",["High-scoring trend"]));
+  P.push(mk("OVER_8.5_CORNERS","Over 8.5 Corners",clamp(62+noise(sd,"CRN",6),52,74),"Nine or more corners.",["High-tempo football"]));
+  P.push(mk("OVER_3.5_CARDS","Over 3.5 Cards",clamp(55+noise(sd,"CRD",7),46,68),"Four or more cards.",["Physical match expected"]));
 
-  P.push(mk("FIRST_HALF_OVER_0.5","First Half Over 0.5 Goals",
-    clamp(Math.round((1-Po.pmf(0,htL2))*100+noise(sd,"1H_O05",5)),52,82),
-    "At least one goal before half-time — most attacking teams strike early.",["Fast starts are typical in high-tempo matches"]));
-  P.push(mk("FIRST_HALF_OVER_1.5","First Half Over 1.5 Goals",
-    clamp(Math.round(Po.ccdf(1,htL2)*100+noise(sd,"1H_O15",5)),28,68),
-    "Two or more first-half goals — requires both attacks to be on the front foot from the off.",["Attacking starts suit both these teams"]));
-  P.push(mk("SECOND_HALF_OVER_0.5","Second Half Over 0.5 Goals",
-    clamp(Math.round((1-Po.pmf(0,shL))*100+noise(sd,"2H_O05",4)),62,88),
-    "At least one second-half goal — teams push forward for the win, creating space in the final stages.",["Teams open up in the second half chasing goals"]));
-  P.push(mk("SECOND_HALF_OVER_1.5","Second Half Over 1.5 Goals",
-    clamp(Math.round(Po.ccdf(1,shL)*100+noise(sd,"2H_O15",5)),34,74),
-    "Two or more second-half goals — end-to-end football as both sides push for the decisive moment.",["Late goals are common as teams commit forward"]));
-  P.push(mk("GOAL_RANGE_0_1","Total Goals 0-1",
-    clamp(Math.round(Po.cdf(1,lT)*100+noise(sd,"RANGE_01",5)),18,68),
-    "A very low-scoring, tight match where defences dominate — suits conservative game plans.",
-    [!m.base&&m.avg<1.8?`H2H average of ${fmt1(m.avg)} goals per game`:"Defensive sides make a low-scoring game possible"]));
-  P.push(mk("GOAL_RANGE_2_3","Total Goals 2-3",
-    clamp(Math.round((Po.cdf(3,lT)-Po.cdf(1,lT))*100+noise(sd,"RANGE_23",5)),36,74),
-    "A moderate tally of two or three goals — the most common scoring band for a balanced football match.",
-    ["Two-to-three goals is the sweet spot for most competitive matches"]));
-  P.push(mk("GOAL_RANGE_4_PLUS","Total Goals 4+",
-    clamp(Math.round(Po.ccdf(3,lT)*100+noise(sd,"RANGE_4",5)),14,70),
-    "Four or more goals — a genuine goal-fest that needs both defences to be caught open.",
-    [!m.base&&m.avg>=3.0?`H2H average of ${fmt1(m.avg)} goals per game`:"High-scoring trend exists between these sides"]));
-  P.push(mk("OVER_8.5_CORNERS","Over 8.5 Corners",
-    clamp(62+noise(sd,"CORNERS",6),52,74),
-    "Nine or more corners — attacking sides generate plenty of set-piece opportunities.",
-    ["High-tempo, attacking football produces corner counts","Both teams like to attack wide"]));
-  P.push(mk("OVER_3.5_CARDS","Over 3.5 Cards",
-    clamp(55+noise(sd,"CARDS",7),46,68),
-    "Four or more cards in this match — a feisty, competitive encounter where the referee is kept busy.",
-    ["Physical, competitive match is expected","Referee may have a low foul threshold"]));
-
-  // ═══ SECTION 15: LOW CONFIDENCE / TIMING MARKETS (complete) ═══
-  const lo=(id,nm,b,rng,lo2,hi2,an,re)=>mk(id,nm,clamp(b+noise(sd,id,rng),lo2,hi2),an,re);
-
-  P.push(lo("EARLY_GOAL_0_15","Goal in First 15 Minutes",45,8,32,55,
-    "A goal inside the first quarter of an hour — for sides with fast-starting forwards.",
-    ["Some attacks are dangerous from the first whistle"]));
-  P.push(lo("LATE_GOAL_75_PLUS","Goal After 75 Minutes",48,6,38,58,
-    "Late drama as teams chase the game — a common occurrence when a side needs a result.",
-    ["Teams push men forward in the closing stages","Space opens up for counter-attacks"]));
-  P.push(lo("HOME_SCORE_FIRST","Home Team Scores First",52,6,42,62,
-    "Home side draw first blood — home advantage often means they start on the front foot.",
-    ["Home crowd lifts the team in the opening exchanges","Home advantage is real in the early stages"]));
-  P.push(lo("AWAY_SCORE_FIRST","Away Team Scores First",46,6,36,56,
-    "Away team catch the home side cold and strike first — counter-attacking sides love this approach.",
-    ["Away teams often sit deep and catch the home side on the break"]));
-  P.push(lo("GOAL_BOTH_HALVES","Goal in Both Halves",50,6,40,62,
-    "Goals spread across both halves — suggests an open, flowing game rather than a dead-rubber.",
-    ["Consistently goal-active sides score in both halves"]));
-  P.push(lo("COMEBACK_POSSIBLE","Comeback Win Possible",42,8,30,52,
-    "A team coming from behind to win — rare but the strongest indicator of squad depth.",
-    ["Strong squad depth can turn games around","Don't write off this team at half-time"]));
-  P.push(lo("PENALTY_AWARDED","Penalty Awarded",38,8,28,50,
-    "A penalty kick awarded in this match — attacking play in the box increases the probability.",
-    ["Both sides attack in dangerous areas","Penalties occur in roughly a third of top-level matches"]));
-  P.push(lo("RED_CARD","Red Card Shown",32,8,22,44,
-    "A player receives a red card — higher probability in tense, high-stakes matches.",
-    ["Physical match expected","Referee likely to clamp down on rough challenges"]));
-  P.push(lo("HIGH_TEMPO_MATCH","High Tempo Match",46,7,36,58,
-    "A fast-paced, end-to-end encounter — both sides like to press high and play with intensity.",
-    ["Both teams favour an attacking, high-press style"]));
-  P.push(lo("DEFENSIVE_BATTLE","Defensive Battle",42,8,30,52,
-    "Both sides defend deep and make it difficult — the game is settled by the finest of margins.",
-    ["Risk-averse approach from one or both sides","Neither team wants to open up and get punished"]));
-  P.push(lo("MANY_SHOTS","Over 20 Total Shots",48,7,38,60,
-    "More than 20 shots between both teams — an attacking match with both sides looking to create.",
-    ["High-tempo attacking game expected from both sides"]));
-  P.push(lo("SUBSTITUTION_IMPACT","Substitute Makes Impact",42,8,30,54,
-    "A substitution directly changes the game — common when managers gamble for the winning goal.",
-    ["Bench depth and tactical changes often decide tight games"]));
-
+  const lo=(id,nm,b,rng,l2,h2,an,re)=>mk(id,nm,clamp(b+noise(sd,id,rng),l2,h2),an,re);
+  P.push(lo("EARLY_GOAL_0_15","Goal First 15 Min",45,8,32,55,"Goal inside the first quarter.",["Fast-starting forwards"]));
+  P.push(lo("LATE_GOAL_75_PLUS","Goal After 75 Min",48,6,38,58,"Late drama as teams chase the game.",["Teams push forward late"]));
+  P.push(lo("HOME_SCORE_FIRST","Home Scores First",52,6,42,62,"Home side draw first blood.",["Home advantage early"]));
+  P.push(lo("AWAY_SCORE_FIRST","Away Scores First",46,6,36,56,"Away catch home cold.",["Counter-attacks"]));
+  P.push(lo("GOAL_BOTH_HALVES","Goal Both Halves",50,6,40,62,"Goals across both halves.",["Goal-active sides"]));
+  P.push(lo("COMEBACK_POSSIBLE","Comeback Possible",42,8,30,52,"A team coming from behind to win.",["Squad depth"]));
+  P.push(lo("PENALTY_AWARDED","Penalty Awarded",38,8,28,50,"Penalty kick in this match.",["Attacking play in the box"]));
+  P.push(lo("RED_CARD","Red Card",32,8,22,44,"A red card shown.",["Tense match expected"]));
   return P;
 },
 
-// ═══ FILTER FOR CATEGORY (signature preserved) ═══
 filter(cat,pool,dMap){
-  const f=CF[cat]; if(!f) return [];
-  const used=new Set();
-  const cands=pool.map(m2=>{
-    const ps=this.gen(m2,dMap[m2.id])
-      .filter(p=>f.ids.has(p.id)&&p.confidence>=f.min)
-      .sort((a,b)=>b.confidence-a.confidence);
-    return ps.length?{match:m2,ranked:ps.map(p=>({...p,matchItem:m2}))}:null;
-  }).filter(Boolean).sort((a,b)=>b.ranked[0].confidence-a.ranked[0].confidence);
-  const res=[];
-  for(const mc of cands){
-    if(res.length>=f.n)break;
-    const ch=mc.ranked.find(p=>!used.has(p.id))||mc.ranked[0];
-    res.push(ch); used.add(ch.id);
-  }
-  return res;
+  const f=CF[cat];if(!f)return[];const used=new Set();
+  const cands=pool.map(m2=>{const ps=this.gen(m2,dMap[m2.id]).filter(p=>f.ids.has(p.id)&&p.confidence>=f.min).sort((a,b)=>b.confidence-a.confidence);return ps.length?{match:m2,ranked:ps.map(p=>({...p,matchItem:m2}))}:null}).filter(Boolean).sort((a,b)=>b.ranked[0].confidence-a.ranked[0].confidence);
+  const res=[];for(const mc of cands){if(res.length>=f.n)break;const ch=mc.ranked.find(p=>!used.has(p.id))||mc.ranked[0];res.push(ch);used.add(ch.id)}return res;
 }
-}; // end PE
+};
 
 // ═══════════════════════════════════════════════════════════
-// §8  UI
+// §9  UI
 // ═══════════════════════════════════════════════════════════
 function dispDate(d){
   const today=new Date();today.setHours(0,0,0,0);const c=new Date(d);c.setHours(0,0,0,0);
@@ -709,40 +711,48 @@ function dispDate(d){
   document.getElementById('dDay').textContent=lbl;
   document.getElementById('dFull').textContent=d.toLocaleDateString('en',{day:'numeric',month:'long',year:'numeric'});
 }
-function chgDate(off){curDate.setDate(curDate.getDate()+off);dispDate(curDate);load()}
+
+function chgDate(off){
+  curDate.setDate(curDate.getDate()+off);
+  dispDate(curDate);
+  loadForDate();
+}
+
+async function loadForDate(force=false){
+  const main=document.getElementById('main');
+  main.innerHTML='<div class="ld"><div class="sp"></div><p>Loading predictions…</p></div>';
+  showMeta(null);
+  bundle=await loadBundleForDate(curDate,force);
+  predC={};
+  if(!bundle||!bundle.matches.length){main.innerHTML='<div class="em"><div class="ic">📡</div><p>No data available.<br>Check your connection.</p><button onclick="loadForDate(true)">Retry</button></div>';return}
+  showMeta(bundle.meta);updStatus();render();
+}
+
 function buildTabs(){
   const el=document.getElementById('tabs');el.innerHTML='';
   for(const[k,f]of Object.entries(CF)){
-    const b=document.createElement('button');
-    b.className='cb'+(k===curCat?' a':'');
+    const b=document.createElement('button');b.className='cb'+(k===curCat?' a':'');
     b.innerHTML=(CL[k]||k)+(f.v?' <span class="vb">VIP</span>':'');
     b.onclick=()=>{curCat=k;document.querySelectorAll('.cb').forEach(x=>x.classList.remove('a'));b.classList.add('a');render()};
     el.appendChild(b);
   }
 }
+
 function showMeta(meta){
   const el=document.getElementById('metaBar');
   if(!meta){el.style.display='none';return}
   el.style.display='flex';
   el.innerHTML=`<div class="mi">⚽ <b>${meta.totalMatches||0}</b> matches</div><div class="mi">📊 <b>${meta.statsLoaded||0}</b> with stats</div><div class="mi">🔋 <b>${meta.readiness||0}%</b> ready</div>`;
 }
-async function load(force=false){
-  const main=document.getElementById('main');
-  main.innerHTML='<div class="ld"><div class="sp"></div><p>Loading predictions…</p></div>';
-  showMeta(null);
-  bundle=await loadBundle(curDate,force);
-  predC={};
-  if(!bundle||!bundle.matches.length){main.innerHTML='<div class="em"><div class="ic">📡</div><p>No data available for this date.<br>Check your connection and try again.</p><button onclick="load(true)">Retry</button></div>';return}
-  showMeta(bundle.meta);updStatus();render();
-}
+
 function render(){
   const main=document.getElementById('main');
   if(!bundle||!bundle.matches.length){main.innerHTML='<div class="em"><div class="ic">⚽</div><p>No matches found.</p></div>';return}
   const f=CF[curCat],ds=fmtD(curDate),ck=curCat+'_'+ds;
-  if(!predC[ck]){const t0=performance.now();predC[ck]=PE.filter(curCat,bundle.matches,bundle.details);LOG.info(`Predictions: ${predC[ck].length} in ${Math.round(performance.now()-t0)}ms`)}
+  if(!predC[ck]){const t0=performance.now();predC[ck]=PE.filter(curCat,bundle.matches,bundle.details);LOG.info(`Preds: ${predC[ck].length} in ${Math.round(performance.now()-t0)}ms`)}
   const preds=predC[ck];
   let html=`<div class="sh"><h2>⚡ ${CL[curCat]||curCat} ${f.v?'<span class="vb" style="font-size:10px">VIP</span>':''}</h2><span class="cnt">${preds.length} tip${preds.length!==1?'s':''}</span></div>`;
-  if(!preds.length){html+='<div class="em"><div class="ic">🔍</div><p>No predictions meet criteria for this category today.</p></div>';main.innerHTML=html;return}
+  if(!preds.length){html+='<div class="em"><div class="ic">🔍</div><p>No predictions meet criteria today.</p></div>';main.innerHTML=html;return}
   for(let i=0;i<preds.length;i++){
     const pr=preds[i],mx=pr.matchItem||{};
     const home=mx.home?.name||mx.homeTeam?.name||mx.teams?.home?.name||'Home';
@@ -760,26 +770,61 @@ function render(){
   html+=`<div class="ci">⚡ Predictions generated offline • ${new Date().toLocaleTimeString()}</div>`;
   main.innerHTML=html;
 }
+
 function tog(id){const e=document.getElementById(id);if(e)e.classList.toggle('open')}
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000)}
 function updStatus(){const d=document.getElementById('sDot'),t=document.getElementById('sTxt');if(navigator.onLine){d.className='dot on';t.textContent='Online'}else{d.className='dot off';t.textContent='Offline'}}
+
 async function doRefresh(){
   document.getElementById('rBtn').classList.add('spin');
   Cache.reset();predC={};
   try{await fetch(`${API}/sync-fixtures`,{signal:AbortSignal.timeout(10000)});LOG.net('sync-fixtures ok')}catch(e){LOG.info('sync skip:'+e.message)}
-  await load(true);
+  await loadForDate(true);
   document.getElementById('rBtn').classList.remove('spin');
   toast('🔄 Data refreshed');
 }
 
 // ═══════════════════════════════════════════════════════════
-// §9  INIT
+// §10  INIT — Loading screen decision flow
 // ═══════════════════════════════════════════════════════════
-window.addEventListener('online',updStatus);window.addEventListener('offline',updStatus);
+window.addEventListener('online',updStatus);
+window.addEventListener('offline',updStatus);
+
 (async()=>{
   await Cache.init();
   if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>{});
-  dispDate(curDate);buildTabs();updStatus();load();
+  dispDate(curDate);
+  buildTabs();
+  updStatus();
+
+  // Decision: show loading screen or go straight to app?
+  const needsLoad=await LoadCtrl.needsLoading();
+
+  if(needsLoad){
+    // COLD START — show branded loading screen with 4 chunked steps
+    LOG.info('Cold start — showing loading screen');
+    LoadCtrl.show();
+    startLoading();
+  }else{
+    // WARM START — instant from cache, no loading screen
+    LOG.info('Warm start — loading from cache');
+    document.getElementById('loadScreen').classList.add('hidden');
+    document.getElementById('appContainer').classList.add('visible');
+    loadingComplete=true;
+
+    // Load data from cache silently
+    const ds=fmtD(curDate);
+    const raw=Cache.memGet('bundle:'+ds)||(await Cache.diskGet('bundle:'+ds));
+    bundle=parseBundle(raw);
+    if(bundle&&bundle.matches.length){
+      showMeta(bundle.meta);
+      render();
+    }else{
+      // Cache was valid but empty — fall back to loading screen
+      LoadCtrl.show();
+      startLoading();
+    }
+  }
 })();
 </script>
 </body>
