@@ -55,10 +55,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .dot.on{background:var(--accent);box-shadow:0 0 6px var(--accent)}.dot.off{background:var(--red);box-shadow:0 0 6px var(--red)}
 .rbtn{background:none;border:1px solid var(--border);color:var(--text2);width:30px;height:30px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:.2s;-webkit-tap-highlight-color:transparent}
 .rbtn:hover{border-color:var(--accent);color:var(--accent)}.rbtn.spin{animation:sp .8s linear infinite}
-.dn{background:var(--card);padding:12px 16px;display:flex;align-items:center;justify-content:center;gap:12px;border-bottom:1px solid var(--border)}
-.dn button{background:none;border:1px solid var(--border);color:var(--text);width:36px;height:36px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;transition:.2s;-webkit-tap-highlight-color:transparent}
-.dn button:active{border-color:var(--accent);color:var(--accent)}
-.dd{text-align:center;min-width:160px}.dd .d1{font-size:16px;font-weight:700}.dd .d2{font-size:11px;color:var(--text2);margin-top:2px}
+
+/* ═══ DATE BAR (display only, no buttons) ═══ */
+.date-bar{background:var(--card);padding:10px 16px;display:flex;align-items:center;justify-content:center;gap:8px;border-bottom:1px solid var(--border)}
+.date-bar .date-icon{font-size:16px}
+.date-bar .date-label{font-size:14px;font-weight:700;color:var(--accent)}
+.date-bar .date-full{font-size:12px;color:var(--text2);margin-left:4px}
+
+/* ═══ TABS ═══ */
 .cw{background:var(--card);border-bottom:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}.cw::-webkit-scrollbar{display:none}
 .cs{display:flex;padding:8px 12px;gap:6px;min-width:max-content}
 .cb{padding:8px 16px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--text2);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;transition:.2s;display:flex;align-items:center;gap:4px;-webkit-tap-highlight-color:transparent}
@@ -146,7 +150,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
     <h1>Predict<span>Pro</span></h1>
   </div>
   <div class="ls-tagline">AI-Powered Football Predictions</div>
-  <div class="ls-steps" id="lsSteps">
+  <div class="ls-steps">
     <div class="ls-step" id="ls1"><div class="ls-step-icon">1</div><div class="ls-step-text">Downloading today's matches…</div></div>
     <div class="ls-step" id="ls2"><div class="ls-step-icon">2</div><div class="ls-step-text">Loading match statistics…</div></div>
     <div class="ls-step" id="ls3"><div class="ls-step-icon">3</div><div class="ls-step-text">Generating predictions…</div></div>
@@ -160,35 +164,62 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 
 <!-- ═══ APP ═══ -->
 <div class="app-container" id="appContainer">
+
 <div class="hdr">
-  <div class="logo"><svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" stroke="#00c853" stroke-width="2"/><path d="M16 4a12 12 0 110 24 12 12 0 010-24zm0 3a9 9 0 100 18 9 9 0 000-18z" fill="#00c853" opacity=".3"/><path d="M10 16h12M16 10v12" stroke="#00c853" stroke-width="1.2" opacity=".5"/><circle cx="16" cy="16" r="3" fill="#00c853"/></svg><h1>Predict<span>Pro</span></h1></div>
-  <div class="hr"><span class="dot on" id="sDot"></span><span id="sTxt">Online</span><button class="rbtn" id="rBtn" onclick="doRefresh()" title="Refresh">↻</button></div>
+  <div class="logo">
+    <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" stroke="#00c853" stroke-width="2"/><path d="M16 4a12 12 0 110 24 12 12 0 010-24zm0 3a9 9 0 100 18 9 9 0 000-18z" fill="#00c853" opacity=".3"/><path d="M10 16h12M16 10v12" stroke="#00c853" stroke-width="1.2" opacity=".5"/><circle cx="16" cy="16" r="3" fill="#00c853"/></svg>
+    <h1>Predict<span>Pro</span></h1>
+  </div>
+  <div class="hr">
+    <span class="dot on" id="sDot"></span>
+    <span id="sTxt">Online</span>
+    <button class="rbtn" id="rBtn" onclick="doRefresh()" title="Refresh">↻</button>
+  </div>
 </div>
+
 <div class="log-bar" id="logBar">—</div>
-<div class="dn">
-  <button onclick="chgDate(-1)">‹</button>
-  <div class="dd"><div class="d1" id="dDay">Today</div><div class="d2" id="dFull"></div></div>
-  <button onclick="chgDate(1)">›</button>
+
+<!-- DATE BAR — display only, no navigation -->
+<div class="date-bar">
+  <span class="date-icon">📅</span>
+  <span class="date-label">Today</span>
+  <span class="date-full" id="todayDate"></span>
 </div>
+
 <div id="metaBar" class="meta-bar" style="display:none"></div>
 <div class="cw"><div class="cs" id="tabs"></div></div>
 <div class="mn" id="main"></div>
-<div class="ft"><p>⚽ PredictPro Football Betting Tips © 2025</p><p style="margin-top:6px">AI-powered predictions • Always bet responsibly</p></div>
+<div class="ft">
+  <p>⚽ PredictPro Football Betting Tips © 2025</p>
+  <p style="margin-top:6px">AI-powered predictions • Always bet responsibly</p>
 </div>
+
+</div><!-- end app-container -->
 
 <div class="toast" id="toast"></div>
 
 <script>
 // ═══════════════════════════════════════════════════════════
-// §1  CONFIG & STATE
+// §1  CONFIG — today only, no date navigation
 // ═══════════════════════════════════════════════════════════
 const API='https://football-ai-backend.ephesians2004.workers.dev';
 const DB_NAME='predictpro_db';const DB_VER=2;
-const TTL={FIX:24*36e5,DET:24*36e5,ODDS:2*36e5,PAST:7*24*36e5};
-let curDate=new Date(),curCat='DAILY_5PLUS',bundle=null,predC={};
+const TTL={FIX:24*36e5,DET:24*36e5,PAST:7*24*36e5};
+
+// LOCKED to today — never changes
+const TODAY=new Date();
+let curCat='DAILY_5PLUS';
+let bundle=null;
+let predC={};
 const MEM={bundles:new Map(),details:new Map()};
 const INFLIGHT=new Map();
-let lastPrefetchDate=null,loadingComplete=false;
+let lastPrefetchDate=null;
+let loadingComplete=false;
+let wrPeriod='7d';
+
+function todayStr(){return fmtD(TODAY)}
+function fmtD(d){return d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0')}
+function yesterdayStr(){const y=new Date(TODAY);y.setDate(y.getDate()-1);return fmtD(y)}
 
 // ═══════════════════════════════════════════════════════════
 // §2  LOGGING
@@ -202,7 +233,7 @@ const LOG={
 };
 
 // ═══════════════════════════════════════════════════════════
-// §3  3-LAYER CACHE (fixed refresh — no unnecessary resets)
+// §3  3-LAYER CACHE
 // ═══════════════════════════════════════════════════════════
 const Cache={
   db:null,
@@ -218,219 +249,130 @@ const Cache={
   async wrSet(k,v){if(!this.db)return;try{this.db.transaction('winrate','readwrite').objectStore('winrate').put(v,k)}catch(e){}},
   async wrGetAll(){if(!this.db)return[];return new Promise(ok=>{try{const rq=this.db.transaction('winrate','readonly').objectStore('winrate').getAll();rq.onsuccess=()=>ok(rq.result||[]);rq.onerror=()=>ok([])}catch(e){ok([])}})},
   async netFetch(u){if(INFLIGHT.has(u)){LOG.info('Dedup');return INFLIGHT.get(u)}const p=fetch(u,{signal:AbortSignal.timeout(20000)}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}).finally(()=>INFLIGHT.delete(u));INFLIGHT.set(u,p);return p},
-  async get(k,t,u){const m=this.memGet(k);if(m){LOG.mem(k);return m}const d=await this.diskGet(k);if(d){LOG.disk(k);this.memSet(k,d,t);return d}if(u){try{const n=await this.netFetch(u);LOG.net(k);this.memSet(k,n,t);await this.diskSet(k,n,t);return n}catch(e){LOG.stale(k+' net:'+e.message)}}const s=await this.diskGetStale(k);if(s){LOG.stale(k);this.memSet(k,s,t);return s}return null},
-  forceReset(){MEM.bundles.clear();MEM.details.clear();lastPrefetchDate=null;predC={};LOG.info('Force reset')}
+  async get(k,t,u){
+    const m=this.memGet(k);if(m){LOG.mem(k);return m}
+    const d=await this.diskGet(k);if(d){LOG.disk(k);this.memSet(k,d,t);return d}
+    if(u){try{const n=await this.netFetch(u);LOG.net(k);this.memSet(k,n,t);await this.diskSet(k,n,t);return n}catch(e){LOG.stale(k+' net:'+e.message)}}
+    const s=await this.diskGetStale(k);if(s){LOG.stale(k);this.memSet(k,s,t);return s}
+    return null;
+  }
 };
 
 // ═══════════════════════════════════════════════════════════
-// §4  WIN-RATE TRACKER
+// §4  WIN-RATE TRACKER (zero extra API calls)
 // ═══════════════════════════════════════════════════════════
 const WinRate={
-  // Store prediction results: { date, category, predictions: [{id,matchId,market,confidence,result:'W'|'L'|'P'}] }
   async recordPredictions(date,category,predictions){
     const key=`${date}_${category}`;
-    const record={date,category,ts:Date.now(),predictions:predictions.map(p=>({
-      id:p.id,matchId:p.matchItem?.id||'',market:p.name,confidence:p.confidence,result:'P' // P=pending
-    }))};
-    await Cache.wrSet(key,record);
+    await Cache.wrSet(key,{date,category,ts:Date.now(),predictions:predictions.map(p=>({
+      id:p.id,matchId:p.matchItem?.id||'',market:p.name,confidence:p.confidence,result:'P'
+    }))});
   },
 
-  // Evaluate results against actual match outcomes
   async evaluateDay(date,bundleData){
     if(!bundleData||!bundleData.matches)return;
-    const matches=bundleData.matches;
-    // Build results map: matchId → {homeScore, awayScore}
     const results={};
-    for(const m of matches){
+    for(const m of bundleData.matches){
       const hs=m.score?.home??m.homeScore??m.goals?.home??m.result?.home??null;
       const as2=m.score?.away??m.awayScore??m.goals?.away??m.result?.away??null;
       if(hs!==null&&as2!==null)results[m.id]={h:hs,a:as2};
     }
     if(!Object.keys(results).length)return;
-
-    // Go through all stored predictions for this date
-    for(const[catKey,filter] of Object.entries(CF)){
+    for(const catKey of Object.keys(CF)){
       const key=`${date}_${catKey}`;
-      const record=await Cache.wrGet(key);
-      if(!record||!record.predictions)continue;
+      const rec=await Cache.wrGet(key);
+      if(!rec||!rec.predictions)continue;
       let changed=false;
-      for(const pred of record.predictions){
+      for(const pred of rec.predictions){
         if(pred.result!=='P')continue;
         const res=results[pred.matchId];
         if(!res)continue;
-        pred.result=this.checkResult(pred.id,res.h,res.a)?'W':'L';
+        pred.result=this.check(pred.id,res.h,res.a)?'W':'L';
         changed=true;
       }
-      if(changed)await Cache.wrSet(key,record);
+      if(changed)await Cache.wrSet(key,rec);
     }
   },
 
-  // Check if a prediction was correct based on actual score
-  checkResult(marketId,h,a){
+  check(id,h,a){
     const t=h+a;
-    switch(marketId){
-      case'HOME_WIN':return h>a;
-      case'AWAY_WIN':return a>h;
-      case'DRAW':return h===a;
-      case'HOME_WIN_OR_DRAW':return h>=a;
-      case'AWAY_WIN_OR_DRAW':return a>=h;
-      case'OVER_0.5':return t>=1;
-      case'OVER_1.5':return t>=2;
-      case'OVER_2.5':return t>=3;
-      case'OVER_3.5':return t>=4;
-      case'UNDER_2.5':return t<3;
-      case'UNDER_3.5':return t<4;
-      case'UNDER_4.5':return t<5;
-      case'BTTS_YES':return h>0&&a>0;
-      case'BTTS_NO':return h===0||a===0;
-      case'HOME_OVER_0.5':return h>=1;
-      case'HOME_OVER_1.5':return h>=2;
-      case'AWAY_OVER_0.5':return a>=1;
-      case'AWAY_OVER_1.5':return a>=2;
-      case'HOME_CLEAN_SHEET':return a===0;
-      case'AWAY_CLEAN_SHEET':return h===0;
-      case'HOME_WIN_BTTS':return h>a&&h>0&&a>0;
-      case'AWAY_WIN_BTTS':return a>h&&h>0&&a>0;
-      case'HOME_WIN_OVER_2.5':return h>a&&t>=3;
-      case'AWAY_WIN_OVER_2.5':return a>h&&t>=3;
-      case'HOME_WIN_BY_1':return h-a===1;
-      case'HOME_WIN_BY_2_PLUS':return h-a>=2;
-      case'AWAY_WIN_BY_1':return a-h===1;
-      case'AWAY_WIN_BY_2_PLUS':return a-h>=2;
-      case'EXACT_1_1':return h===1&&a===1;
-      case'EXACT_2_1_HOME':return h===2&&a===1;
-      case'EXACT_3_1_HOME':return h===3&&a===1;
-      case'EXACT_0_1_AWAY':return h===0&&a===1;
-      case'EXACT_0_2_AWAY':return h===0&&a===2;
-      case'EXACT_0_3_AWAY':return h===0&&a===3;
-      default:return false;
-    }
+    const map={HOME_WIN:h>a,AWAY_WIN:a>h,DRAW:h===a,HOME_WIN_OR_DRAW:h>=a,AWAY_WIN_OR_DRAW:a>=h,
+      'OVER_0.5':t>=1,'OVER_1.5':t>=2,'OVER_2.5':t>=3,'OVER_3.5':t>=4,
+      'UNDER_2.5':t<3,'UNDER_3.5':t<4,'UNDER_4.5':t<5,
+      BTTS_YES:h>0&&a>0,BTTS_NO:h===0||a===0,
+      'HOME_OVER_0.5':h>=1,'HOME_OVER_1.5':h>=2,'AWAY_OVER_0.5':a>=1,'AWAY_OVER_1.5':a>=2,
+      HOME_CLEAN_SHEET:a===0,AWAY_CLEAN_SHEET:h===0,
+      HOME_WIN_BTTS:h>a&&h>0&&a>0,AWAY_WIN_BTTS:a>h&&h>0&&a>0,
+      'HOME_WIN_OVER_2.5':h>a&&t>=3,'AWAY_WIN_OVER_2.5':a>h&&t>=3,
+      HOME_WIN_BY_1:h-a===1,HOME_WIN_BY_2_PLUS:h-a>=2,
+      AWAY_WIN_BY_1:a-h===1,AWAY_WIN_BY_2_PLUS:a-h>=2,
+      EXACT_1_1:h===1&&a===1,EXACT_2_1_HOME:h===2&&a===1,EXACT_3_1_HOME:h===3&&a===1,
+      EXACT_0_1_AWAY:h===0&&a===1,EXACT_0_2_AWAY:h===0&&a===2,EXACT_0_3_AWAY:h===0&&a===3};
+    return map[id]||false;
   },
 
-  // Calculate win rate stats for display
-  async getStats(period='7d'){
-    const all=await Cache.wrGetAll();
-    if(!all.length)return null;
-
+  async getStats(period){
+    const all=await Cache.wrGetAll();if(!all.length)return null;
     const now=Date.now();
-    const cutoff=period==='7d'?7*864e5:period==='30d'?30*864e5:3*864e5;
-    const recent=all.filter(r=>now-r.ts<cutoff);
-    if(!recent.length)return null;
-
-    let totalW=0,totalL=0,totalP=0;
-    const byCat={};
-    const dailyResults=[];
-
-    for(const rec of recent){
-      if(!rec.predictions)continue;
-      const cat=rec.category;
-      if(!byCat[cat])byCat[cat]={w:0,l:0,p:0};
-      for(const p of rec.predictions){
-        if(p.result==='W'){totalW++;byCat[cat].w++}
-        else if(p.result==='L'){totalL++;byCat[cat].l++}
-        else{totalP++;byCat[cat].p++}
-      }
-    }
-
-    // Daily streak (last 10 days)
+    const cutoff=period==='30d'?30*864e5:period==='3d'?3*864e5:7*864e5;
+    const recent=all.filter(r=>now-r.ts<cutoff);if(!recent.length)return null;
+    let totalW=0,totalL=0,totalP=0;const byCat={};
+    for(const rec of recent){if(!rec.predictions)continue;const cat=rec.category;if(!byCat[cat])byCat[cat]={w:0,l:0,p:0};
+      for(const p of rec.predictions){if(p.result==='W'){totalW++;byCat[cat].w++}else if(p.result==='L'){totalL++;byCat[cat].l++}else{totalP++;byCat[cat].p++}}}
     const dayMap={};
-    for(const rec of recent){
-      if(!rec.predictions)continue;
-      const d=rec.date;
-      if(!dayMap[d])dayMap[d]={w:0,l:0};
-      for(const p of rec.predictions){
-        if(p.result==='W')dayMap[d].w++;
-        else if(p.result==='L')dayMap[d].l++;
-      }
-    }
-    const sortedDays=Object.entries(dayMap).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,10);
-    const streak=sortedDays.map(([d,v])=>({date:d,w:v.w,l:v.l,pct:v.w+v.l>0?Math.round(v.w/(v.w+v.l)*100):0}));
-
+    for(const rec of recent){if(!rec.predictions)continue;const d=rec.date;if(!dayMap[d])dayMap[d]={w:0,l:0};
+      for(const p of rec.predictions){if(p.result==='W')dayMap[d].w++;else if(p.result==='L')dayMap[d].l++}}
+    const streak=Object.entries(dayMap).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,10).map(([d,v])=>({date:d,w:v.w,l:v.l,pct:v.w+v.l>0?Math.round(v.w/(v.w+v.l)*100):0}));
     const total=totalW+totalL;
-    const overallPct=total>0?Math.round(totalW/total*100):0;
-
-    // Per-category rates
-    const catRates=Object.entries(byCat).map(([cat,v])=>{
-      const ct=v.w+v.l;
-      return{cat,label:CL[cat]||cat,pct:ct>0?Math.round(v.w/ct*100):0,wins:v.w,total:ct,isVip:CF[cat]?.v||0};
-    }).filter(c=>c.total>0).sort((a,b)=>b.pct-a.pct);
-
-    // Profit simulation ($10 per bet, average odds ~1.8 for safe markets)
-    const avgOdds=1.75;
-    const profit=totalW*10*(avgOdds-1)-totalL*10;
-
-    return{
-      overallPct,totalW,totalL,totalP,total,
-      streak,catRates,profit:profit.toFixed(0),
-      period:period==='7d'?'Last 7 Days':period==='30d'?'Last 30 Days':'Last 3 Days'
-    };
+    const catRates=Object.entries(byCat).map(([cat,v])=>{const ct=v.w+v.l;return{cat,label:CL[cat]||cat,pct:ct>0?Math.round(v.w/ct*100):0,wins:v.w,total:ct,isVip:CF[cat]?.v||0}}).filter(c=>c.total>0).sort((a,b)=>b.pct-a.pct);
+    const profit=totalW*10*0.75-totalL*10;
+    return{overallPct:total>0?Math.round(totalW/total*100):0,totalW,totalL,totalP,total,streak,catRates,profit:profit.toFixed(0),period:period==='30d'?'Last 30 Days':period==='3d'?'Last 3 Days':'Last 7 Days'};
   },
 
-  // Render win rate banner HTML
   async renderBanner(){
     const stats=await this.getStats(wrPeriod);
-    if(!stats||stats.total<3)return this.renderPlaceholder();
+    if(!stats||stats.total<3)return`<div class="wr-banner" style="text-align:center;padding:20px">
+      <div class="wr-title" style="justify-content:center">📊 Prediction Performance</div>
+      <p style="font-size:12px;color:var(--text2);margin-top:8px">Win rate tracking starts after your first few predictions settle. Check back tomorrow!</p>
+      <div class="wr-stats" style="margin-top:12px">
+        <div class="wr-stat"><div class="wr-stat-label">Tips Today</div><div class="wr-stat-value" style="color:var(--gold)">—</div><div class="wr-stat-sub">Awaiting results</div></div>
+        <div class="wr-stat"><div class="wr-stat-label">Tracking</div><div class="wr-stat-value" style="color:var(--gold)">Active</div><div class="wr-stat-sub">Recording predictions</div></div>
+      </div></div>`;
 
-    const streakHtml=stats.streak.map(d=>{
-      const cls=d.pct>=60?'w':d.pct>=40?'p':'l';
-      const label=d.pct+'%';
-      return`<div class="wr-streak-dot ${cls}" title="${d.date}: ${d.w}W ${d.l}L">${label}</div>`;
-    }).join('');
-
-    const catHtml=stats.catRates.slice(0,6).map(c=>{
-      const col=c.pct>=65?'var(--accent)':c.pct>=45?'var(--gold)':'var(--red)';
-      return`<div class="wr-cat-row">
-        <span class="wr-cat-name">${c.label} ${c.isVip?'<span class="vb">VIP</span>':''}</span>
-        <div class="wr-cat-bar-wrap"><div class="wr-cat-bar"><div class="wr-cat-fill" style="width:${c.pct}%;background:${col}"></div></div><span class="wr-cat-pct" style="color:${col}">${c.pct}%</span></div>
-      </div>`;
-    }).join('');
-
-    const profitColor=parseFloat(stats.profit)>=0?'var(--accent)':'var(--red)';
-    const profitSign=parseFloat(stats.profit)>=0?'+':'';
+    const streakHtml=stats.streak.map(d=>`<div class="wr-streak-dot ${d.pct>=60?'w':d.pct>=40?'p':'l'}" title="${d.date}: ${d.w}W ${d.l}L">${d.pct}%</div>`).join('');
+    const catHtml=stats.catRates.slice(0,6).map(c=>{const col=c.pct>=65?'var(--accent)':c.pct>=45?'var(--gold)':'var(--red)';
+      return`<div class="wr-cat-row"><span class="wr-cat-name">${c.label} ${c.isVip?'<span class="vb">VIP</span>':''}</span><div class="wr-cat-bar-wrap"><div class="wr-cat-bar"><div class="wr-cat-fill" style="width:${c.pct}%;background:${col}"></div></div><span class="wr-cat-pct" style="color:${col}">${c.pct}%</span></div></div>`}).join('');
+    const pc=parseFloat(stats.profit)>=0?'var(--accent)':'var(--red)';const ps=parseFloat(stats.profit)>=0?'+':'';
 
     return`<div class="wr-banner">
       <div class="wr-title">📊 Prediction Performance</div>
       <div class="wr-stats">
         <div class="wr-stat"><div class="wr-stat-label">Win Rate</div><div class="wr-stat-value">${stats.overallPct}%</div><div class="wr-stat-sub">${stats.totalW}W / ${stats.totalL}L</div></div>
         <div class="wr-stat"><div class="wr-stat-label">Total Tips</div><div class="wr-stat-value">${stats.total}</div><div class="wr-stat-sub">${stats.totalP} pending</div></div>
-        <div class="wr-stat"><div class="wr-stat-label">Simulated P/L</div><div class="wr-stat-value" style="color:${profitColor}">${profitSign}$${stats.profit}</div><div class="wr-stat-sub">$10 per bet</div></div>
+        <div class="wr-stat"><div class="wr-stat-label">Simulated P/L</div><div class="wr-stat-value" style="color:${pc}">${ps}$${stats.profit}</div><div class="wr-stat-sub">$10 per bet</div></div>
       </div>
       <div class="wr-period"><span>${stats.period} · Daily Hit Rate</span><select onchange="wrPeriod=this.value;render()"><option value="7d"${wrPeriod==='7d'?' selected':''}>7 Days</option><option value="30d"${wrPeriod==='30d'?' selected':''}>30 Days</option><option value="3d"${wrPeriod==='3d'?' selected':''}>3 Days</option></select></div>
       <div class="wr-streak" style="margin-top:8px">${streakHtml}</div>
       ${catHtml?'<div style="margin-top:12px;padding-top:8px;border-top:1px solid var(--border)"><div style="font-size:11px;color:var(--text2);margin-bottom:6px;font-weight:600">Category Performance</div>'+catHtml+'</div>':''}
-      <div class="wr-profit"><span class="wr-profit-icon">💡</span><div class="wr-profit-text">Based on ${stats.total} settled tips. If you bet <b>$10</b> on each tip at average odds of <b>1.75</b>, your simulated return would be <b style="color:${profitColor}">${profitSign}$${stats.profit}</b>.</div></div>
-    </div>`;
-  },
-
-  renderPlaceholder(){
-    return`<div class="wr-banner" style="text-align:center;padding:20px">
-      <div class="wr-title" style="justify-content:center">📊 Prediction Performance</div>
-      <p style="font-size:12px;color:var(--text2);margin-top:8px">Win rate tracking starts after your first few predictions settle. Check back tomorrow to see how today's tips performed!</p>
-      <div class="wr-stats" style="margin-top:12px">
-        <div class="wr-stat"><div class="wr-stat-label">Tips Today</div><div class="wr-stat-value" style="color:var(--gold)">—</div><div class="wr-stat-sub">Awaiting results</div></div>
-        <div class="wr-stat"><div class="wr-stat-label">Tracking</div><div class="wr-stat-value" style="color:var(--gold)">Active</div><div class="wr-stat-sub">Recording predictions</div></div>
-      </div>
+      <div class="wr-profit"><span class="wr-profit-icon">💡</span><div class="wr-profit-text">Based on ${stats.total} settled tips at <b>$10</b> per bet, avg odds <b>1.75</b> → <b style="color:${pc}">${ps}$${stats.profit}</b></div></div>
     </div>`;
   }
 };
-
-let wrPeriod='7d';
 
 // ═══════════════════════════════════════════════════════════
 // §5  LOADING SCREEN
 // ═══════════════════════════════════════════════════════════
 const LoadCtrl={
-  steps:[{id:'ls1'},{id:'ls2'},{id:'ls3'},{id:'ls4'}],
-  setStep(n){this.steps.forEach((s,i)=>{const el=document.getElementById(s.id);el.classList.remove('active','done');if(i<n)el.classList.add('done');else if(i===n)el.classList.add('active')})},
+  setStep(n){['ls1','ls2','ls3','ls4'].forEach((s,i)=>{const el=document.getElementById(s);el.classList.remove('active','done');if(i<n)el.classList.add('done');else if(i===n)el.classList.add('active')})},
   setProgress(p){document.getElementById('lsBar').style.width=p+'%';document.getElementById('lsPct').textContent=Math.round(p)+'%'},
   setSub(t){document.getElementById('lsSub').textContent=t},
-  showError(m){document.getElementById('lsErrMsg').textContent=m||'Failed to load.';document.getElementById('lsError').classList.add('show');document.getElementById('lsSteps').style.opacity='.3'},
-  hideError(){document.getElementById('lsError').classList.remove('show');document.getElementById('lsSteps').style.opacity='1'},
+  showError(m){document.getElementById('lsErrMsg').textContent=m;document.getElementById('lsError').classList.add('show')},
+  hideError(){document.getElementById('lsError').classList.remove('show')},
   dismiss(){loadingComplete=true;document.getElementById('loadScreen').classList.add('hidden');document.getElementById('appContainer').classList.add('visible')},
   show(){loadingComplete=false;document.getElementById('loadScreen').classList.remove('hidden');document.getElementById('appContainer').classList.remove('visible');this.hideError();this.setStep(0);this.setProgress(0);this.setSub('');document.getElementById('lsSkip').classList.remove('show')},
 
   async needsLoading(){
-    const ds=fmtD(curDate);
+    const ds=todayStr();
     const last=await Cache.metaGet('lastLoadDate');
     if(last&&last.date===ds&&Date.now()-last.ts<TTL.FIX){
       const c=Cache.memGet('bundle:'+ds)||(await Cache.diskGet('bundle:'+ds));
@@ -453,39 +395,42 @@ const LoadCtrl={
   },
 
   async run(){
-    const ds=fmtD(curDate),key='bundle:'+ds,ttl=isPast(curDate)?TTL.PAST:TTL.FIX;
+    const ds=todayStr(),key='bundle:'+ds,ttl=TTL.FIX;
     try{
-      this.setStep(0);this.setProgress(5);this.setSub('Fetching match data…');
+      // STEP 1: Download
+      this.setStep(0);this.setProgress(5);
       let raw=await this.fetchWithRetry(ds),fromCache=false;
       if(!raw){raw=await Cache.diskGetStale(key);if(raw){fromCache=true;this.setSub('Loaded from cache')}else{this.showError('Could not load data. Check your connection.');return false}}
       this.setProgress(25);
       if(!fromCache){Cache.memSet(key,raw,ttl);await Cache.diskSet(key,raw,ttl)}
       setTimeout(()=>document.getElementById('lsSkip').classList.add('show'),500);
 
+      // STEP 2: Parse
       this.setStep(1);this.setProgress(30);this.setSub('Parsing statistics…');
       const parsed=parseBundle(raw);
-      if(!parsed||!parsed.matches.length){this.showError('No matches found today.');return false}
+      if(!parsed||!parsed.matches.length){this.showError('No matches found for today.');return false}
       bundle=parsed;
       this.setSub(`${bundle.matches.length} matches loaded`);this.setProgress(55);
-
-      for(const[id,det]of Object.entries(bundle.details)){if(det.stats||det.h2h){Cache.memSet('detail:'+id,det,TTL.DET,'details');await Cache.diskSet('detail:'+id,det,TTL.DET)}}
+      for(const[id,det]of Object.entries(bundle.details)){
+        if(det.stats||det.h2h){Cache.memSet('detail:'+id,det,TTL.DET,'details');await Cache.diskSet('detail:'+id,det,TTL.DET)}
+      }
       this.setProgress(65);
 
+      // STEP 3: Predictions
       this.setStep(2);this.setProgress(68);this.setSub('Running prediction engine…');
       const t0=performance.now();
       predC[curCat+'_'+ds]=PE.filter(curCat,bundle.matches,bundle.details);
-      // Record predictions for win-rate tracking
       await WinRate.recordPredictions(ds,curCat,predC[curCat+'_'+ds]);
       for(const cat of['PRIME_SAFE','DAILY_10PLUS','OVER_UNDER','ELITE_VIP']){
         if(cat!==curCat){const ck=cat+'_'+ds;predC[ck]=PE.filter(cat,bundle.matches,bundle.details);await WinRate.recordPredictions(ds,cat,predC[ck])}
       }
       this.setSub(`Done in ${Math.round(performance.now()-t0)}ms`);this.setProgress(90);
 
+      // STEP 4: Evaluate yesterday (from cache only — zero API calls)
       this.setStep(3);this.setProgress(95);this.setSub('Evaluating past results…');
-      // Try to evaluate yesterday's results
-      const yds=fmtD(new Date(curDate.getTime()-864e5));
-      const yBundle=await Cache.get('bundle:'+yds,TTL.PAST,`${API}/v2/bundle?date=${yds}`);
-      if(yBundle)await WinRate.evaluateDay(yds,parseBundle(yBundle));
+      const yds=yesterdayStr();
+      const yRaw=await Cache.diskGetStale('bundle:'+yds);
+      if(yRaw)await WinRate.evaluateDay(yds,parseBundle(yRaw));
 
       await Cache.metaSet('lastLoadDate',{date:ds,ts:Date.now()});
       lastPrefetchDate=ds;this.setProgress(100);this.setSub('Ready!');
@@ -497,33 +442,27 @@ const LoadCtrl={
 
 function retryLoading(){LoadCtrl.hideError();LoadCtrl.setStep(0);LoadCtrl.setProgress(0);startLoading()}
 function skipLoading(){if(bundle&&bundle.matches.length){LoadCtrl.dismiss();render()}}
-async function startLoading(){const ok=await LoadCtrl.run();if(ok){LoadCtrl.dismiss();dispDate(curDate);buildTabs();render()}}
+async function startLoading(){if(await LoadCtrl.run()){LoadCtrl.dismiss();buildTabs();render()}}
 
 // ═══════════════════════════════════════════════════════════
 // §6  DATA HELPERS
 // ═══════════════════════════════════════════════════════════
-function fmtD(d){return d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0')}
-function isPast(d){const t=new Date();t.setHours(0,0,0,0);const c=new Date(d);c.setHours(0,0,0,0);return c<t}
 function parseBundle(raw){
   if(!raw||raw.status==='error')return null;
   let ms=raw.response?.matches||raw.matches||raw.data?.matches||raw.fixtures||[];
   if(!Array.isArray(ms))ms=[];const det={};
-  for(const m of ms){const id=m.id||m.fixture?.id||('m'+Math.random().toString(36).slice(2));m.id=id;det[id]={h2h:m.cachedH2H||m.h2h||null,stats:m.cachedStats||m.stats||null,odds:m.cachedOdds||m.odds||(m.stats?.odds?{response:{odds:m.stats.odds}}:null)||null}}
+  for(const m of ms){const id=m.id||m.fixture?.id||('m'+Math.random().toString(36).slice(2));m.id=id;
+    det[id]={h2h:m.cachedH2H||m.h2h||null,stats:m.cachedStats||m.stats||null,odds:m.cachedOdds||m.odds||(m.stats?.odds?{response:{odds:m.stats.odds}}:null)||null}}
   return{matches:ms,details:det,meta:raw.meta||{totalMatches:ms.length,statsLoaded:Object.values(det).filter(d=>d.stats).length,readiness:100}};
 }
-async function loadBundleForDate(date){
-  const ds=fmtD(date),key='bundle:'+ds,ttl=isPast(date)?TTL.PAST:TTL.FIX;
+
+// Load today only — always from cache first, network only if TTL expired
+async function loadToday(){
+  const ds=todayStr(),key='bundle:'+ds;
   if(lastPrefetchDate===ds){const m=Cache.memGet(key);if(m){LOG.mem('guard:'+ds);return parseBundle(m)}}
-  const url=`${API}/v2/bundle?date=${ds}`;
-  const raw=await Cache.get(key,ttl,url);
+  const raw=await Cache.get(key,TTL.FIX,`${API}/v2/bundle?date=${ds}`);
   lastPrefetchDate=ds;
-  if(raw){
-    // Record predictions for new date and evaluate if past
-    const parsed=parseBundle(raw);
-    if(parsed&&isPast(date))await WinRate.evaluateDay(ds,parsed);
-    return parsed;
-  }
-  return null;
+  return raw?parseBundle(raw):null;
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -566,6 +505,7 @@ gen(match,det){
   const t=Math.max(m.n,1),mk=(id,nm,c,an,re)=>({id,name:nm,confidence:c,analysis:an,reasons:this.reasons(...(re||[])),matchItem:match});
   const pHW=Po.pHW(L.h,L.a),pDr=Po.pDr(L.h,L.a),pAW=Po.pAW(L.h,L.a),hHW=m.base?45:m.hW/t*100,hAW=m.base?32:m.aW/t*100,hDr=m.base?26:m.dr/t*100;
   const hn=m.base?"General home advantage applies":`${m.hW}W/${m.dr}D/${m.aW}L in last ${m.n} meetings`;
+
   P.push(mk("HOME_WIN","Home Win",this.bl(hHW,pHW*100,r,ip.has?ip.hW:null,3,noise(sd,"HW",4),36,93),pHW>=.5?"Home side are strong at home — form book strongly suggests a home win.":"Home advantage could be the deciding factor.",[hn]));
   P.push(mk("AWAY_WIN","Away Win",this.bl(hAW,pAW*100,r,ip.has?ip.aW:null,0,noise(sd,"AW",4),28,88),pAW>=.4?"Away quality and form suggest they can win on the road.":"Away win possible — visitors have enough quality.",[hn]));
   P.push(mk("DRAW","Draw",this.bl(hDr,pDr*100,r,ip.has?ip.dr:null,0,noise(sd,"DR",4),24,72),"Evenly matched — a share of the spoils looks fair.",[hn]));
@@ -575,12 +515,12 @@ gen(match,det){
   P.push(mk("OVER_0.5","Over 0.5 Goals",clamp(Math.round(Po.ccdf(0,lT)*100+noise(sd,"O05",2)),82,97),"Almost every match produces at least one goal.",["Goals expected"]));
   const pO15=Po.ccdf(1,lT),hO15=m.base?.74:m.o15/t;P.push(mk("OVER_1.5","Over 1.5 Goals",gc(pO15,hO15,"O15",55,93),lT>=2.5?"Both attacks in form — 2+ goals certain.":"Enough quality for two goals.",[!m.base?`${m.o15} of ${m.n} H2H had 2+ goals`:"Both finding the net"]));
   const pO25=Po.ccdf(2,lT),hO25=m.base?.52:m.o25/t;P.push(mk("OVER_2.5","Over 2.5 Goals",gc(pO25,hO25,"O25",34,88),lT>=3?"Three goals looks a minimum.":"Both attacks capable.",[!m.base?`${m.o25} of ${m.n} H2H had 3+ goals`:"Attacks in form"]));
-  const pO35=Po.ccdf(3,lT),hO35=m.base?.28:m.o35/t;P.push(mk("OVER_3.5","Over 3.5 Goals",gc(pO35,hO35,"O35",22,76),lT>=3?"High-scoring game likely.":"Would need both firing.",[!m.base?`${m.o35} of ${m.n} H2H had 4+ goals`:"Attacking styles"]));
-  const pU25=Po.cdf(2,lT),hU25=m.base?.48:(t-m.o25)/t;P.push(mk("UNDER_2.5","Under 2.5 Goals",gc(pU25,hU25,"U25",28,86),lT<2.2?"Defensively solid — tight affair.":"Defences on top.",[!m.base?`${t-m.o25} of ${m.n} H2H had <3 goals`:"Solid defences"]));
-  const pU35=Po.cdf(3,lT),hU35=m.base?.72:(t-m.o35)/t;P.push(mk("UNDER_3.5","Under 3.5 Goals",gc(pU35,hU35,"U35",42,92),"Fewer than four — most common range.",["Vast majority end under this"]));
-  P.push(mk("UNDER_4.5","Under 4.5 Goals",clamp(Math.round(Po.cdf(4,lT)*100+noise(sd,"U45",3)),68,96),"Overwhelming statistical favourite.",["Very few produce 5+"]));
-  const pBt=Po.pBt(L.h,L.a),hBt=m.base?.48:m.bt/t;P.push(mk("BTTS_YES","Both Teams To Score - Yes",gc(pBt,hBt,"BT",36,88),L.h>=1.3&&L.a>=1?"Expect goals at both ends.":"Both scoring — BTTS strong.",[!m.base?`${m.bt} of ${m.n} H2H both scored`:"Both scoring consistently"]));
-  P.push(mk("BTTS_NO","Both Teams To Score - No",gc(1-pBt,1-hBt,"BN",24,76),"One side likely kept quiet.",["Strong defensive records"]));
+  const pO35=Po.ccdf(3,lT),hO35=m.base?.28:m.o35/t;P.push(mk("OVER_3.5","Over 3.5 Goals",gc(pO35,hO35,"O35",22,76),lT>=3?"High-scoring game likely.":"Both need to fire.",[!m.base?`${m.o35} of ${m.n} H2H had 4+`:"Attacking styles"]));
+  const pU25=Po.cdf(2,lT),hU25=m.base?.48:(t-m.o25)/t;P.push(mk("UNDER_2.5","Under 2.5 Goals",gc(pU25,hU25,"U25",28,86),lT<2.2?"Tight, low-scoring affair.":"Defences on top.",[!m.base?`${t-m.o25} of ${m.n} H2H had <3`:"Solid defences"]));
+  const pU35=Po.cdf(3,lT),hU35=m.base?.72:(t-m.o35)/t;P.push(mk("UNDER_3.5","Under 3.5 Goals",gc(pU35,hU35,"U35",42,92),"Fewer than four — most common range.",["Vast majority end under"]));
+  P.push(mk("UNDER_4.5","Under 4.5 Goals",clamp(Math.round(Po.cdf(4,lT)*100+noise(sd,"U45",3)),68,96),"Overwhelming favourite.",["Few produce 5+"]));
+  const pBt=Po.pBt(L.h,L.a),hBt=m.base?.48:m.bt/t;P.push(mk("BTTS_YES","Both Teams To Score - Yes",gc(pBt,hBt,"BT",36,88),L.h>=1.3&&L.a>=1?"Expect goals both ends.":"Both scoring — BTTS strong.",[!m.base?`${m.bt} of ${m.n} H2H both scored`:"Both scoring"]));
+  P.push(mk("BTTS_NO","Both Teams To Score - No",gc(1-pBt,1-hBt,"BN",24,76),"One side likely kept quiet.",["Defensive records"]));
   const cs=(hg,ag,id,fl,cl)=>clamp(Math.floor(Po.jp(hg,ag,L.h,L.a)*280)+(r>=.5&&m.n>=5?noise(sd,id,2):0),fl,cl);
   const csA=(hg,ag)=>hg===ag&&hg===1?"1-1 the most likely single scoreline.":hg>ag?`${hg}-${ag} home win.`:`${hg}-${ag} away win.`;
   P.push(mk("EXACT_1_1","Correct Score: 1-1",cs(1,1,"CS11",18,52),csA(1,1),["Even sides"]));
@@ -613,14 +553,14 @@ gen(match,det){
   const htL2=L.h*.45+L.a*.45,shL=L.h*.55+L.a*.55;
   P.push(mk("FIRST_HALF_OVER_0.5","1H Over 0.5",clamp(Math.round((1-Po.pmf(0,htL2))*100+noise(sd,"1H5",5)),52,82),"Goal before half-time.",["Fast starts"]));
   P.push(mk("SECOND_HALF_OVER_0.5","2H Over 0.5",clamp(Math.round((1-Po.pmf(0,shL))*100+noise(sd,"2H5",4)),62,88),"Second-half goal.",["Teams open up"]));
-  P.push(mk("GOAL_RANGE_2_3","Goals 2-3",clamp(Math.round((Po.cdf(3,lT)-Po.cdf(1,lT))*100+noise(sd,"R23",5)),36,74),"Most common band.",["Sweet spot"]));
+  P.push(mk("GOAL_RANGE_2_3","Goals 2-3",clamp(Math.round((Po.cdf(3,lT)-Po.cdf(1,lT))*100+noise(sd,"R23",5)),36,74),"Most common band.",["Competitive matches"]));
   P.push(mk("OVER_8.5_CORNERS","Over 8.5 Corners",clamp(62+noise(sd,"CRN",6),52,74),"Nine or more corners.",["High-tempo"]));
   P.push(mk("OVER_3.5_CARDS","Over 3.5 Cards",clamp(55+noise(sd,"CRD",7),46,68),"Four or more cards.",["Physical match"]));
   const lo=(id,nm,b,rng,l2,h2,an,re)=>mk(id,nm,clamp(b+noise(sd,id,rng),l2,h2),an,re);
   P.push(lo("EARLY_GOAL_0_15","Goal First 15 Min",45,8,32,55,"Early goal.",["Fast starters"]));
   P.push(lo("LATE_GOAL_75_PLUS","Goal After 75 Min",48,6,38,58,"Late drama.",["Push forward late"]));
-  P.push(lo("HOME_SCORE_FIRST","Home Scores First",52,6,42,62,"Home draw first blood.",["Home advantage early"]));
-  P.push(lo("AWAY_SCORE_FIRST","Away Scores First",46,6,36,56,"Away catch home cold.",["Counter-attack"]));
+  P.push(lo("HOME_SCORE_FIRST","Home Scores First",52,6,42,62,"Home first blood.",["Home advantage"]));
+  P.push(lo("AWAY_SCORE_FIRST","Away Scores First",46,6,36,56,"Away catch cold.",["Counter-attacks"]));
   P.push(lo("GOAL_BOTH_HALVES","Goal Both Halves",50,6,40,62,"Goals both halves.",["Goal-active sides"]));
   return P;
 },
@@ -628,42 +568,49 @@ filter(cat,pool,dMap){const f=CF[cat];if(!f)return[];const used=new Set();const 
 };
 
 // ═══════════════════════════════════════════════════════════
-// §9  UI
+// §9  UI — no date navigation, today only
 // ═══════════════════════════════════════════════════════════
-function dispDate(d){const today=new Date();today.setHours(0,0,0,0);const c=new Date(d);c.setHours(0,0,0,0);const diff=Math.round((c-today)/864e5);const lbl=diff===0?'Today':diff===1?'Tomorrow':diff===-1?'Yesterday':d.toLocaleDateString('en',{weekday:'long'});document.getElementById('dDay').textContent=lbl;document.getElementById('dFull').textContent=d.toLocaleDateString('en',{day:'numeric',month:'long',year:'numeric'})}
-function chgDate(off){curDate.setDate(curDate.getDate()+off);dispDate(curDate);loadForDate()}
-function buildTabs(){const el=document.getElementById('tabs');el.innerHTML='';for(const[k,f]of Object.entries(CF)){const b=document.createElement('button');b.className='cb'+(k===curCat?' a':'');b.innerHTML=(CL[k]||k)+(f.v?' <span class="vb">VIP</span>':'');b.onclick=()=>{curCat=k;document.querySelectorAll('.cb').forEach(x=>x.classList.remove('a'));b.classList.add('a');render()};el.appendChild(b)}}
+function showTodayDate(){
+  document.getElementById('todayDate').textContent='· '+TODAY.toLocaleDateString('en',{day:'numeric',month:'long',year:'numeric'});
+}
+
+function buildTabs(){
+  const el=document.getElementById('tabs');el.innerHTML='';
+  for(const[k,f]of Object.entries(CF)){
+    const b=document.createElement('button');b.className='cb'+(k===curCat?' a':'');
+    b.innerHTML=(CL[k]||k)+(f.v?' <span class="vb">VIP</span>':'');
+    b.onclick=()=>{curCat=k;document.querySelectorAll('.cb').forEach(x=>x.classList.remove('a'));b.classList.add('a');render()};
+    el.appendChild(b);
+  }
+}
+
 function showMeta(m){const el=document.getElementById('metaBar');if(!m){el.style.display='none';return}el.style.display='flex';el.innerHTML=`<div class="mi">⚽ <b>${m.totalMatches||0}</b> matches</div><div class="mi">📊 <b>${m.statsLoaded||0}</b> stats</div><div class="mi">🔋 <b>${m.readiness||0}%</b></div>`}
 
-async function loadForDate(){
+async function loadTodayData(){
   const main=document.getElementById('main');
   main.innerHTML='<div class="ld"><div class="sp"></div><p>Loading…</p></div>';
   showMeta(null);
-  bundle=await loadBundleForDate(curDate);
+  bundle=await loadToday();
   predC={};
-  if(!bundle||!bundle.matches.length){main.innerHTML='<div class="em"><div class="ic">📡</div><p>No data available.</p><button onclick="loadForDate()">Retry</button></div>';return}
+  if(!bundle||!bundle.matches.length){main.innerHTML='<div class="em"><div class="ic">📡</div><p>No matches available for today.<br>Check back later.</p><button onclick="loadTodayData()">Retry</button></div>';return}
   showMeta(bundle.meta);updStatus();render();
 }
 
 async function render(){
   const main=document.getElementById('main');
-  if(!bundle||!bundle.matches.length){main.innerHTML='<div class="em"><div class="ic">⚽</div><p>No matches.</p></div>';return}
-  const f=CF[curCat],ds=fmtD(curDate),ck=curCat+'_'+ds;
+  if(!bundle||!bundle.matches.length){main.innerHTML='<div class="em"><div class="ic">⚽</div><p>No matches today.</p></div>';return}
+  const f=CF[curCat],ds=todayStr(),ck=curCat+'_'+ds;
   if(!predC[ck]){
     const t0=performance.now();
     predC[ck]=PE.filter(curCat,bundle.matches,bundle.details);
     LOG.info(`Preds: ${predC[ck].length} in ${Math.round(performance.now()-t0)}ms`);
-    // Record for win-rate tracking
     await WinRate.recordPredictions(ds,curCat,predC[ck]);
   }
   const preds=predC[ck];
-
-  // Win-rate banner
   let wrHtml=await WinRate.renderBanner();
-
   let html=wrHtml;
   html+=`<div class="sh"><h2>⚡ ${CL[curCat]||curCat} ${f.v?'<span class="vb" style="font-size:10px">VIP</span>':''}</h2><span class="cnt">${preds.length} tip${preds.length!==1?'s':''}</span></div>`;
-  if(!preds.length){html+='<div class="em"><div class="ic">🔍</div><p>No predictions meet criteria.</p></div>';main.innerHTML=html;return}
+  if(!preds.length){html+='<div class="em"><div class="ic">🔍</div><p>No predictions meet criteria for this category today.</p></div>';main.innerHTML=html;return}
   for(let i=0;i<preds.length;i++){
     const pr=preds[i],mx=pr.matchItem||{};
     const home=mx.home?.name||mx.homeTeam?.name||mx.teams?.home?.name||'Home';
@@ -678,7 +625,7 @@ async function render(){
     <div class="pa"><div class="pr ${cc}" onclick="tog('${uid}')"><div class="pl"><div class="pn">🎯 ${pr.name}</div><div class="pt">${pr.id.replace(/_/g,' ')}</div></div><div class="cw2"><div class="cfb"><div class="cff" style="width:${pr.confidence}%"></div></div><div class="cn">${pr.confidence}%</div></div></div>
     <div class="pd" id="${uid}"><div class="pan">📊 ${pr.analysis||''}</div><ul class="pre">${(pr.reasons||[]).map(r=>'<li>'+r+'</li>').join('')}</ul></div></div></div>`;
   }
-  html+=`<div class="ci">⚡ Predictions generated offline • ${new Date().toLocaleTimeString()}</div>`;
+  html+=`<div class="ci">⚡ Today's predictions generated offline • ${new Date().toLocaleTimeString()}</div>`;
   main.innerHTML=html;
 }
 
@@ -686,32 +633,39 @@ function tog(id){const e=document.getElementById(id);if(e)e.classList.toggle('op
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000)}
 function updStatus(){const d=document.getElementById('sDot'),t=document.getElementById('sTxt');if(navigator.onLine){d.className='dot on';t.textContent='Online'}else{d.className='dot off';t.textContent='Offline'}}
 
-// FIXED: Refresh uses cache — does NOT call /sync-fixtures or reset cache
+// Refresh — serves from cache, zero API calls unless TTL expired
 async function doRefresh(){
   const btn=document.getElementById('rBtn');btn.classList.add('spin');
-  predC={};// Only clear prediction cache to re-render, not data cache
-  await loadForDate();
+  predC={};
+  await loadTodayData();
   btn.classList.remove('spin');
-  toast('✅ Refreshed from cache');
+  toast('✅ Refreshed');
 }
 
 // ═══════════════════════════════════════════════════════════
-// §10  INIT
+// §10  INIT — today only
 // ═══════════════════════════════════════════════════════════
-window.addEventListener('online',updStatus);window.addEventListener('offline',updStatus);
+window.addEventListener('online',updStatus);
+window.addEventListener('offline',updStatus);
+
 (async()=>{
   await Cache.init();
   if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>{});
-  dispDate(curDate);buildTabs();updStatus();
+  showTodayDate();
+  buildTabs();
+  updStatus();
+
   const needs=await LoadCtrl.needsLoading();
-  if(needs){LOG.info('Cold start');LoadCtrl.show();startLoading()}
-  else{
-    LOG.info('Warm start');
+  if(needs){
+    LOG.info('Cold start — loading screen');
+    LoadCtrl.show();
+    startLoading();
+  }else{
+    LOG.info('Warm start — instant from cache');
     document.getElementById('loadScreen').classList.add('hidden');
     document.getElementById('appContainer').classList.add('visible');
     loadingComplete=true;
-    const ds=fmtD(curDate);
-    const raw=Cache.memGet('bundle:'+ds)||(await Cache.diskGet('bundle:'+ds));
+    const raw=Cache.memGet('bundle:'+todayStr())||(await Cache.diskGet('bundle:'+todayStr()));
     bundle=parseBundle(raw);
     if(bundle&&bundle.matches.length){showMeta(bundle.meta);render()}
     else{LoadCtrl.show();startLoading()}
