@@ -126,6 +126,56 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .meta-bar{display:flex;gap:12px;padding:8px 16px;background:var(--card);border-bottom:1px solid var(--border);font-size:11px;color:var(--text2);justify-content:center;flex-wrap:wrap}
 .meta-bar .mi{display:flex;align-items:center;gap:4px}.meta-bar .mi b{color:var(--accent)}
 @media(max-width:480px){.tn{font-size:12px}.pn{font-size:12px}.ms{padding:12px}.cw2{width:80px}.logo h1{font-size:16px}.ls-logo h1{font-size:24px}.ls-logo svg{width:44px;height:44px}.wr-stats{grid-template-columns:1fr 1fr}}
+/* ═══ VIP LOCK OVERLAY ═══ */
+.vip-locked .pr{position:relative}
+.vip-locked .pn,.vip-locked .pt,.vip-locked .cn{filter:blur(6px);user-select:none;pointer-events:none}
+.vip-locked .cff{filter:blur(4px)}
+.vip-locked .pd{display:none!important}
+.vip-lock-overlay{display:none;position:absolute;inset:0;background:rgba(13,17,23,.85);border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;z-index:5}
+.vip-locked .vip-lock-overlay{display:flex}
+.vip-lock-icon{font-size:20px}
+.vip-lock-text{font-size:11px;color:var(--text2);text-align:center}
+.vip-lock-btn{padding:6px 16px;border-radius:8px;border:1px solid var(--vip);background:transparent;color:var(--vip);font-size:11px;font-weight:700;cursor:pointer;transition:.2s}
+.vip-lock-btn:hover{background:var(--vip);color:#fff}
+
+/* ═══ PRICING MODAL ═══ */
+.modal-overlay{position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.modal-overlay.show{display:flex}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:16px;width:min(420px,92vw);max-height:90vh;overflow-y:auto;padding:0}
+.modal-hdr{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.modal-hdr h3{font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px}
+.modal-close{background:none;border:none;color:var(--text2);font-size:20px;cursor:pointer;padding:4px 8px;border-radius:6px;transition:.2s}
+.modal-close:hover{color:var(--text);background:var(--card2)}
+.modal-body{padding:20px}
+.plan-cards{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+.plan-card{border:2px solid var(--border);border-radius:12px;padding:14px 16px;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:space-between;position:relative}
+.plan-card:hover{border-color:var(--accent)}
+.plan-card.selected{border-color:var(--vip);background:rgba(255,109,0,.06)}
+.plan-card.popular::after{content:'BEST VALUE';position:absolute;top:-8px;right:12px;background:var(--vip);color:#fff;font-size:8px;font-weight:800;padding:2px 8px;border-radius:4px}
+.plan-left{display:flex;flex-direction:column;gap:2px}
+.plan-dur{font-size:14px;font-weight:700}
+.plan-save{font-size:10px;color:var(--accent)}
+.plan-price{font-size:18px;font-weight:800;color:var(--accent)}
+.plan-unit{font-size:10px;color:var(--text2)}
+.pay-section{margin-top:16px}
+.pay-label{font-size:12px;color:var(--text2);margin-bottom:8px;font-weight:600}
+.pay-input{width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--border);background:var(--card2);color:var(--text);font-size:13px;margin-bottom:10px;outline:none;transition:.2s}
+.pay-input:focus{border-color:var(--accent)}
+.pay-input::placeholder{color:var(--text2)}
+.pay-row{display:flex;gap:10px}
+.pay-row .pay-input{flex:1}
+.pay-btn{width:100%;padding:14px;border-radius:10px;border:none;background:var(--vip);color:#fff;font-size:14px;font-weight:700;cursor:pointer;transition:.2s;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:8px}
+.pay-btn:hover{opacity:.9}
+.pay-btn:disabled{opacity:.5;cursor:not-allowed}
+.pay-btn .sp2{width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sp .6s linear infinite;display:none}
+.pay-btn.loading .sp2{display:inline-block}
+.pay-btn.loading span{display:none}
+.pay-secure{font-size:10px;color:var(--text2);text-align:center;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:4px}
+.pay-error{color:var(--red);font-size:12px;text-align:center;margin-top:8px;min-height:16px}
+.pay-success{color:var(--accent);font-size:13px;text-align:center;padding:24px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.pay-success .check{font-size:48px}
+.vip-active-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(255,109,0,.15);color:var(--vip);font-size:9px;font-weight:700;padding:2px 6px;border-radius:6px;margin-left:4px}
+.vip-expiry{font-size:10px;color:var(--text2);text-align:center;margin-top:4px}  
 </style>
 </head>
 <body>
@@ -165,6 +215,34 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <div class="mn" id="main"></div>
 <div class="ft"><p>⚽ PredictPro Football Betting Tips © 2025</p><p style="margin-top:6px">AI-powered predictions • Always bet responsibly</p></div>
 </div>
+<!-- ═══ PRICING MODAL ═══ -->
+<div class="modal-overlay" id="pricingModal">
+  <div class="modal">
+    <div class="modal-hdr">
+      <h3>🔓 <span id="modalTitle">Unlock VIP</span></h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody">
+      <div class="plan-cards" id="planCards"></div>
+      <div class="pay-section">
+        <div class="pay-label">Email</div>
+        <input class="pay-input" id="payEmail" type="email" placeholder="your@email.com">
+        <div class="pay-label">Card Number</div>
+        <input class="pay-input" id="payCard" type="text" placeholder="4084 0840 8408 4081" maxlength="19" oninput="formatCard(this)">
+        <div class="pay-row">
+          <div style="flex:1"><div class="pay-label">Expiry</div><input class="pay-input" id="payExpiry" type="text" placeholder="MM/YY" maxlength="5" oninput="formatExpiry(this)"></div>
+          <div style="flex:1"><div class="pay-label">CVV</div><input class="pay-input" id="payCvv" type="password" placeholder="•••" maxlength="4"></div>
+        </div>
+        <button class="pay-btn" id="payBtn" onclick="processPayment()">
+          <div class="sp2"></div>
+          <span>Pay Now</span>
+        </button>
+        <div class="pay-secure">🔒 Secured by Paystack · PCI DSS Compliant</div>
+        <div class="pay-error" id="payError"></div>
+      </div>
+    </div>
+  </div>
+</div>  
 <div class="toast" id="toast"></div>
 <script>
 // ═══════════════════════════════════════════════════════════
@@ -566,10 +644,179 @@ gen(match,det){
 filter(cat,pool,dMap){const f=CF[cat];if(!f)return[];const used=new Set();const cands=pool.map(m2=>{const ps=this.gen(m2,dMap[m2.id]).filter(p=>f.ids.has(p.id)&&p.confidence>=f.min).sort((a,b)=>b.confidence-a.confidence);return ps.length?{match:m2,ranked:ps.map(p=>({...p,matchItem:m2}))}:null}).filter(Boolean).sort((a,b)=>b.ranked[0].confidence-a.ranked[0].confidence);const res=[];for(const mc of cands){if(res.length>=f.n)break;const ch=mc.ranked.find(p=>!used.has(p.id))||mc.ranked[0];res.push(ch);used.add(ch.id)}return res}
 };
 // ═══════════════════════════════════════════════════════════
+// §8.5  VIP BILLING MANAGER (Paystack-style, localStorage)
+// ═══════════════════════════════════════════════════════════
+const VIP_CATS = new Set(["ELITE_VIP","CORRECT_SCORE","HT_FT_VIP","DAILY_50_ODDS","PRIME_PLUS","FIXED_VIP","PREMIUM_VIP","SINGLE_VIP","OVER_UNDER_VIP"]);
+const FREE_CATS = new Set(["PRIME_SAFE","DAILY_5PLUS","DAILY_10PLUS","OVER_UNDER","DOUBLE_TIPS","SINGLE_GAME","DAILY_2_2_5","HIGH_VALUE_1","HIGH_VALUE_2"]);
+
+const VIP_PLANS = {
+  ELITE_VIP:      {name:"Elite VIP",       w:499,  m:1499, q:2999},
+  CORRECT_SCORE:  {name:"Correct Score",   w:699,  m:1799, q:3599},
+  HT_FT_VIP:     {name:"HT/FT VIP",       w:699,  m:1799, q:3599},
+  DAILY_50_ODDS:  {name:"50+ Odds",        w:599,  m:1499, q:2999},
+  PRIME_PLUS:     {name:"Prime Plus",      w:799,  m:1999, q:3999},
+  FIXED_VIP:      {name:"Fixed VIP",       w:999,  m:2499, q:4999},
+  PREMIUM_VIP:    {name:"Premium VIP",     w:599,  m:1499, q:2999},
+  SINGLE_VIP:     {name:"Single VIP",      w:399,  m:999,  q:1999},
+  OVER_UNDER_VIP: {name:"O/U VIP",         w:599,  m:1499, q:2999}
+};
+
+const PLAN_DURATIONS = {w:7*864e5, m:30*864e5, q:90*864e5};
+
+const Billing = {
+  _unlocked: new Set(),
+
+  init(){
+    const now = Date.now();
+    for(const cat of Object.keys(VIP_PLANS)){
+      const exp = parseInt(localStorage.getItem('vip_exp_'+cat)||'0');
+      if(exp > now) this._unlocked.add(cat);
+      else if(exp > 0) localStorage.removeItem('vip_exp_'+cat);
+    }
+    LOG.info(`Billing: ${this._unlocked.size} active VIP subscriptions`);
+  },
+
+  isUnlocked(cat){ return FREE_CATS.has(cat) || this._unlocked.has(cat); },
+  isVipCat(cat){ return VIP_CATS.has(cat); },
+
+  unlock(cat, duration){
+    const exp = Date.now() + (PLAN_DURATIONS[duration]||PLAN_DURATIONS.w);
+    localStorage.setItem('vip_exp_'+cat, exp.toString());
+    this._unlocked.add(cat);
+    LOG.info(`VIP unlocked: ${cat} until ${new Date(exp).toLocaleDateString()}`);
+  },
+
+  getExpiry(cat){
+    const exp = parseInt(localStorage.getItem('vip_exp_'+cat)||'0');
+    if(exp <= Date.now()) return null;
+    return new Date(exp);
+  },
+
+  // Simulate Paystack charge (in production, use Paystack Popup JS or redirect)
+  async chargeCard(cat, duration, email, cardNum, expiry, cvv){
+    // Validate
+    const clean = cardNum.replace(/\s/g,'');
+    if(clean.length < 15) throw new Error('Invalid card number');
+    if(!email.includes('@')) throw new Error('Invalid email');
+    if(expiry.length < 4) throw new Error('Invalid expiry');
+    if(cvv.length < 3) throw new Error('Invalid CVV');
+
+    const plan = VIP_PLANS[cat]; if(!plan) throw new Error('Unknown plan');
+    const amount = duration==='w'?plan.w:duration==='m'?plan.m:plan.q;
+    const ref = 'predictpro_'+cat+'_'+Date.now();
+
+    // In production: Initialize Paystack transaction here
+    // POST https://api.paystack.co/transaction/initialize
+    // { email, amount: amount*100, currency: "USD", reference: ref, callback_url: "..." }
+    // Then open the authorization_url in a popup/iframe
+
+    // For MVP: simulate a 2-second processing delay
+    await new Promise(r => setTimeout(r, 2000));
+
+    // Simulate success (in production, verify with Paystack)
+    this.unlock(cat, duration);
+    return { success: true, reference: ref, amount };
+  }
+};
+
+// Modal state
+let modalCat = null;
+let modalPlan = 'w';
+
+function openPricingModal(cat){
+  modalCat = cat;
+  modalPlan = 'w';
+  const plan = VIP_PLANS[cat];
+  if(!plan) return;
+  document.getElementById('modalTitle').textContent = 'Unlock ' + plan.name;
+  const pc = document.getElementById('planCards');
+  pc.innerHTML = `
+    <div class="plan-card selected" onclick="selectPlan('w',this)" data-dur="w">
+      <div class="plan-left"><div class="plan-dur">1 Week</div><div class="plan-save"></div></div>
+      <div><div class="plan-price">$${(plan.w/100).toFixed(2)}</div><div class="plan-unit">/week</div></div>
+    </div>
+    <div class="plan-card popular" onclick="selectPlan('m',this)" data-dur="m">
+      <div class="plan-left"><div class="plan-dur">1 Month</div><div class="plan-save">Save ${Math.round((1-plan.m/(plan.w*4.3))*100)}%</div></div>
+      <div><div class="plan-price">$${(plan.m/100).toFixed(2)}</div><div class="plan-unit">/month</div></div>
+    </div>
+    <div class="plan-card" onclick="selectPlan('q',this)" data-dur="q">
+      <div class="plan-left"><div class="plan-dur">3 Months</div><div class="plan-save">Save ${Math.round((1-plan.q/(plan.w*13))*100)}%</div></div>
+      <div><div class="plan-price">$${(plan.q/100).toFixed(2)}</div><div class="plan-unit">/quarter</div></div>
+    </div>`;
+  document.getElementById('payError').textContent = '';
+  document.getElementById('payBtn').disabled = false;
+  document.getElementById('payBtn').classList.remove('loading');
+  document.getElementById('pricingModal').classList.add('show');
+}
+
+function closeModal(){
+  document.getElementById('pricingModal').classList.remove('show');
+  modalCat = null;
+}
+
+function selectPlan(dur, el){
+  modalPlan = dur;
+  document.querySelectorAll('.plan-card').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function formatCard(el){
+  let v = el.value.replace(/\D/g,'').slice(0,16);
+  el.value = v.replace(/(.{4})/g,'$1 ').trim();
+}
+
+function formatExpiry(el){
+  let v = el.value.replace(/\D/g,'').slice(0,4);
+  if(v.length >= 3) v = v.slice(0,2)+'/'+v.slice(2);
+  el.value = v;
+}
+
+async function processPayment(){
+  if(!modalCat) return;
+  const btn = document.getElementById('payBtn');
+  const err = document.getElementById('payError');
+  err.textContent = '';
+  btn.disabled = true;
+  btn.classList.add('loading');
+
+  try{
+    const email = document.getElementById('payEmail').value.trim();
+    const card = document.getElementById('payCard').value;
+    const expiry = document.getElementById('payExpiry').value;
+    const cvv = document.getElementById('payCvv').value;
+
+    const result = await Billing.chargeCard(modalCat, modalPlan, email, card, expiry, cvv);
+
+    // Show success
+    const plan = VIP_PLANS[modalCat];
+    const durLabel = modalPlan==='w'?'1 week':modalPlan==='m'?'1 month':'3 months';
+    document.getElementById('modalBody').innerHTML = `
+      <div class="pay-success">
+        <div class="check">✅</div>
+        <div style="font-size:16px;font-weight:700">${plan.name} Unlocked!</div>
+        <div style="font-size:12px;color:var(--text2)">Access granted for ${durLabel}</div>
+        <div style="font-size:11px;color:var(--text2)">Ref: ${result.reference}</div>
+        <button class="pay-btn" onclick="closeModal();render()" style="margin-top:12px;background:var(--accent)"><span>View Predictions</span></button>
+      </div>`;
+    toast('🔓 '+plan.name+' unlocked!');
+    // Rebuild tabs to show active badge
+    buildTabs();
+  }catch(e){
+    err.textContent = e.message || 'Payment failed. Please try again.';
+    btn.disabled = false;
+    btn.classList.remove('loading');
+  }
+}
+
+// Close modal on backdrop click
+document.addEventListener('click', e => {
+  if(e.target.classList.contains('modal-overlay')) closeModal();
+});
+// ═══════════════════════════════════════════════════════════
 // §9 UI
 // ═══════════════════════════════════════════════════════════
 function showTodayDate(){document.getElementById('todayDate').textContent='· '+TODAY.toLocaleDateString('en',{day:'numeric',month:'long',year:'numeric'})}
-function buildTabs(){const el=document.getElementById('tabs');el.innerHTML='';for(const[k,f]of Object.entries(CF)){const b=document.createElement('button');b.className='cb'+(k===curCat?' a':'');b.innerHTML=(CL[k]||k)+(f.v?' <span class="vb">VIP</span>':'');b.onclick=()=>{curCat=k;document.querySelectorAll('.cb').forEach(x=>x.classList.remove('a'));b.classList.add('a');render()};el.appendChild(b)}}
+function buildTabs(){const el=document.getElementById('tabs');el.innerHTML='';for(const[k,f]of Object.entries(CF)){const b=document.createElement('button');b.className='cb'+(k===curCat?' a':'');const isVip=VIP_CATS.has(k);const isActive=Billing.isUnlocked(k);const exp=Billing.getExpiry(k);let badge='';if(isVip&&isActive)badge=' <span class="vip-active-badge">✓ ACTIVE</span>';else if(isVip)badge=' <span class="vb">VIP</span>';b.innerHTML=(CL[k]||k)+badge;b.onclick=()=>{curCat=k;document.querySelectorAll('.cb').forEach(x=>x.classList.remove('a'));b.classList.add('a');render()};el.appendChild(b)}}
 function showMeta(m){const el=document.getElementById('metaBar');if(!m){el.style.display='none';return}el.style.display='flex';el.innerHTML=`<div class="mi">⚽ <b>${m.totalMatches||0}</b> matches</div><div class="mi">📊 <b>${m.statsLoaded||0}</b> stats</div><div class="mi">🔋 <b>${m.readiness||0}%</b></div>`}
 async function loadTodayData(){
   const main=document.getElementById('main');
@@ -604,10 +851,13 @@ async function render(){
     const country=mx.league?.country||mx.competition?.country||'';
     const cc=pr.confidence>=65?'ch':pr.confidence>=45?'cm':'cl';
     const uid='p'+i+'_'+Math.abs(hc(pr.id+(mx.id||'')));
+        const isLocked = Billing.isVipCat(curCat) && !Billing.isUnlocked(curCat);
     html+=`<div class="mc"><div class="mh"><span class="ml">${country?country+' · ':''}${league}</span><span class="mt2">🕐 ${time}</span></div>
       <div class="ms"><div class="tm"><div class="ti">${(home[0]||'?').toUpperCase()}</div><div class="tn">${home}</div></div><div class="vs">VS</div><div class="tm aw"><div class="tn">${away}</div><div class="ti">${(away[0]||'?').toUpperCase()}</div></div></div>
-      <div class="pa"><div class="pr ${cc}" onclick="tog('${uid}')"><div class="pl"><div class="pn">🎯 ${pr.name}</div><div class="pt">${pr.id.replace(/_/g,' ')}</div></div><div class="cw2"><div class="cfb"><div class="cff" style="width:${pr.confidence}%"></div></div><div class="cn">${pr.confidence}%</div></div></div>
-      <div class="pd" id="${uid}"><div class="pan">📊 ${pr.analysis||''}</div><ul class="pre">${(pr.reasons||[]).map(r=>'<li>'+r+'</li>').join('')}</ul></div></div></div>`;
+      <div class="pa"><div class="pr ${cc} ${isLocked?'vip-locked':''}" onclick="${isLocked?`openPricingModal('${curCat}')`:`tog('${uid}')`}">
+        ${isLocked?`<div class="vip-lock-overlay"><div class="vip-lock-icon">🔒</div><div class="vip-lock-text">Unlock VIP to see this tip</div><button class="vip-lock-btn" onclick="event.stopPropagation();openPricingModal('${curCat}')">Unlock — $${(VIP_PLANS[curCat]?.w/100||4.99).toFixed(2)}/wk</button></div>`:''}
+        <div class="pl"><div class="pn">🎯 ${pr.name}</div><div class="pt">${pr.id.replace(/_/g,' ')}</div></div><div class="cw2"><div class="cfb"><div class="cff" style="width:${pr.confidence}%"></div></div><div class="cn">${pr.confidence}%</div></div></div>
+      ${isLocked?'':`<div class="pd" id="${uid}"><div class="pan">📊 ${pr.analysis||''}</div><ul class="pre">${(pr.reasons||[]).map(r=>'<li>'+r+'</li>').join('')}</ul></div>`}</div></div>`;
   }
   html+=`<div class="ci">⚡ Today's predictions generated offline • ${new Date().toLocaleTimeString()}</div>`;
   main.innerHTML=html;
@@ -628,6 +878,7 @@ async function doRefresh(){
 window.addEventListener('online',updStatus);window.addEventListener('offline',updStatus);
 (async()=>{
   await Cache.init();
+  Billing.init(); // ← ADD THIS LINE
   if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>{});
   showTodayDate();buildTabs();updStatus();
   const needs=await LoadCtrl.needsLoading();
