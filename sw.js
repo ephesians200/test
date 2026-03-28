@@ -1,64 +1,58 @@
-const CACHE_NAME = 'predictpro-v4';
-const PRECACHE_URLS = [
-  '/',
-  '/index.html',
-  '/manifest.json'
-];
+// ═══════════════════════════════════════════════════════════
+// PredictPro Service Worker — Cache-first for static,
+// Network-first for API, offline fallback
+// ═══════════════════════════════════════════════════════════
+const CACHE = 'predictpro-sw-v5';
+const API_HOST = 'football-ai-backend.ephesians2004.workers.dev';
 
-// Install — precache shell
-self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(PRECACHE_URLS))
+const SHELL = ['/', '/index.html', '/manifest.json'];
+
+self.addEventListener('install', e => {
+  e.waitUntil(
+    caches.open(CACHE)
+      .then(c => c.addAll(SHELL))
       .then(() => self.skipWaiting())
   );
 });
 
-// Activate — clean old caches
-self.addEventListener('activate', event => {
-  event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(
-        keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))
-      )
-    ).then(() => self.clients.claim())
+self.addEventListener('activate', e => {
+  e.waitUntil(
+    caches.keys()
+      .then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))))
+      .then(() => self.clients.claim())
   );
 });
 
-// Fetch — network-first for API, cache-first for static
-self.addEventListener('fetch', event => {
-  if (event.request.method !== 'GET') return;
+self.addEventListener('fetch', e => {
+  if (e.request.method !== 'GET') return;
+  const url = new URL(e.request.url);
 
-  const url = new URL(event.request.url);
-
-  // API calls → network-first, cache fallback
-  if (url.hostname.includes('football-ai-backend') || url.hostname.includes('workers.dev')) {
-    event.respondWith(
-      caches.open(CACHE_NAME).then(cache =>
-        fetch(event.request, { signal: AbortSignal.timeout(15000) })
-          .then(response => {
-            if (response.ok) {
-              cache.put(event.request, response.clone());
-            }
-            return response;
+  // API requests → network-first, cache fallback
+  if (url.hostname === API_HOST || url.hostname.includes('workers.dev')) {
+    e.respondWith(
+      caches.open(CACHE).then(cache =>
+        fetch(e.request, { signal: AbortSignal.timeout(20000) })
+          .then(resp => {
+            if (resp.ok) cache.put(e.request, resp.clone());
+            return resp;
           })
-          .catch(() => cache.match(event.request))
+          .catch(() => cache.match(e.request))
       )
     );
     return;
   }
 
   // Static assets → cache-first, network fallback
-  event.respondWith(
-    caches.match(event.request).then(cached => {
+  e.respondWith(
+    caches.match(e.request).then(cached => {
       if (cached) return cached;
-      return fetch(event.request).then(response => {
-        if (response.ok) {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+      return fetch(e.request).then(resp => {
+        if (resp.ok && url.origin === self.location.origin) {
+          const cl = resp.clone();
+          caches.open(CACHE).then(c => c.put(e.request, cl));
         }
-        return response;
+        return resp;
       });
-    })
+    }).catch(() => caches.match('/index.html'))
   );
 });
