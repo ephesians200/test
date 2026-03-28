@@ -26,14 +26,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .ls-tagline{font-size:12px;color:var(--text2);margin-bottom:32px;letter-spacing:1px;text-transform:uppercase}
 .ls-steps{width:min(360px,85vw);margin-bottom:32px}
 .ls-step{display:flex;align-items:center;gap:12px;padding:10px 0;opacity:.3;transition:opacity .3s,transform .3s;transform:translateX(-8px)}
-.ls-step.active{opacity:1;transform:translateX(0)}
-.ls-step.done{opacity:.65;transform:translateX(0)}
+.ls-step.active{opacity:1;transform:translateX(0)}.ls-step.done{opacity:.65;transform:translateX(0)}
 .ls-step-icon{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;border:2px solid var(--border);color:var(--text2);transition:.3s}
 .ls-step.active .ls-step-icon{border-color:var(--accent);color:var(--accent);box-shadow:0 0 12px rgba(0,200,83,.25)}
 .ls-step.done .ls-step-icon{border-color:var(--accent);background:var(--accent);color:#000}
 .ls-step-text{font-size:13px;font-weight:500;color:var(--text2);transition:.3s}
 .ls-step.active .ls-step-text{color:var(--text);font-weight:600}
-.ls-step.done .ls-step-text{color:var(--text2)}
 .ls-progress-wrap{width:min(360px,85vw);margin-bottom:20px}
 .ls-progress-bar{width:100%;height:4px;background:var(--border);border-radius:2px;overflow:hidden}
 .ls-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:2px;transition:width .4s ease;width:0}
@@ -47,11 +45,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .ls-footer{position:absolute;bottom:24px;font-size:10px;color:var(--text2);opacity:.5}
 .ls-skip{position:absolute;top:16px;right:16px;font-size:11px;color:var(--text2);background:none;border:none;cursor:pointer;opacity:0;transition:opacity .3s;padding:8px}.ls-skip.show{opacity:1}
 
-/* ═══ APP CONTAINER ═══ */
-.app-container{opacity:0;transition:opacity .5s ease .1s}
-.app-container.visible{opacity:1}
-
-/* ═══ HEADER ═══ */
+/* ═══ APP ═══ */
+.app-container{opacity:0;transition:opacity .5s ease .1s}.app-container.visible{opacity:1}
 .hdr{background:var(--header);border-bottom:2px solid var(--accent);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(12px)}
 .logo{display:flex;align-items:center;gap:8px}.logo svg{width:32px;height:32px;flex-shrink:0}
 .logo h1{font-size:18px;font-weight:800;letter-spacing:-.5px}.logo h1 span{color:var(--accent)}
@@ -73,6 +68,36 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .sh{display:flex;align-items:center;justify-content:space-between;padding:12px 4px 8px}
 .sh h2{font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px}
 .cnt{background:var(--accent);color:#000;font-size:11px;padding:2px 8px;border-radius:10px;font-weight:800}
+
+/* ═══ WIN RATE BANNER ═══ */
+.wr-banner{background:linear-gradient(135deg,rgba(0,200,83,.08),rgba(0,200,83,.02));border:1px solid rgba(0,200,83,.2);border-radius:12px;padding:16px;margin-bottom:16px;position:relative;overflow:hidden}
+.wr-banner::before{content:'';position:absolute;top:-20px;right:-20px;width:80px;height:80px;background:radial-gradient(circle,rgba(0,200,83,.15),transparent);border-radius:50%}
+.wr-title{font-size:14px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.wr-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:12px}
+.wr-stat{background:var(--card2);border-radius:8px;padding:10px 12px;border:1px solid var(--border)}
+.wr-stat-label{font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.wr-stat-value{font-size:20px;font-weight:800;color:var(--accent)}
+.wr-stat-sub{font-size:10px;color:var(--text2);margin-top:2px}
+.wr-streak{display:flex;gap:4px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.wr-streak-dot{width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}
+.wr-streak-dot.w{background:rgba(0,200,83,.2);color:var(--accent);border:1px solid rgba(0,200,83,.3)}
+.wr-streak-dot.l{background:rgba(248,81,73,.15);color:var(--red);border:1px solid rgba(248,81,73,.2)}
+.wr-streak-dot.p{background:rgba(139,148,158,.15);color:var(--text2);border:1px solid var(--border)}
+.wr-period{font-size:10px;color:var(--text2);display:flex;justify-content:space-between;align-items:center}
+.wr-period select{background:var(--card2);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-size:10px;cursor:pointer}
+.wr-profit{display:flex;align-items:center;gap:6px;padding:8px 12px;background:var(--card2);border-radius:8px;border:1px solid var(--border);margin-top:8px}
+.wr-profit-icon{font-size:16px}
+.wr-profit-text{font-size:11px;color:var(--text2);line-height:1.4}
+.wr-profit-text b{color:var(--accent)}
+.wr-cat-row{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(48,54,61,.5)}
+.wr-cat-row:last-child{border:none}
+.wr-cat-name{font-size:11px;color:var(--text);font-weight:500}
+.wr-cat-bar-wrap{width:100px;display:flex;align-items:center;gap:6px}
+.wr-cat-bar{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden}
+.wr-cat-fill{height:100%;border-radius:2px}
+.wr-cat-pct{font-size:11px;font-weight:700;min-width:32px;text-align:right}
+
+/* ═══ MATCH CARD ═══ */
 .mc{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:12px;overflow:hidden;transition:.2s}.mc:hover{border-color:rgba(0,200,83,.4)}
 .mh{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid var(--border);background:var(--card2)}
 .ml{font-size:11px;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:60%}
@@ -108,57 +133,38 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .log-bar{background:var(--card2);padding:4px 12px;font-size:10px;font-family:monospace;color:var(--text2);border-bottom:1px solid var(--border);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;cursor:pointer}.log-bar:hover{color:var(--accent)}
 .meta-bar{display:flex;gap:12px;padding:8px 16px;background:var(--card);border-bottom:1px solid var(--border);font-size:11px;color:var(--text2);justify-content:center;flex-wrap:wrap}
 .meta-bar .mi{display:flex;align-items:center;gap:4px}.meta-bar .mi b{color:var(--accent)}
-@media(max-width:480px){.tn{font-size:12px}.pn{font-size:12px}.ms{padding:12px}.cw2{width:80px}.logo h1{font-size:16px}.ls-logo h1{font-size:24px}.ls-logo svg{width:44px;height:44px}}
+@media(max-width:480px){.tn{font-size:12px}.pn{font-size:12px}.ms{padding:12px}.cw2{width:80px}.logo h1{font-size:16px}.ls-logo h1{font-size:24px}.ls-logo svg{width:44px;height:44px}.wr-stats{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════════════════════
-     LOADING SCREEN — shows only on cold start / expired cache
-     ═══════════════════════════════════════════════════════════ -->
+<!-- ═══ LOADING SCREEN ═══ -->
 <div class="loading-screen" id="loadScreen">
   <button class="ls-skip" id="lsSkip" onclick="skipLoading()">Skip ›</button>
-
   <div class="ls-logo">
     <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" stroke="#00c853" stroke-width="2"/><path d="M16 4a12 12 0 110 24 12 12 0 010-24zm0 3a9 9 0 100 18 9 9 0 000-18z" fill="#00c853" opacity=".3"/><path d="M10 16h12M16 10v12" stroke="#00c853" stroke-width="1.2" opacity=".5"/><circle cx="16" cy="16" r="3" fill="#00c853"/></svg>
     <h1>Predict<span>Pro</span></h1>
   </div>
   <div class="ls-tagline">AI-Powered Football Predictions</div>
-
   <div class="ls-steps" id="lsSteps">
     <div class="ls-step" id="ls1"><div class="ls-step-icon">1</div><div class="ls-step-text">Downloading today's matches…</div></div>
     <div class="ls-step" id="ls2"><div class="ls-step-icon">2</div><div class="ls-step-text">Loading match statistics…</div></div>
     <div class="ls-step" id="ls3"><div class="ls-step-icon">3</div><div class="ls-step-text">Generating predictions…</div></div>
     <div class="ls-step" id="ls4"><div class="ls-step-icon">4</div><div class="ls-step-text">Almost ready…</div></div>
   </div>
-
-  <div class="ls-progress-wrap">
-    <div class="ls-progress-bar"><div class="ls-progress-fill" id="lsBar"></div></div>
-    <div class="ls-percent" id="lsPct">0%</div>
-  </div>
+  <div class="ls-progress-wrap"><div class="ls-progress-bar"><div class="ls-progress-fill" id="lsBar"></div></div><div class="ls-percent" id="lsPct">0%</div></div>
   <div class="ls-sub" id="lsSub"></div>
-
-  <div class="ls-error" id="lsError">
-    <p id="lsErrMsg">Failed to load data. Please check your connection.</p>
-    <button onclick="retryLoading()">Retry</button>
-  </div>
-
+  <div class="ls-error" id="lsError"><p id="lsErrMsg">Failed to load data.</p><button onclick="retryLoading()">Retry</button></div>
   <div class="ls-footer">© 2025 PredictPro</div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════════
-     APP CONTAINER — hidden until loading completes
-     ═══════════════════════════════════════════════════════════ -->
+<!-- ═══ APP ═══ -->
 <div class="app-container" id="appContainer">
-
 <div class="hdr">
-  <div class="logo">
-    <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" stroke="#00c853" stroke-width="2"/><path d="M16 4a12 12 0 110 24 12 12 0 010-24zm0 3a9 9 0 100 18 9 9 0 000-18z" fill="#00c853" opacity=".3"/><path d="M10 16h12M16 10v12" stroke="#00c853" stroke-width="1.2" opacity=".5"/><circle cx="16" cy="16" r="3" fill="#00c853"/></svg>
-    <h1>Predict<span>Pro</span></h1>
-  </div>
+  <div class="logo"><svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" stroke="#00c853" stroke-width="2"/><path d="M16 4a12 12 0 110 24 12 12 0 010-24zm0 3a9 9 0 100 18 9 9 0 000-18z" fill="#00c853" opacity=".3"/><path d="M10 16h12M16 10v12" stroke="#00c853" stroke-width="1.2" opacity=".5"/><circle cx="16" cy="16" r="3" fill="#00c853"/></svg><h1>Predict<span>Pro</span></h1></div>
   <div class="hr"><span class="dot on" id="sDot"></span><span id="sTxt">Online</span><button class="rbtn" id="rBtn" onclick="doRefresh()" title="Refresh">↻</button></div>
 </div>
-<div class="log-bar" id="logBar" onclick="this.title=this.textContent">—</div>
+<div class="log-bar" id="logBar">—</div>
 <div class="dn">
   <button onclick="chgDate(-1)">‹</button>
   <div class="dd"><div class="d1" id="dDay">Today</div><div class="d2" id="dFull"></div></div>
@@ -168,14 +174,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <div class="cw"><div class="cs" id="tabs"></div></div>
 <div class="mn" id="main"></div>
 <div class="ft"><p>⚽ PredictPro Football Betting Tips © 2025</p><p style="margin-top:6px">AI-powered predictions • Always bet responsibly</p></div>
-
-</div><!-- end app-container -->
+</div>
 
 <div class="toast" id="toast"></div>
 
 <script>
 // ═══════════════════════════════════════════════════════════
-// §1  CONFIGURATION & STATE
+// §1  CONFIG & STATE
 // ═══════════════════════════════════════════════════════════
 const API='https://football-ai-backend.ephesians2004.workers.dev';
 const DB_NAME='predictpro_db';const DB_VER=2;
@@ -183,8 +188,7 @@ const TTL={FIX:24*36e5,DET:24*36e5,ODDS:2*36e5,PAST:7*24*36e5};
 let curDate=new Date(),curCat='DAILY_5PLUS',bundle=null,predC={};
 const MEM={bundles:new Map(),details:new Map()};
 const INFLIGHT=new Map();
-let lastPrefetchDate=null;
-let loadingComplete=false;
+let lastPrefetchDate=null,loadingComplete=false;
 
 // ═══════════════════════════════════════════════════════════
 // §2  LOGGING
@@ -198,332 +202,338 @@ const LOG={
 };
 
 // ═══════════════════════════════════════════════════════════
-// §3  3-LAYER CACHE
+// §3  3-LAYER CACHE (fixed refresh — no unnecessary resets)
 // ═══════════════════════════════════════════════════════════
 const Cache={
   db:null,
-  async init(){
-    return new Promise(ok=>{
-      const r=indexedDB.open(DB_NAME,DB_VER);
-      r.onupgradeneeded=e=>{
-        const d=e.target.result;
-        if(!d.objectStoreNames.contains('kv'))d.createObjectStore('kv');
-        if(!d.objectStoreNames.contains('meta'))d.createObjectStore('meta');
-      };
-      r.onsuccess=e=>{Cache.db=e.target.result;ok()};
-      r.onerror=()=>ok();
-    });
-  },
+  async init(){return new Promise(ok=>{const r=indexedDB.open(DB_NAME,DB_VER);r.onupgradeneeded=e=>{const d=e.target.result;if(!d.objectStoreNames.contains('kv'))d.createObjectStore('kv');if(!d.objectStoreNames.contains('meta'))d.createObjectStore('meta');if(!d.objectStoreNames.contains('winrate'))d.createObjectStore('winrate')};r.onsuccess=e=>{Cache.db=e.target.result;ok()};r.onerror=()=>ok()})},
   memGet(k){const e=MEM.bundles.get(k)||MEM.details.get(k);if(!e)return null;if(Date.now()-e.ts>e.ttl){MEM.bundles.delete(k);MEM.details.delete(k);return null}return e.data},
   memSet(k,d,t,s='bundles'){MEM[s].set(k,{data:d,ts:Date.now(),ttl:t})},
-  async diskGet(k){if(!this.db)return null;return new Promise(ok=>{try{const tx=this.db.transaction('kv','readonly');const rq=tx.objectStore('kv').get(k);rq.onsuccess=()=>{const e=rq.result;ok(e&&Date.now()-e.ts<=e.ttl?e.data:null)};rq.onerror=()=>ok(null)}catch(e){ok(null)}})},
+  async diskGet(k){if(!this.db)return null;return new Promise(ok=>{try{const rq=this.db.transaction('kv','readonly').objectStore('kv').get(k);rq.onsuccess=()=>{const e=rq.result;ok(e&&Date.now()-e.ts<=e.ttl?e.data:null)};rq.onerror=()=>ok(null)}catch(e){ok(null)}})},
   async diskSet(k,d,t){if(!this.db)return;try{this.db.transaction('kv','readwrite').objectStore('kv').put({data:d,ts:Date.now(),ttl:t},k)}catch(e){}},
-  async diskGetStale(k){if(!this.db)return null;return new Promise(ok=>{try{const tx=this.db.transaction('kv','readonly');const rq=tx.objectStore('kv').get(k);rq.onsuccess=()=>{const e=rq.result;ok(e?e.data:null)};rq.onerror=()=>ok(null)}catch(e){ok(null)}})},
+  async diskGetStale(k){if(!this.db)return null;return new Promise(ok=>{try{const rq=this.db.transaction('kv','readonly').objectStore('kv').get(k);rq.onsuccess=()=>{const e=rq.result;ok(e?e.data:null)};rq.onerror=()=>ok(null)}catch(e){ok(null)}})},
   async metaGet(k){if(!this.db)return null;return new Promise(ok=>{try{const rq=this.db.transaction('meta','readonly').objectStore('meta').get(k);rq.onsuccess=()=>ok(rq.result||null);rq.onerror=()=>ok(null)}catch(e){ok(null)}})},
   async metaSet(k,v){if(!this.db)return;try{this.db.transaction('meta','readwrite').objectStore('meta').put(v,k)}catch(e){}},
-  async netFetch(u){if(INFLIGHT.has(u)){LOG.info('Dedup: '+u.split('?')[0].split('/').pop());return INFLIGHT.get(u)}const p=fetch(u,{signal:AbortSignal.timeout(20000)}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}).finally(()=>INFLIGHT.delete(u));INFLIGHT.set(u,p);return p},
+  async wrGet(k){if(!this.db)return null;return new Promise(ok=>{try{const rq=this.db.transaction('winrate','readonly').objectStore('winrate').get(k);rq.onsuccess=()=>ok(rq.result||null);rq.onerror=()=>ok(null)}catch(e){ok(null)}})},
+  async wrSet(k,v){if(!this.db)return;try{this.db.transaction('winrate','readwrite').objectStore('winrate').put(v,k)}catch(e){}},
+  async wrGetAll(){if(!this.db)return[];return new Promise(ok=>{try{const rq=this.db.transaction('winrate','readonly').objectStore('winrate').getAll();rq.onsuccess=()=>ok(rq.result||[]);rq.onerror=()=>ok([])}catch(e){ok([])}})},
+  async netFetch(u){if(INFLIGHT.has(u)){LOG.info('Dedup');return INFLIGHT.get(u)}const p=fetch(u,{signal:AbortSignal.timeout(20000)}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}).finally(()=>INFLIGHT.delete(u));INFLIGHT.set(u,p);return p},
   async get(k,t,u){const m=this.memGet(k);if(m){LOG.mem(k);return m}const d=await this.diskGet(k);if(d){LOG.disk(k);this.memSet(k,d,t);return d}if(u){try{const n=await this.netFetch(u);LOG.net(k);this.memSet(k,n,t);await this.diskSet(k,n,t);return n}catch(e){LOG.stale(k+' net:'+e.message)}}const s=await this.diskGetStale(k);if(s){LOG.stale(k);this.memSet(k,s,t);return s}return null},
-  reset(){MEM.bundles.clear();MEM.details.clear();lastPrefetchDate=null;predC={};LOG.info('All caches reset')}
+  forceReset(){MEM.bundles.clear();MEM.details.clear();lastPrefetchDate=null;predC={};LOG.info('Force reset')}
 };
 
 // ═══════════════════════════════════════════════════════════
-// §4  LOADING SCREEN CONTROLLER
+// §4  WIN-RATE TRACKER
+// ═══════════════════════════════════════════════════════════
+const WinRate={
+  // Store prediction results: { date, category, predictions: [{id,matchId,market,confidence,result:'W'|'L'|'P'}] }
+  async recordPredictions(date,category,predictions){
+    const key=`${date}_${category}`;
+    const record={date,category,ts:Date.now(),predictions:predictions.map(p=>({
+      id:p.id,matchId:p.matchItem?.id||'',market:p.name,confidence:p.confidence,result:'P' // P=pending
+    }))};
+    await Cache.wrSet(key,record);
+  },
+
+  // Evaluate results against actual match outcomes
+  async evaluateDay(date,bundleData){
+    if(!bundleData||!bundleData.matches)return;
+    const matches=bundleData.matches;
+    // Build results map: matchId → {homeScore, awayScore}
+    const results={};
+    for(const m of matches){
+      const hs=m.score?.home??m.homeScore??m.goals?.home??m.result?.home??null;
+      const as2=m.score?.away??m.awayScore??m.goals?.away??m.result?.away??null;
+      if(hs!==null&&as2!==null)results[m.id]={h:hs,a:as2};
+    }
+    if(!Object.keys(results).length)return;
+
+    // Go through all stored predictions for this date
+    for(const[catKey,filter] of Object.entries(CF)){
+      const key=`${date}_${catKey}`;
+      const record=await Cache.wrGet(key);
+      if(!record||!record.predictions)continue;
+      let changed=false;
+      for(const pred of record.predictions){
+        if(pred.result!=='P')continue;
+        const res=results[pred.matchId];
+        if(!res)continue;
+        pred.result=this.checkResult(pred.id,res.h,res.a)?'W':'L';
+        changed=true;
+      }
+      if(changed)await Cache.wrSet(key,record);
+    }
+  },
+
+  // Check if a prediction was correct based on actual score
+  checkResult(marketId,h,a){
+    const t=h+a;
+    switch(marketId){
+      case'HOME_WIN':return h>a;
+      case'AWAY_WIN':return a>h;
+      case'DRAW':return h===a;
+      case'HOME_WIN_OR_DRAW':return h>=a;
+      case'AWAY_WIN_OR_DRAW':return a>=h;
+      case'OVER_0.5':return t>=1;
+      case'OVER_1.5':return t>=2;
+      case'OVER_2.5':return t>=3;
+      case'OVER_3.5':return t>=4;
+      case'UNDER_2.5':return t<3;
+      case'UNDER_3.5':return t<4;
+      case'UNDER_4.5':return t<5;
+      case'BTTS_YES':return h>0&&a>0;
+      case'BTTS_NO':return h===0||a===0;
+      case'HOME_OVER_0.5':return h>=1;
+      case'HOME_OVER_1.5':return h>=2;
+      case'AWAY_OVER_0.5':return a>=1;
+      case'AWAY_OVER_1.5':return a>=2;
+      case'HOME_CLEAN_SHEET':return a===0;
+      case'AWAY_CLEAN_SHEET':return h===0;
+      case'HOME_WIN_BTTS':return h>a&&h>0&&a>0;
+      case'AWAY_WIN_BTTS':return a>h&&h>0&&a>0;
+      case'HOME_WIN_OVER_2.5':return h>a&&t>=3;
+      case'AWAY_WIN_OVER_2.5':return a>h&&t>=3;
+      case'HOME_WIN_BY_1':return h-a===1;
+      case'HOME_WIN_BY_2_PLUS':return h-a>=2;
+      case'AWAY_WIN_BY_1':return a-h===1;
+      case'AWAY_WIN_BY_2_PLUS':return a-h>=2;
+      case'EXACT_1_1':return h===1&&a===1;
+      case'EXACT_2_1_HOME':return h===2&&a===1;
+      case'EXACT_3_1_HOME':return h===3&&a===1;
+      case'EXACT_0_1_AWAY':return h===0&&a===1;
+      case'EXACT_0_2_AWAY':return h===0&&a===2;
+      case'EXACT_0_3_AWAY':return h===0&&a===3;
+      default:return false;
+    }
+  },
+
+  // Calculate win rate stats for display
+  async getStats(period='7d'){
+    const all=await Cache.wrGetAll();
+    if(!all.length)return null;
+
+    const now=Date.now();
+    const cutoff=period==='7d'?7*864e5:period==='30d'?30*864e5:3*864e5;
+    const recent=all.filter(r=>now-r.ts<cutoff);
+    if(!recent.length)return null;
+
+    let totalW=0,totalL=0,totalP=0;
+    const byCat={};
+    const dailyResults=[];
+
+    for(const rec of recent){
+      if(!rec.predictions)continue;
+      const cat=rec.category;
+      if(!byCat[cat])byCat[cat]={w:0,l:0,p:0};
+      for(const p of rec.predictions){
+        if(p.result==='W'){totalW++;byCat[cat].w++}
+        else if(p.result==='L'){totalL++;byCat[cat].l++}
+        else{totalP++;byCat[cat].p++}
+      }
+    }
+
+    // Daily streak (last 10 days)
+    const dayMap={};
+    for(const rec of recent){
+      if(!rec.predictions)continue;
+      const d=rec.date;
+      if(!dayMap[d])dayMap[d]={w:0,l:0};
+      for(const p of rec.predictions){
+        if(p.result==='W')dayMap[d].w++;
+        else if(p.result==='L')dayMap[d].l++;
+      }
+    }
+    const sortedDays=Object.entries(dayMap).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,10);
+    const streak=sortedDays.map(([d,v])=>({date:d,w:v.w,l:v.l,pct:v.w+v.l>0?Math.round(v.w/(v.w+v.l)*100):0}));
+
+    const total=totalW+totalL;
+    const overallPct=total>0?Math.round(totalW/total*100):0;
+
+    // Per-category rates
+    const catRates=Object.entries(byCat).map(([cat,v])=>{
+      const ct=v.w+v.l;
+      return{cat,label:CL[cat]||cat,pct:ct>0?Math.round(v.w/ct*100):0,wins:v.w,total:ct,isVip:CF[cat]?.v||0};
+    }).filter(c=>c.total>0).sort((a,b)=>b.pct-a.pct);
+
+    // Profit simulation ($10 per bet, average odds ~1.8 for safe markets)
+    const avgOdds=1.75;
+    const profit=totalW*10*(avgOdds-1)-totalL*10;
+
+    return{
+      overallPct,totalW,totalL,totalP,total,
+      streak,catRates,profit:profit.toFixed(0),
+      period:period==='7d'?'Last 7 Days':period==='30d'?'Last 30 Days':'Last 3 Days'
+    };
+  },
+
+  // Render win rate banner HTML
+  async renderBanner(){
+    const stats=await this.getStats(wrPeriod);
+    if(!stats||stats.total<3)return this.renderPlaceholder();
+
+    const streakHtml=stats.streak.map(d=>{
+      const cls=d.pct>=60?'w':d.pct>=40?'p':'l';
+      const label=d.pct+'%';
+      return`<div class="wr-streak-dot ${cls}" title="${d.date}: ${d.w}W ${d.l}L">${label}</div>`;
+    }).join('');
+
+    const catHtml=stats.catRates.slice(0,6).map(c=>{
+      const col=c.pct>=65?'var(--accent)':c.pct>=45?'var(--gold)':'var(--red)';
+      return`<div class="wr-cat-row">
+        <span class="wr-cat-name">${c.label} ${c.isVip?'<span class="vb">VIP</span>':''}</span>
+        <div class="wr-cat-bar-wrap"><div class="wr-cat-bar"><div class="wr-cat-fill" style="width:${c.pct}%;background:${col}"></div></div><span class="wr-cat-pct" style="color:${col}">${c.pct}%</span></div>
+      </div>`;
+    }).join('');
+
+    const profitColor=parseFloat(stats.profit)>=0?'var(--accent)':'var(--red)';
+    const profitSign=parseFloat(stats.profit)>=0?'+':'';
+
+    return`<div class="wr-banner">
+      <div class="wr-title">📊 Prediction Performance</div>
+      <div class="wr-stats">
+        <div class="wr-stat"><div class="wr-stat-label">Win Rate</div><div class="wr-stat-value">${stats.overallPct}%</div><div class="wr-stat-sub">${stats.totalW}W / ${stats.totalL}L</div></div>
+        <div class="wr-stat"><div class="wr-stat-label">Total Tips</div><div class="wr-stat-value">${stats.total}</div><div class="wr-stat-sub">${stats.totalP} pending</div></div>
+        <div class="wr-stat"><div class="wr-stat-label">Simulated P/L</div><div class="wr-stat-value" style="color:${profitColor}">${profitSign}$${stats.profit}</div><div class="wr-stat-sub">$10 per bet</div></div>
+      </div>
+      <div class="wr-period"><span>${stats.period} · Daily Hit Rate</span><select onchange="wrPeriod=this.value;render()"><option value="7d"${wrPeriod==='7d'?' selected':''}>7 Days</option><option value="30d"${wrPeriod==='30d'?' selected':''}>30 Days</option><option value="3d"${wrPeriod==='3d'?' selected':''}>3 Days</option></select></div>
+      <div class="wr-streak" style="margin-top:8px">${streakHtml}</div>
+      ${catHtml?'<div style="margin-top:12px;padding-top:8px;border-top:1px solid var(--border)"><div style="font-size:11px;color:var(--text2);margin-bottom:6px;font-weight:600">Category Performance</div>'+catHtml+'</div>':''}
+      <div class="wr-profit"><span class="wr-profit-icon">💡</span><div class="wr-profit-text">Based on ${stats.total} settled tips. If you bet <b>$10</b> on each tip at average odds of <b>1.75</b>, your simulated return would be <b style="color:${profitColor}">${profitSign}$${stats.profit}</b>.</div></div>
+    </div>`;
+  },
+
+  renderPlaceholder(){
+    return`<div class="wr-banner" style="text-align:center;padding:20px">
+      <div class="wr-title" style="justify-content:center">📊 Prediction Performance</div>
+      <p style="font-size:12px;color:var(--text2);margin-top:8px">Win rate tracking starts after your first few predictions settle. Check back tomorrow to see how today's tips performed!</p>
+      <div class="wr-stats" style="margin-top:12px">
+        <div class="wr-stat"><div class="wr-stat-label">Tips Today</div><div class="wr-stat-value" style="color:var(--gold)">—</div><div class="wr-stat-sub">Awaiting results</div></div>
+        <div class="wr-stat"><div class="wr-stat-label">Tracking</div><div class="wr-stat-value" style="color:var(--gold)">Active</div><div class="wr-stat-sub">Recording predictions</div></div>
+      </div>
+    </div>`;
+  }
+};
+
+let wrPeriod='7d';
+
+// ═══════════════════════════════════════════════════════════
+// §5  LOADING SCREEN
 // ═══════════════════════════════════════════════════════════
 const LoadCtrl={
-  steps:[
-    {id:'ls1',text:'Downloading today\'s matches…'},
-    {id:'ls2',text:'Loading match statistics…'},
-    {id:'ls3',text:'Generating predictions…'},
-    {id:'ls4',text:'Almost ready…'}
-  ],
-  currentStep:0,
-  progress:0,
-  failed:false,
-  pendingRetries:0,
+  steps:[{id:'ls1'},{id:'ls2'},{id:'ls3'},{id:'ls4'}],
+  setStep(n){this.steps.forEach((s,i)=>{const el=document.getElementById(s.id);el.classList.remove('active','done');if(i<n)el.classList.add('done');else if(i===n)el.classList.add('active')})},
+  setProgress(p){document.getElementById('lsBar').style.width=p+'%';document.getElementById('lsPct').textContent=Math.round(p)+'%'},
+  setSub(t){document.getElementById('lsSub').textContent=t},
+  showError(m){document.getElementById('lsErrMsg').textContent=m||'Failed to load.';document.getElementById('lsError').classList.add('show');document.getElementById('lsSteps').style.opacity='.3'},
+  hideError(){document.getElementById('lsError').classList.remove('show');document.getElementById('lsSteps').style.opacity='1'},
+  dismiss(){loadingComplete=true;document.getElementById('loadScreen').classList.add('hidden');document.getElementById('appContainer').classList.add('visible')},
+  show(){loadingComplete=false;document.getElementById('loadScreen').classList.remove('hidden');document.getElementById('appContainer').classList.remove('visible');this.hideError();this.setStep(0);this.setProgress(0);this.setSub('');document.getElementById('lsSkip').classList.remove('show')},
 
-  setStep(n){
-    this.currentStep=n;
-    this.steps.forEach((s,i)=>{
-      const el=document.getElementById(s.id);
-      el.classList.remove('active','done');
-      if(i<n)el.classList.add('done');
-      else if(i===n)el.classList.add('active');
-    });
-  },
-
-  setProgress(pct){
-    this.progress=pct;
-    document.getElementById('lsBar').style.width=pct+'%';
-    document.getElementById('lsPct').textContent=Math.round(pct)+'%';
-  },
-
-  setSub(txt){document.getElementById('lsSub').textContent=txt},
-
-  showError(msg){
-    this.failed=true;
-    document.getElementById('lsErrMsg').textContent=msg||'Failed to load data. Please check your connection.';
-    document.getElementById('lsError').classList.add('show');
-    document.getElementById('lsSteps').style.opacity='.3';
-  },
-
-  hideError(){
-    this.failed=false;
-    document.getElementById('lsError').classList.remove('show');
-    document.getElementById('lsSteps').style.opacity='1';
-  },
-
-  dismiss(){
-    loadingComplete=true;
-    document.getElementById('loadScreen').classList.add('hidden');
-    document.getElementById('appContainer').classList.add('visible');
-  },
-
-  show(){
-    loadingComplete=false;
-    document.getElementById('loadScreen').classList.remove('hidden');
-    document.getElementById('appContainer').classList.remove('visible');
-    this.hideError();
-    this.setStep(0);this.setProgress(0);this.setSub('');
-    document.getElementById('lsSkip').classList.remove('show');
-  },
-
-  // ─── Check if we need the loading screen at all ───
   async needsLoading(){
     const ds=fmtD(curDate);
-    const lastLoad=await Cache.metaGet('lastLoadDate');
-    if(lastLoad&&lastLoad.date===ds&&Date.now()-lastLoad.ts<TTL.FIX){
-      // Check if the actual data is still in cache
-      const cached=Cache.memGet('bundle:'+ds)||(await Cache.diskGet('bundle:'+ds));
-      if(cached){
-        LOG.info('Warm cache for '+ds+' — skipping loading screen');
-        return false;
-      }
+    const last=await Cache.metaGet('lastLoadDate');
+    if(last&&last.date===ds&&Date.now()-last.ts<TTL.FIX){
+      const c=Cache.memGet('bundle:'+ds)||(await Cache.diskGet('bundle:'+ds));
+      if(c)return false;
     }
     return true;
   },
 
-  // ─── Fetch bundle with pending retry logic ───
-  async fetchBundleWithRetry(ds){
+  async fetchWithRetry(ds){
     const url=`${API}/v2/bundle?date=${ds}`;
-    let attempts=0;const maxRetries=3;
-    while(attempts<maxRetries){
+    for(let i=0;i<3;i++){
       try{
-        this.setSub(attempts>0?'Checking server… (retry '+(attempts)+')':'Connecting to server…');
+        this.setSub(i>0?`Checking server… (retry ${i})`:'Connecting…');
         const raw=await Cache.netFetch(url);
-
-        // Handle pending status
-        if(raw.status==='pending'){
-          attempts++;
-          this.pendingRetries=attempts;
-          this.setSub(`Server preparing data… retry ${attempts}/${maxRetries}`);
-          if(attempts<maxRetries){
-            await new Promise(r=>setTimeout(r,2000));
-            continue;
-          }
-          LOG.info('Bundle pending after '+maxRetries+' retries');
-          return null;
-        }
+        if(raw.status==='pending'){this.setSub(`Server preparing… retry ${i+1}/3`);if(i<2){await new Promise(r=>setTimeout(r,2000));continue}return null}
         return raw;
-      }catch(e){
-        attempts++;
-        if(attempts<maxRetries){
-          this.setSub(`Connection issue… retry ${attempts}/${maxRetries}`);
-          await new Promise(r=>setTimeout(r,2000));
-        }else{
-          LOG.stale('Bundle fetch failed after '+maxRetries+' attempts: '+e.message);
-          return null;
-        }
-      }
+      }catch(e){if(i<2){this.setSub(`Retrying… ${i+1}/3`);await new Promise(r=>setTimeout(r,2000))}else return null}
     }
     return null;
   },
 
-  // ─── Main loading sequence ───
-  async runLoading(){
-    const ds=fmtD(curDate);
-    const key='bundle:'+ds;
-    const ttl=isPast(curDate)?TTL.PAST:TTL.FIX;
-
+  async run(){
+    const ds=fmtD(curDate),key='bundle:'+ds,ttl=isPast(curDate)?TTL.PAST:TTL.FIX;
     try{
-      // ═══ STEP 1: Download bundle ═══
-      this.setStep(0);this.setProgress(5);
-      this.setSub('Fetching match data…');
-
-      let raw=await this.fetchBundleWithRetry(ds);
-      let fromCache=false;
-
-      if(!raw){
-        // Try disk cache as fallback
-        raw=await Cache.diskGetStale(key);
-        if(raw){
-          fromCache=true;
-          LOG.stale('Using stale cache for loading');
-          this.setSub('Loaded from offline cache');
-        }else{
-          this.showError('Could not download match data. Please check your internet connection and try again.');
-          return false;
-        }
-      }
-
+      this.setStep(0);this.setProgress(5);this.setSub('Fetching match data…');
+      let raw=await this.fetchWithRetry(ds),fromCache=false;
+      if(!raw){raw=await Cache.diskGetStale(key);if(raw){fromCache=true;this.setSub('Loaded from cache')}else{this.showError('Could not load data. Check your connection.');return false}}
       this.setProgress(25);
-      if(!fromCache){
-        Cache.memSet(key,raw,ttl);
-        await Cache.diskSet(key,raw,ttl);
-      }
-
-      // After step 1, show skip button (data is downloaded)
+      if(!fromCache){Cache.memSet(key,raw,ttl);await Cache.diskSet(key,raw,ttl)}
       setTimeout(()=>document.getElementById('lsSkip').classList.add('show'),500);
 
-      // ═══ STEP 2: Parse H2H + Stats ═══
-      this.setStep(1);this.setProgress(30);
-      this.setSub('Parsing match statistics…');
-
+      this.setStep(1);this.setProgress(30);this.setSub('Parsing statistics…');
       const parsed=parseBundle(raw);
-      if(!parsed||!parsed.matches.length){
-        this.showError('No matches found for today. Try refreshing later.');
-        return false;
-      }
-
+      if(!parsed||!parsed.matches.length){this.showError('No matches found today.');return false}
       bundle=parsed;
-      const matchCount=bundle.matches.length;
-      const statsCount=Object.values(bundle.details).filter(d=>d.stats||d.h2h).length;
-      this.setSub(`${matchCount} matches · ${statsCount} with statistics`);
-      this.setProgress(50);
+      this.setSub(`${bundle.matches.length} matches loaded`);this.setProgress(55);
 
-      // Write individual match details to cache
-      let written=0;
-      for(const[id,det]of Object.entries(bundle.details)){
-        if(det.stats||det.h2h){
-          Cache.memSet('detail:'+id,det,TTL.DET,'details');
-          await Cache.diskSet('detail:'+id,det,TTL.DET);
-          written++;
-          // Update progress proportionally within step 2 range (50-65%)
-          if(written%10===0)this.setProgress(50+Math.min(written/Math.max(statsCount,1)*15,15));
-        }
-      }
+      for(const[id,det]of Object.entries(bundle.details)){if(det.stats||det.h2h){Cache.memSet('detail:'+id,det,TTL.DET,'details');await Cache.diskSet('detail:'+id,det,TTL.DET)}}
       this.setProgress(65);
 
-      // ═══ STEP 3: Generate predictions ═══
-      this.setStep(2);this.setProgress(68);
-      this.setSub('Running prediction engine…');
-
-      // Warm up prediction engine by pre-generating the default category
+      this.setStep(2);this.setProgress(68);this.setSub('Running prediction engine…');
       const t0=performance.now();
-      const warmKey=curCat+'_'+ds;
-      predC[warmKey]=PE.filter(curCat,bundle.matches,bundle.details);
-      const elapsed=Math.round(performance.now()-t0);
-      this.setSub(`${predC[warmKey].length} predictions generated in ${elapsed}ms`);
-      this.setProgress(85);
-
-      // Pre-generate a few popular categories
-      const popularCats=['PRIME_SAFE','DAILY_10PLUS','OVER_UNDER','ELITE_VIP'];
-      for(const cat of popularCats){
-        if(cat!==curCat){
-          const ck=cat+'_'+ds;
-          predC[ck]=PE.filter(cat,bundle.matches,bundle.details);
-        }
+      predC[curCat+'_'+ds]=PE.filter(curCat,bundle.matches,bundle.details);
+      // Record predictions for win-rate tracking
+      await WinRate.recordPredictions(ds,curCat,predC[curCat+'_'+ds]);
+      for(const cat of['PRIME_SAFE','DAILY_10PLUS','OVER_UNDER','ELITE_VIP']){
+        if(cat!==curCat){const ck=cat+'_'+ds;predC[ck]=PE.filter(cat,bundle.matches,bundle.details);await WinRate.recordPredictions(ds,cat,predC[ck])}
       }
-      this.setProgress(92);
+      this.setSub(`Done in ${Math.round(performance.now()-t0)}ms`);this.setProgress(90);
 
-      // ═══ STEP 4: Finalize ═══
-      this.setStep(3);this.setProgress(95);
-      this.setSub('Verifying cache integrity…');
+      this.setStep(3);this.setProgress(95);this.setSub('Evaluating past results…');
+      // Try to evaluate yesterday's results
+      const yds=fmtD(new Date(curDate.getTime()-864e5));
+      const yBundle=await Cache.get('bundle:'+yds,TTL.PAST,`${API}/v2/bundle?date=${yds}`);
+      if(yBundle)await WinRate.evaluateDay(yds,parseBundle(yBundle));
 
-      // Verify cache integrity
-      const verify=await Cache.diskGet(key);
-      if(!verify){
-        LOG.info('Cache verification failed — rewriting');
-        await Cache.diskSet(key,raw,ttl);
-      }
-
-      // Save last load timestamp
       await Cache.metaSet('lastLoadDate',{date:ds,ts:Date.now()});
-      lastPrefetchDate=ds;
-
-      this.setProgress(100);
-      this.setSub('Ready!');
-
-      LOG.bundle(`Loading complete: ${matchCount} matches, ${statsCount} stats, ${Object.keys(predC).length} categories cached`);
-
-      // Brief pause so user sees 100%
+      lastPrefetchDate=ds;this.setProgress(100);this.setSub('Ready!');
       await new Promise(r=>setTimeout(r,400));
-
       return true;
-
-    }catch(e){
-      console.error('Loading error:',e);
-      this.showError('An unexpected error occurred: '+e.message);
-      return false;
-    }
+    }catch(e){this.showError('Error: '+e.message);return false}
   }
 };
 
-function retryLoading(){
-  LoadCtrl.hideError();
-  LoadCtrl.setStep(0);
-  LoadCtrl.setProgress(0);
-  startLoading();
-}
-
-function skipLoading(){
-  // Only allow skip if we have some data
-  if(bundle&&bundle.matches.length){
-    LoadCtrl.dismiss();
-    render();
-  }
-}
-
-async function startLoading(){
-  const success=await LoadCtrl.runLoading();
-  if(success){
-    LoadCtrl.dismiss();
-    dispDate(curDate);
-    buildTabs();
-    render();
-  }
-}
+function retryLoading(){LoadCtrl.hideError();LoadCtrl.setStep(0);LoadCtrl.setProgress(0);startLoading()}
+function skipLoading(){if(bundle&&bundle.matches.length){LoadCtrl.dismiss();render()}}
+async function startLoading(){const ok=await LoadCtrl.run();if(ok){LoadCtrl.dismiss();dispDate(curDate);buildTabs();render()}}
 
 // ═══════════════════════════════════════════════════════════
-// §5  DATA HELPERS
+// §6  DATA HELPERS
 // ═══════════════════════════════════════════════════════════
 function fmtD(d){return d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0')}
 function isPast(d){const t=new Date();t.setHours(0,0,0,0);const c=new Date(d);c.setHours(0,0,0,0);return c<t}
-
 function parseBundle(raw){
-  if(!raw)return null;
-  if(raw.status==='error')return null;
-  let matches=raw.response?.matches||raw.matches||raw.data?.matches||raw.data?.fixtures||raw.fixtures||[];
-  if(!Array.isArray(matches))matches=[];
-  const details={};
-  for(const m of matches){
-    const id=m.id||m.fixture?.id||('m'+Math.random().toString(36).slice(2));
-    m.id=id;
-    const h2h=m.cachedH2H||m.h2h||m.head2head||null;
-    const stats=m.cachedStats||m.stats||m.teamStats||null;
-    const odds=m.cachedOdds||m.odds||(stats?.odds?{response:{odds:stats.odds}}:null)||null;
-    details[id]={h2h,stats,odds};
-  }
-  const meta=raw.meta||{totalMatches:matches.length,statsLoaded:Object.values(details).filter(d=>d.stats).length,readiness:100};
-  return{matches,details,meta};
+  if(!raw||raw.status==='error')return null;
+  let ms=raw.response?.matches||raw.matches||raw.data?.matches||raw.fixtures||[];
+  if(!Array.isArray(ms))ms=[];const det={};
+  for(const m of ms){const id=m.id||m.fixture?.id||('m'+Math.random().toString(36).slice(2));m.id=id;det[id]={h2h:m.cachedH2H||m.h2h||null,stats:m.cachedStats||m.stats||null,odds:m.cachedOdds||m.odds||(m.stats?.odds?{response:{odds:m.stats.odds}}:null)||null}}
+  return{matches:ms,details:det,meta:raw.meta||{totalMatches:ms.length,statsLoaded:Object.values(det).filter(d=>d.stats).length,readiness:100}};
 }
-
-async function loadBundleForDate(date,force){
+async function loadBundleForDate(date){
   const ds=fmtD(date),key='bundle:'+ds,ttl=isPast(date)?TTL.PAST:TTL.FIX;
-  if(!force&&lastPrefetchDate===ds){const m=Cache.memGet(key);if(m){LOG.mem('prefetch-guard:'+ds);return parseBundle(m)}}
+  if(lastPrefetchDate===ds){const m=Cache.memGet(key);if(m){LOG.mem('guard:'+ds);return parseBundle(m)}}
   const url=`${API}/v2/bundle?date=${ds}`;
-  if(force){try{const f=await Cache.netFetch(url);LOG.net('forced:'+ds);Cache.memSet(key,f,ttl);await Cache.diskSet(key,f,ttl);lastPrefetchDate=ds;return parseBundle(f)}catch(e){LOG.stale('force failed');}}
-  const raw=await Cache.get(key,ttl,url);lastPrefetchDate=ds;return parseBundle(raw);
+  const raw=await Cache.get(key,ttl,url);
+  lastPrefetchDate=ds;
+  if(raw){
+    // Record predictions for new date and evaluate if past
+    const parsed=parseBundle(raw);
+    if(parsed&&isPast(date))await WinRate.evaluateDay(ds,parsed);
+    return parsed;
+  }
+  return null;
 }
 
 // ═══════════════════════════════════════════════════════════
-// §6  POISSON ENGINE
+// §7  POISSON ENGINE
 // ═══════════════════════════════════════════════════════════
 function clamp(v,lo,hi){return Math.min(Math.max(v,lo),hi)}
 function hc(s){let h=0;for(let i=0;i<(s||'').length;i++)h=((h<<5)-h+s.charCodeAt(i))|0;return h}
 function sRand(seed){let s=seed|0;return()=>{s=(s*1664525+1013904223)|0;return(s>>>0)/4294967296}}
 function noise(seed,id,range){const r=sRand((seed+hc(id))^0xDEADBEEF);return Math.floor(r()*(range*2+1))-range}
 function fmt1(v){return v.toFixed(1)}
-
 const Po={
   pmf(k,l){if(l<=0)return k===0?1:0;if(k<0)return 0;let f=0;for(let i=2;i<=k;i++)f+=Math.log(i);return clamp(Math.exp(k*Math.log(l)-l-f),0,1)},
   cdf(n,l){let s=0;for(let i=0;i<=n;i++)s+=this.pmf(i,l);return clamp(s,0,1)},
@@ -537,222 +547,123 @@ const Po={
 };
 
 // ═══════════════════════════════════════════════════════════
-// §7  CATEGORY FILTERS
+// §8  CATEGORIES & PREDICTION ENGINE
 // ═══════════════════════════════════════════════════════════
-const CF={
-  PRIME_SAFE:{ids:new Set(["HOME_WIN","AWAY_WIN","HOME_WIN_OR_DRAW","AWAY_WIN_OR_DRAW"]),min:48,n:2,v:0},
-  DAILY_5PLUS:{ids:new Set(["HOME_WIN","AWAY_WIN","HOME_WIN_OR_DRAW","AWAY_WIN_OR_DRAW","OVER_1.5","OVER_2.5","UNDER_3.5"]),min:50,n:3,v:0},
-  DAILY_10PLUS:{ids:new Set(["HOME_WIN","AWAY_WIN","HOME_WIN_OR_DRAW","AWAY_WIN_OR_DRAW","OVER_1.5","UNDER_3.5"]),min:48,n:4,v:0},
-  OVER_UNDER:{ids:new Set(["OVER_1.5","UNDER_2.5","UNDER_3.5","UNDER_4.5"]),min:50,n:2,v:0},
-  DOUBLE_TIPS:{ids:new Set(["HOME_WIN_BTTS","AWAY_WIN_BTTS","HOME_WIN_OR_DRAW","AWAY_WIN_OR_DRAW"]),min:48,n:2,v:0},
-  SINGLE_GAME:{ids:new Set(["HOME_WIN","AWAY_WIN","HOME_WIN_OR_DRAW","AWAY_WIN_OR_DRAW"]),min:50,n:1,v:0},
-  DAILY_2_2_5:{ids:new Set(["HOME_WIN_OR_DRAW","AWAY_WIN_OR_DRAW","UNDER_2.5","UNDER_3.5"]),min:50,n:5,v:0},
-  ELITE_VIP:{ids:new Set(["HOME_WIN_OR_DRAW","AWAY_WIN_OR_DRAW","HOME_OVER_0.5","AWAY_OVER_0.5","OVER_1.5","UNDER_3.5","UNDER_4.5"]),min:58,n:5,v:1},
-  CORRECT_SCORE:{ids:new Set(["EXACT_1_1","EXACT_2_1_HOME","EXACT_3_1_HOME","EXACT_0_1_AWAY","EXACT_0_2_AWAY","EXACT_0_3_AWAY"]),min:10,n:6,v:1},
-  HT_FT_VIP:{ids:new Set(["HT_FT_HOME_HOME","HT_FT_DRAW_HOME","HT_FT_AWAY_AWAY","HT_FT_DRAW_AWAY"]),min:10,n:6,v:1},
-  DAILY_50_ODDS:{ids:new Set(["HOME_WIN","AWAY_WIN","HOME_WIN_OR_DRAW","AWAY_WIN_OR_DRAW","OVER_1.5","OVER_2.5","OVER_3.5","UNDER_3.5","UNDER_4.5","HOME_OVER_0.5","AWAY_OVER_0.5","HOME_WIN_BTTS","AWAY_WIN_BTTS"]),min:45,n:10,v:1},
-  PRIME_PLUS:{ids:new Set(["HOME_WIN","AWAY_WIN","HOME_WIN_OR_DRAW","AWAY_WIN_OR_DRAW","HOME_OVER_0.5","AWAY_OVER_0.5"]),min:48,n:6,v:1},
-  FIXED_VIP:{ids:new Set(["HOME_WIN_BY_1","HOME_WIN_BY_2_PLUS","OVER_0.5"]),min:30,n:3,v:1},
-  PREMIUM_VIP:{ids:new Set(["HOME_WIN_BTTS","AWAY_WIN_BTTS","OVER_1.5","UNDER_3.5","HOME_WIN_OR_DRAW","AWAY_WIN_OR_DRAW"]),min:48,n:5,v:1},
-  SINGLE_VIP:{ids:new Set(["HOME_OVER_0.5","AWAY_OVER_0.5","UNDER_4.5"]),min:60,n:1,v:1},
-  OVER_UNDER_VIP:{ids:new Set(["OVER_2.5","OVER_3.5","UNDER_3.5","UNDER_4.5","OVER_1.5"]),min:45,n:6,v:1},
-  HIGH_VALUE_1:{ids:new Set(["HOME_WIN_OR_DRAW","AWAY_WIN_OR_DRAW","OVER_1.5","UNDER_3.5","UNDER_4.5","HOME_OVER_0.5","AWAY_OVER_0.5","OVER_0.5"]),min:70,n:6,v:0},
-  HIGH_VALUE_2:{ids:new Set(["HOME_WIN","AWAY_WIN","DRAW","OVER_2.5","UNDER_2.5","BTTS_YES","HOME_CLEAN_SHEET"]),min:55,n:6,v:0}
-};
+const CF={PRIME_SAFE:{ids:new Set(["HOME_WIN","AWAY_WIN","HOME_WIN_OR_DRAW","AWAY_WIN_OR_DRAW"]),min:48,n:2,v:0},DAILY_5PLUS:{ids:new Set(["HOME_WIN","AWAY_WIN","HOME_WIN_OR_DRAW","AWAY_WIN_OR_DRAW","OVER_1.5","OVER_2.5","UNDER_3.5"]),min:50,n:3,v:0},DAILY_10PLUS:{ids:new Set(["HOME_WIN","AWAY_WIN","HOME_WIN_OR_DRAW","AWAY_WIN_OR_DRAW","OVER_1.5","UNDER_3.5"]),min:48,n:4,v:0},OVER_UNDER:{ids:new Set(["OVER_1.5","UNDER_2.5","UNDER_3.5","UNDER_4.5"]),min:50,n:2,v:0},DOUBLE_TIPS:{ids:new Set(["HOME_WIN_BTTS","AWAY_WIN_BTTS","HOME_WIN_OR_DRAW","AWAY_WIN_OR_DRAW"]),min:48,n:2,v:0},SINGLE_GAME:{ids:new Set(["HOME_WIN","AWAY_WIN","HOME_WIN_OR_DRAW","AWAY_WIN_OR_DRAW"]),min:50,n:1,v:0},DAILY_2_2_5:{ids:new Set(["HOME_WIN_OR_DRAW","AWAY_WIN_OR_DRAW","UNDER_2.5","UNDER_3.5"]),min:50,n:5,v:0},ELITE_VIP:{ids:new Set(["HOME_WIN_OR_DRAW","AWAY_WIN_OR_DRAW","HOME_OVER_0.5","AWAY_OVER_0.5","OVER_1.5","UNDER_3.5","UNDER_4.5"]),min:58,n:5,v:1},CORRECT_SCORE:{ids:new Set(["EXACT_1_1","EXACT_2_1_HOME","EXACT_3_1_HOME","EXACT_0_1_AWAY","EXACT_0_2_AWAY","EXACT_0_3_AWAY"]),min:10,n:6,v:1},HT_FT_VIP:{ids:new Set(["HT_FT_HOME_HOME","HT_FT_DRAW_HOME","HT_FT_AWAY_AWAY","HT_FT_DRAW_AWAY"]),min:10,n:6,v:1},DAILY_50_ODDS:{ids:new Set(["HOME_WIN","AWAY_WIN","HOME_WIN_OR_DRAW","AWAY_WIN_OR_DRAW","OVER_1.5","OVER_2.5","OVER_3.5","UNDER_3.5","UNDER_4.5","HOME_OVER_0.5","AWAY_OVER_0.5","HOME_WIN_BTTS","AWAY_WIN_BTTS"]),min:45,n:10,v:1},PRIME_PLUS:{ids:new Set(["HOME_WIN","AWAY_WIN","HOME_WIN_OR_DRAW","AWAY_WIN_OR_DRAW","HOME_OVER_0.5","AWAY_OVER_0.5"]),min:48,n:6,v:1},FIXED_VIP:{ids:new Set(["HOME_WIN_BY_1","HOME_WIN_BY_2_PLUS","OVER_0.5"]),min:30,n:3,v:1},PREMIUM_VIP:{ids:new Set(["HOME_WIN_BTTS","AWAY_WIN_BTTS","OVER_1.5","UNDER_3.5","HOME_WIN_OR_DRAW","AWAY_WIN_OR_DRAW"]),min:48,n:5,v:1},SINGLE_VIP:{ids:new Set(["HOME_OVER_0.5","AWAY_OVER_0.5","UNDER_4.5"]),min:60,n:1,v:1},OVER_UNDER_VIP:{ids:new Set(["OVER_2.5","OVER_3.5","UNDER_3.5","UNDER_4.5","OVER_1.5"]),min:45,n:6,v:1},HIGH_VALUE_1:{ids:new Set(["HOME_WIN_OR_DRAW","AWAY_WIN_OR_DRAW","OVER_1.5","UNDER_3.5","UNDER_4.5","HOME_OVER_0.5","AWAY_OVER_0.5","OVER_0.5"]),min:70,n:6,v:0},HIGH_VALUE_2:{ids:new Set(["HOME_WIN","AWAY_WIN","DRAW","OVER_2.5","UNDER_2.5","BTTS_YES","HOME_CLEAN_SHEET"]),min:55,n:6,v:0}};
 const CL={PRIME_SAFE:"Prime Safe",DAILY_5PLUS:"Daily 5+",DAILY_10PLUS:"Daily 10+",OVER_UNDER:"Over/Under",DOUBLE_TIPS:"Double Tips",SINGLE_GAME:"Single Game",DAILY_2_2_5:"Daily 2‒2.5",ELITE_VIP:"Elite VIP",CORRECT_SCORE:"Correct Score",HT_FT_VIP:"HT/FT VIP",DAILY_50_ODDS:"50+ Odds",PRIME_PLUS:"Prime Plus",FIXED_VIP:"Fixed VIP",PREMIUM_VIP:"Premium VIP",SINGLE_VIP:"Single VIP",OVER_UNDER_VIP:"O/U VIP",HIGH_VALUE_1:"High Value 1",HIGH_VALUE_2:"High Value 2"};
 
-// ═══════════════════════════════════════════════════════════
-// §8  PREDICTION ENGINE v2
-// ═══════════════════════════════════════════════════════════
 const PE={
 rel(n){return[0,.15,.3,.45,.55,.65,.72,.79,.85,.93,1][clamp(n,0,10)]},
-calcH2H(data){
-  const ms=data?.response?.matches||data?.matches||data?.data||[];
-  if(!ms.length)return{n:0,hW:0,aW:0,dr:0,avg:2.7,hAvg:1.51,aAvg:1.19,bt:0,o15:0,o25:0,o35:0,hS:0,aS:0,hC:0,aC:0,base:true};
-  let hW=0,aW=0,dr=0,tG=0,tH=0,tA=0,bt=0,o1=0,o2=0,o3=0,hs=0,as2=0,hcs=0,acs=0;
-  for(const x of ms){const h=x.home?.score??x.homeScore??x.goals?.home??x.score?.home??0;const a=x.away?.score??x.awayScore??x.goals?.away??x.score?.away??0;const t=h+a;tG+=t;tH+=h;tA+=a;h>a?hW++:a>h?aW++:dr++;if(t>=2)o1++;if(t>=3)o2++;if(t>=4)o3++;if(h>0&&a>0)bt++;if(h>0)hs++;if(a>0)as2++;if(a===0)hcs++;if(h===0)acs++}
-  const n=ms.length;return{n,hW,aW,dr,avg:tG/n,hAvg:tH/n,aAvg:tA/n,bt,o15:o1,o25:o2,o35:o3,hS:hs,aS:as2,hC:hcs,aC:acs,base:false};
-},
-extractCtx(det,isH){
-  const td=isH?(det?.stats?.response?.home||det?.response?.home||det?.stats?.home):(det?.stats?.response?.away||det?.response?.away||det?.stats?.away);
-  const s=td?.stats||td;if(!s)return null;
-  const w=isH?s.homeWins??s.wins?.home:s.awayWins??s.wins?.away;const l=isH?s.homeLosses??s.losses?.home:s.awayLosses??s.losses?.away;const d=isH?s.homeDraws??s.draws?.home:s.awayDraws??s.draws?.away;
-  const gs=isH?s.homeGoalsScored??s.goals?.scored?.home:s.awayGoalsScored??s.goals?.scored?.away;const gc=isH?s.homeGoalsConceded??s.goals?.conceded?.home:s.awayGoalsConceded??s.goals?.conceded?.away;
-  const g=Math.max((w||0)+(l||0)+(d||0),1);const fm=td?.form||s?.form||'';const rW=fm.slice(-5).split('').filter(c=>c==='W').length;
-  return{atk:clamp((gs||0)/g,.1,4),def:clamp((gc||0)/g,.1,4),wr:clamp((w||0)/g,0,1),rW,ff:(rW-2)*.05};
-},
-extractImp(det){
-  const no={hW:.4,dr:.28,aW:.32,has:false};const o=det?.odds?.response?.odds||det?.odds?.odds||det?.response?.odds||det?.odds||null;if(!o||typeof o!=='object')return no;
-  let rH=o.home_win??o.homeWin??o.home??o.Home??o['1']??0;let rD=o.draw??o.Draw??o['X']??o.x??0;let rA=o.away_win??o.awayWin??o.away??o.Away??o['2']??0;
-  if(rH<=1)rH=0;if(rD<=1)rD=0;if(rA<=1)rA=0;if(!rH&&!rD&&!rA)return no;
-  const iH=rH>1?1/rH:0,iD=rD>1?1/rD:0,iA=rA>1?1/rA:0,s=iH+iD+iA;if(s<=0)return no;
-  return{hW:clamp(iH/s,.01,.98),dr:clamp(iD/s,.01,.98),aW:clamp(iA/s,.01,.98),has:true};
-},
-compLam(h,hC,aC,r){
-  const bH=1.51,bA=1.19;let sH,sA;
-  if(hC&&aC){const l=Po.lam(hC.atk,hC.def,aC.atk,aC.def,1.1);sH=l.h;sA=l.a}else{sH=bH;sA=bA}
-  const hH=h.n>0?h.hAvg:bH,hA=h.n>0?h.aAvg:bA;const w=r*.4,sw=1-w;let bh=sH*sw+hH*w,ba=sA*sw+hA*w;
-  if(hC)bh*=(1+hC.ff);if(aC)ba*=(1+aC.ff);
-  return{h:clamp(bh,.2,5),a:clamp(ba,.1,5),get t(){return this.h+this.a}};
-},
+calcH2H(d){const ms=d?.response?.matches||d?.matches||d?.data||[];if(!ms.length)return{n:0,hW:0,aW:0,dr:0,avg:2.7,hAvg:1.51,aAvg:1.19,bt:0,o15:0,o25:0,o35:0,hS:0,aS:0,hC:0,aC:0,base:true};let hW=0,aW=0,dr=0,tG=0,tH=0,tA=0,bt=0,o1=0,o2=0,o3=0,hs=0,as2=0,hcs=0,acs=0;for(const x of ms){const h=x.home?.score??x.homeScore??x.goals?.home??0,a=x.away?.score??x.awayScore??x.goals?.away??0,t=h+a;tG+=t;tH+=h;tA+=a;h>a?hW++:a>h?aW++:dr++;if(t>=2)o1++;if(t>=3)o2++;if(t>=4)o3++;if(h>0&&a>0)bt++;if(h>0)hs++;if(a>0)as2++;if(a===0)hcs++;if(h===0)acs++}const n=ms.length;return{n,hW,aW,dr,avg:tG/n,hAvg:tH/n,aAvg:tA/n,bt,o15:o1,o25:o2,o35:o3,hS:hs,aS:as2,hC:hcs,aC:acs,base:false}},
+extractCtx(d,isH){const td=isH?(d?.stats?.response?.home||d?.response?.home||d?.stats?.home):(d?.stats?.response?.away||d?.response?.away||d?.stats?.away);const s=td?.stats||td;if(!s)return null;const w=isH?s.homeWins??s.wins?.home:s.awayWins??s.wins?.away;const l=isH?s.homeLosses??s.losses?.home:s.awayLosses??s.losses?.away;const dd=isH?s.homeDraws??s.draws?.home:s.awayDraws??s.draws?.away;const gs=isH?s.homeGoalsScored??s.goals?.scored?.home:s.awayGoalsScored??s.goals?.scored?.away;const gc=isH?s.homeGoalsConceded??s.goals?.conceded?.home:s.awayGoalsConceded??s.goals?.conceded?.away;const g=Math.max((w||0)+(l||0)+(dd||0),1);const fm=td?.form||s?.form||'';const rW=fm.slice(-5).split('').filter(c=>c==='W').length;return{atk:clamp((gs||0)/g,.1,4),def:clamp((gc||0)/g,.1,4),wr:clamp((w||0)/g,0,1),rW,ff:(rW-2)*.05}},
+extractImp(d){const no={hW:.4,dr:.28,aW:.32,has:false};const o=d?.odds?.response?.odds||d?.odds?.odds||d?.response?.odds||d?.odds;if(!o||typeof o!=='object')return no;let rH=o.home_win??o.homeWin??o.home??o.Home??o['1']??0,rD=o.draw??o.Draw??o['X']??o.x??0,rA=o.away_win??o.awayWin??o.away??o.Away??o['2']??0;if(rH<=1)rH=0;if(rD<=1)rD=0;if(rA<=1)rA=0;if(!rH&&!rD&&!rA)return no;const iH=rH>1?1/rH:0,iD=rD>1?1/rD:0,iA=rA>1?1/rA:0,s=iH+iD+iA;if(s<=0)return no;return{hW:clamp(iH/s,.01,.98),dr:clamp(iD/s,.01,.98),aW:clamp(iA/s,.01,.98),has:true}},
+compLam(h,hC,aC,r){const bH=1.51,bA=1.19;let sH,sA;if(hC&&aC){const l=Po.lam(hC.atk,hC.def,aC.atk,aC.def,1.1);sH=l.h;sA=l.a}else{sH=bH;sA=bA}const hH=h.n>0?h.hAvg:bH,hA=h.n>0?h.aAvg:bA;const w=r*.4,sw=1-w;let bh=sH*sw+hH*w,ba=sA*sw+hA*w;if(hC)bh*=(1+hC.ff);if(aC)ba*=(1+aC.ff);return{h:clamp(bh,.2,5),a:clamp(ba,.1,5),get t(){return this.h+this.a}}},
 bl(h2s,ps,r,ip,adv,sn,lo,hi){const b=h2s*r+ps*(1-r);const o=ip!=null?b*.6+ip*100*.4:b;return clamp(Math.round(o+(adv||0)+(sn||0)),lo,hi)},
 reasons(...rs){return rs.filter(r=>r&&r.length>0)},
-
 gen(match,det){
   const P=[],sd=hc(match.id||'')^(hc(match.home?.name||'')*31)^(hc(match.away?.name||'')*17)^(hc(match.time||'')*7);
   const m=this.calcH2H(det?.h2h),r=this.rel(m.n),ip=this.extractImp(det),hC=this.extractCtx(det,true),aC=this.extractCtx(det,false),L=this.compLam(m,hC,aC,r);
   const t=Math.max(m.n,1),mk=(id,nm,c,an,re)=>({id,name:nm,confidence:c,analysis:an,reasons:this.reasons(...(re||[])),matchItem:match});
-
-  const pHW=Po.pHW(L.h,L.a),pDr=Po.pDr(L.h,L.a),pAW=Po.pAW(L.h,L.a);
-  const hHW=m.base?45:m.hW/t*100,hAW=m.base?32:m.aW/t*100,hDr=m.base?26:m.dr/t*100;
+  const pHW=Po.pHW(L.h,L.a),pDr=Po.pDr(L.h,L.a),pAW=Po.pAW(L.h,L.a),hHW=m.base?45:m.hW/t*100,hAW=m.base?32:m.aW/t*100,hDr=m.base?26:m.dr/t*100;
   const hn=m.base?"General home advantage applies":`${m.hW}W/${m.dr}D/${m.aW}L in last ${m.n} meetings`;
-
-  P.push(mk("HOME_WIN","Home Win",this.bl(hHW,pHW*100,r,ip.has?ip.hW:null,3,noise(sd,"HW",4),36,93),pHW>=.5?"Home side are strong at home — form book strongly suggests a home win.":"Home advantage could be the deciding factor.",[hn,m.base?`Home side win in roughly 45% of matches`:`Home wins ${m.hW} of ${t} games`]));
+  P.push(mk("HOME_WIN","Home Win",this.bl(hHW,pHW*100,r,ip.has?ip.hW:null,3,noise(sd,"HW",4),36,93),pHW>=.5?"Home side are strong at home — form book strongly suggests a home win.":"Home advantage could be the deciding factor.",[hn]));
   P.push(mk("AWAY_WIN","Away Win",this.bl(hAW,pAW*100,r,ip.has?ip.aW:null,0,noise(sd,"AW",4),28,88),pAW>=.4?"Away quality and form suggest they can win on the road.":"Away win possible — visitors have enough quality.",[hn]));
-  P.push(mk("DRAW","Draw",this.bl(hDr,pDr*100,r,ip.has?ip.dr:null,0,noise(sd,"DR",4),24,72),"Evenly matched — a share of the spoils looks fair.",[hn,!m.base&&m.dr>0?`${m.dr} draws in ${m.n} H2H matches`:"Evenly matched sides"]));
-
-  const h1X=m.base?68:(m.hW+m.dr)/t*100;
-  P.push(mk("HOME_WIN_OR_DRAW","Home Win or Draw (1X)",this.bl(h1X,(pHW+pDr)*100,r,ip.has?ip.hW+ip.dr:null,2,noise(sd,"1X",4),40,88),"Home team rarely lose here — solid value to avoid defeat.",[!m.base?`${m.hW+m.dr} of ${m.n} H2H ended home win or draw`:"Home sides win or draw in most matches"]));
-  const hX2=m.base?57:(m.aW+m.dr)/t*100;
-  P.push(mk("AWAY_WIN_OR_DRAW","Away Win or Draw (X2)",this.bl(hX2,(pDr+pAW)*100,r,ip.has?ip.aW+ip.dr:null,0,noise(sd,"X2",4),36,82),"Away team have enough quality to avoid defeat.",[!m.base?`${m.aW+m.dr} of ${m.n} H2H ended away win or draw`:"Away sides competitive"]));
-
+  P.push(mk("DRAW","Draw",this.bl(hDr,pDr*100,r,ip.has?ip.dr:null,0,noise(sd,"DR",4),24,72),"Evenly matched — a share of the spoils looks fair.",[hn]));
+  const h1X=m.base?68:(m.hW+m.dr)/t*100;P.push(mk("HOME_WIN_OR_DRAW","Home Win or Draw (1X)",this.bl(h1X,(pHW+pDr)*100,r,ip.has?ip.hW+ip.dr:null,2,noise(sd,"1X",4),40,88),"Home team rarely lose here — solid value.",[!m.base?`${m.hW+m.dr} of ${m.n} H2H home win or draw`:"Home sides win or draw mostly"]));
+  const hX2=m.base?57:(m.aW+m.dr)/t*100;P.push(mk("AWAY_WIN_OR_DRAW","Away Win or Draw (X2)",this.bl(hX2,(pDr+pAW)*100,r,ip.has?ip.aW+ip.dr:null,0,noise(sd,"X2",4),36,82),"Away team can avoid defeat.",[!m.base?`${m.aW+m.dr} of ${m.n} H2H away win or draw`:"Away sides competitive"]));
   const lT=L.t,gc=(pP,hR,id,lo,hi)=>this.bl(hR*100,pP*100,r*.3,null,0,noise(sd,id,5),lo,hi);
-  P.push(mk("OVER_0.5","Over 0.5 Goals",clamp(Math.round(Po.ccdf(0,lT)*100+noise(sd,"O05",2)),82,97),"Almost every match produces at least one goal.",["Goals expected from both attacks"]));
-  const pO15=Po.ccdf(1,lT),hO15=m.base?.74:m.o15/t;
-  P.push(mk("OVER_1.5","Over 1.5 Goals",gc(pO15,hO15,"O15",55,93),lT>=2.5?"Both attacks in form — 2+ goals almost certain.":"Enough quality for at least two goals.",[!m.base?`${m.o15} of ${m.n} H2H had 2+ goals`:"Both teams finding the net"]));
-  const pO25=Po.ccdf(2,lT),hO25=m.base?.52:m.o25/t;
-  P.push(mk("OVER_2.5","Over 2.5 Goals",gc(pO25,hO25,"O25",34,88),lT>=3?"High-scoring record — three goals looks a minimum.":"Both attacks capable.",[!m.base?`${m.o25} of ${m.n} H2H had 3+ goals`:"Both attacks in good form"]));
-  const pO35=Po.ccdf(3,lT),hO35=m.base?.28:m.o35/t;
-  P.push(mk("OVER_3.5","Over 3.5 Goals",gc(pO35,hO35,"O35",22,76),lT>=3?"Both in excellent form — high-scoring game likely.":"Would need both sides firing.",[!m.base?`${m.o35} of ${m.n} H2H had 4+ goals`:"Attacking styles possible"]));
-  const pU25=Po.cdf(2,lT),hU25=m.base?.48:(t-m.o25)/t;
-  P.push(mk("UNDER_2.5","Under 2.5 Goals",gc(pU25,hU25,"U25",28,86),lT<2.2?"Defensively solid — tight, low-scoring affair.":"Defences likely to stay on top.",[!m.base?`${t-m.o25} of ${m.n} H2H had <3 goals`:"Defensively solid sides"]));
-  const pU35=Po.cdf(3,lT),hU35=m.base?.72:(t-m.o35)/t;
-  P.push(mk("UNDER_3.5","Under 3.5 Goals",gc(pU35,hU35,"U35",42,92),"Fewer than four goals — most common range.",[!m.base?`${t-m.o35} of ${m.n} H2H had ≤3 goals`:"Vast majority of matches end under this line"]));
-  P.push(mk("UNDER_4.5","Under 4.5 Goals",clamp(Math.round(Po.cdf(4,lT)*100+noise(sd,"U45",3)),68,96),"Fewer than five goals is an overwhelming favourite.",["Very few matches produce 5+ goals"]));
-
-  const pBt=Po.pBt(L.h,L.a),hBt=m.base?.48:m.bt/t;
-  P.push(mk("BTTS_YES","Both Teams To Score - Yes",gc(pBt,hBt,"BT",36,88),L.h>=1.3&&L.a>=1?"Both have scoring threat — expect goals at both ends.":"Both sides scoring — BTTS is a strong play.",[!m.base?`${m.bt} of ${m.n} H2H saw both score`:"Both attacks scoring consistently"]));
-  P.push(mk("BTTS_NO","Both Teams To Score - No",gc(1-pBt,1-hBt,"BN",24,76),"At least one side likely to be kept quiet.",["Strong defensive records"]));
-
-  const cs=(hg,ag,id,fl,cl)=>{const raw=Po.jp(hg,ag,L.h,L.a);return clamp(Math.floor(raw*280)+(r>=.5&&m.n>=5?noise(sd,id,2):0),fl,cl)};
-  const csA=(hg,ag)=>hg===ag&&hg===1?"Closely matched — 1-1 the most likely single scoreline.":hg>ag?`A ${hg}-${ag} home win — home side take control.`:`A ${hg}-${ag} away win — visitors are clinical.`;
-  P.push(mk("EXACT_1_1","Correct Score: 1-1",cs(1,1,"CS11",18,52),csA(1,1),["Even sides often settle for a share"]));
-  P.push(mk("EXACT_2_1_HOME","Correct Score: 2-1 (Home)",cs(2,1,"CS21",15,48),csA(2,1),["Most common winning margin"]));
-  P.push(mk("EXACT_3_1_HOME","Correct Score: 3-1 (Home)",cs(3,1,"CS31",12,40),csA(3,1),["Home dominance could pull clear"]));
-  P.push(mk("EXACT_0_1_AWAY","Correct Score: 0-1 (Away)",cs(0,1,"CS01",12,42),csA(0,1),["Away side grind out a result"]));
-  P.push(mk("EXACT_0_2_AWAY","Correct Score: 0-2 (Away)",cs(0,2,"CS02",10,36),csA(0,2),["Clinical away display"]));
-  P.push(mk("EXACT_0_3_AWAY","Correct Score: 0-3 (Away)",cs(0,3,"CS03",10,28),csA(0,3),["Long-shot but not impossible"]));
-
+  P.push(mk("OVER_0.5","Over 0.5 Goals",clamp(Math.round(Po.ccdf(0,lT)*100+noise(sd,"O05",2)),82,97),"Almost every match produces at least one goal.",["Goals expected"]));
+  const pO15=Po.ccdf(1,lT),hO15=m.base?.74:m.o15/t;P.push(mk("OVER_1.5","Over 1.5 Goals",gc(pO15,hO15,"O15",55,93),lT>=2.5?"Both attacks in form — 2+ goals certain.":"Enough quality for two goals.",[!m.base?`${m.o15} of ${m.n} H2H had 2+ goals`:"Both finding the net"]));
+  const pO25=Po.ccdf(2,lT),hO25=m.base?.52:m.o25/t;P.push(mk("OVER_2.5","Over 2.5 Goals",gc(pO25,hO25,"O25",34,88),lT>=3?"Three goals looks a minimum.":"Both attacks capable.",[!m.base?`${m.o25} of ${m.n} H2H had 3+ goals`:"Attacks in form"]));
+  const pO35=Po.ccdf(3,lT),hO35=m.base?.28:m.o35/t;P.push(mk("OVER_3.5","Over 3.5 Goals",gc(pO35,hO35,"O35",22,76),lT>=3?"High-scoring game likely.":"Would need both firing.",[!m.base?`${m.o35} of ${m.n} H2H had 4+ goals`:"Attacking styles"]));
+  const pU25=Po.cdf(2,lT),hU25=m.base?.48:(t-m.o25)/t;P.push(mk("UNDER_2.5","Under 2.5 Goals",gc(pU25,hU25,"U25",28,86),lT<2.2?"Defensively solid — tight affair.":"Defences on top.",[!m.base?`${t-m.o25} of ${m.n} H2H had <3 goals`:"Solid defences"]));
+  const pU35=Po.cdf(3,lT),hU35=m.base?.72:(t-m.o35)/t;P.push(mk("UNDER_3.5","Under 3.5 Goals",gc(pU35,hU35,"U35",42,92),"Fewer than four — most common range.",["Vast majority end under this"]));
+  P.push(mk("UNDER_4.5","Under 4.5 Goals",clamp(Math.round(Po.cdf(4,lT)*100+noise(sd,"U45",3)),68,96),"Overwhelming statistical favourite.",["Very few produce 5+"]));
+  const pBt=Po.pBt(L.h,L.a),hBt=m.base?.48:m.bt/t;P.push(mk("BTTS_YES","Both Teams To Score - Yes",gc(pBt,hBt,"BT",36,88),L.h>=1.3&&L.a>=1?"Expect goals at both ends.":"Both scoring — BTTS strong.",[!m.base?`${m.bt} of ${m.n} H2H both scored`:"Both scoring consistently"]));
+  P.push(mk("BTTS_NO","Both Teams To Score - No",gc(1-pBt,1-hBt,"BN",24,76),"One side likely kept quiet.",["Strong defensive records"]));
+  const cs=(hg,ag,id,fl,cl)=>clamp(Math.floor(Po.jp(hg,ag,L.h,L.a)*280)+(r>=.5&&m.n>=5?noise(sd,id,2):0),fl,cl);
+  const csA=(hg,ag)=>hg===ag&&hg===1?"1-1 the most likely single scoreline.":hg>ag?`${hg}-${ag} home win.`:`${hg}-${ag} away win.`;
+  P.push(mk("EXACT_1_1","Correct Score: 1-1",cs(1,1,"CS11",18,52),csA(1,1),["Even sides"]));
+  P.push(mk("EXACT_2_1_HOME","Correct Score: 2-1",cs(2,1,"CS21",15,48),csA(2,1),["Common margin"]));
+  P.push(mk("EXACT_3_1_HOME","Correct Score: 3-1",cs(3,1,"CS31",12,40),csA(3,1),["Home dominance"]));
+  P.push(mk("EXACT_0_1_AWAY","Correct Score: 0-1",cs(0,1,"CS01",12,42),csA(0,1),["Away grind"]));
+  P.push(mk("EXACT_0_2_AWAY","Correct Score: 0-2",cs(0,2,"CS02",10,36),csA(0,2),["Clinical away"]));
+  P.push(mk("EXACT_0_3_AWAY","Correct Score: 0-3",cs(0,3,"CS03",10,28),csA(0,3),["Long-shot"]));
   const htH=L.h*.45,htA=L.a*.45,pHtH=Po.pHW(htH,htA),pHtA=Po.pAW(htH,htA),pHtD=Po.pDr(htH,htA),pFH=Po.pHW(L.h,L.a),pFA=Po.pAW(L.h,L.a);
-  P.push(mk("HT_FT_HOME_HOME","HT/FT: Home/Home",this.bl(hHW,pHtH*pFH*100,r,ip.has?ip.hW*.6:null,0,noise(sd,"HH",6),16,65),"Home lead at break and see the game out.",["Leading at HT predicts FT result"]));
-  P.push(mk("HT_FT_DRAW_HOME","HT/FT: Draw/Home",this.bl((hHW+hDr)/2,pHtD*pFH*100,r,null,0,noise(sd,"DH",6),12,55),"All square at break — home find a way.",["Home sides improve after the break"]));
-  P.push(mk("HT_FT_AWAY_AWAY","HT/FT: Away/Away",this.bl(hAW,pHtA*pFA*100,r,ip.has?ip.aW*.6:null,0,noise(sd,"AA",6),12,60),"Away take control early and hold on.",["Away HT leaders convert well"]));
-  P.push(mk("HT_FT_DRAW_AWAY","HT/FT: Draw/Away",this.bl((hAW+hDr)/2,pHtD*pFA*100,r,null,0,noise(sd,"DA",6),10,50),"Away absorb pressure then strike.",["Counter-attacking sides thrive"]));
-
+  P.push(mk("HT_FT_HOME_HOME","HT/FT: Home/Home",this.bl(hHW,pHtH*pFH*100,r,ip.has?ip.hW*.6:null,0,noise(sd,"HH",6),16,65),"Home lead at break, see it out.",["HT lead predicts FT"]));
+  P.push(mk("HT_FT_DRAW_HOME","HT/FT: Draw/Home",this.bl((hHW+hDr)/2,pHtD*pFH*100,r,null,0,noise(sd,"DH",6),12,55),"Square at break, home find a way.",["Home improve 2nd half"]));
+  P.push(mk("HT_FT_AWAY_AWAY","HT/FT: Away/Away",this.bl(hAW,pHtA*pFA*100,r,ip.has?ip.aW*.6:null,0,noise(sd,"AA",6),12,60),"Away control early, hold on.",["HT leaders convert"]));
+  P.push(mk("HT_FT_DRAW_AWAY","HT/FT: Draw/Away",this.bl((hAW+hDr)/2,pHtD*pFA*100,r,null,0,noise(sd,"DA",6),10,50),"Away strike after break.",["Counter-attack"]));
   const pHS=1-Po.pmf(0,L.h),pAS=1-Po.pmf(0,L.a),hHS=m.base?.8:m.hS/t,hAS=m.base?.72:m.aS/t;
-  P.push(mk("HOME_OVER_0.5","Home Over 0.5 Goals",this.bl(hHS*100,pHS*100,r*.3,null,0,noise(sd,"HO5",4),60,94),"Home expected to score.",[!m.base?`${m.hS} of ${m.n} H2H — home scored`:"Home sides score in vast majority"]));
-  P.push(mk("HOME_OVER_1.5","Home Over 1.5 Goals",this.bl(clamp(m.hAvg,0,3)/3*100,Po.ccdf(1,L.h)*100,r*.3,null,0,noise(sd,"H15",5),28,80),"Home to score at least twice.",["Home attack capable of multi-goal haul"]));
-  P.push(mk("AWAY_OVER_0.5","Away Over 0.5 Goals",this.bl(hAS*100,pAS*100,r*.3,null,0,noise(sd,"AO5",4),54,92),"Away will get at least one.",[!m.base?`${m.aS} of ${m.n} H2H — away scored`:"Away attacks score in most matches"]));
-  P.push(mk("AWAY_OVER_1.5","Away Over 1.5 Goals",this.bl(clamp(m.aAvg,0,3)/3*100,Po.ccdf(1,L.a)*100,r*.3,null,0,noise(sd,"A15",5),22,75),"Away to bag two or more.",["Away attack capable on their day"]));
-  P.push(mk("HOME_CLEAN_SHEET","Home Clean Sheet",this.bl((m.base?.32:m.hC/t)*100,Po.pmf(0,L.a)*100,r*.3,null,0,noise(sd,"HC",5),22,78),"Home to keep a clean sheet.",["Home defences well-organised"]));
-  P.push(mk("AWAY_CLEAN_SHEET","Away Clean Sheet",this.bl((m.base?.22:m.aC/t)*100,Po.pmf(0,L.h)*100,r*.3,null,0,noise(sd,"AC",5),16,72),"Away clean sheet — tough but possible.",["Away can keep it tight"]));
-
+  P.push(mk("HOME_OVER_0.5","Home Over 0.5",this.bl(hHS*100,pHS*100,r*.3,null,0,noise(sd,"HO5",4),60,94),"Home expected to score.",[!m.base?`${m.hS}/${m.n} H2H home scored`:"Home score mostly"]));
+  P.push(mk("AWAY_OVER_0.5","Away Over 0.5",this.bl(hAS*100,pAS*100,r*.3,null,0,noise(sd,"AO5",4),54,92),"Away will score.",[!m.base?`${m.aS}/${m.n} H2H away scored`:"Away score mostly"]));
+  P.push(mk("HOME_OVER_1.5","Home Over 1.5",this.bl(clamp(m.hAvg,0,3)/3*100,Po.ccdf(1,L.h)*100,r*.3,null,0,noise(sd,"H15",5),28,80),"Home to score twice.",["Multi-goal capable"]));
+  P.push(mk("AWAY_OVER_1.5","Away Over 1.5",this.bl(clamp(m.aAvg,0,3)/3*100,Po.ccdf(1,L.a)*100,r*.3,null,0,noise(sd,"A15",5),22,75),"Away bag two or more.",["Away capable"]));
+  P.push(mk("HOME_CLEAN_SHEET","Home Clean Sheet",this.bl((m.base?.32:m.hC/t)*100,Po.pmf(0,L.a)*100,r*.3,null,0,noise(sd,"HC",5),22,78),"Home keep clean sheet.",["Defence organised"]));
+  P.push(mk("AWAY_CLEAN_SHEET","Away Clean Sheet",this.bl((m.base?.22:m.aC/t)*100,Po.pmf(0,L.h)*100,r*.3,null,0,noise(sd,"AC",5),16,72),"Away clean sheet possible.",["Can keep it tight"]));
   const hHW2=m.base?.45:m.hW/t,hAW2=m.base?.32:m.aW/t,hBt2=m.base?.48:m.bt/t,hO252=m.base?.52:m.o25/t;
-  P.push(mk("HOME_WIN_BTTS","Home Win & BTTS",this.bl(hHW2*hBt2*100,pHW*Po.pBt(L.h,L.a)*100,r,ip.has?ip.hW*.55:null,0,noise(sd,"HWB",5),34,76),"Home win while both score.",["Both attacks capable"]));
-  P.push(mk("AWAY_WIN_BTTS","Away Win & BTTS",this.bl(hAW2*hBt2*100,pAW*Po.pBt(L.h,L.a)*100,r,ip.has?ip.aW*.55:null,0,noise(sd,"AWB",5),28,70),"Away win but home score too.",["Both sides can score"]));
-  P.push(mk("HOME_WIN_OVER_2.5","Home Win & Over 2.5",this.bl(hHW2*hO252*100,pHW*Po.ccdf(2,lT)*100,r,ip.has?ip.hW*.6:null,0,noise(sd,"HWO",5),30,74),"Home win with plenty of goals.",["Home dominance in open game"]));
-  P.push(mk("AWAY_WIN_OVER_2.5","Away Win & Over 2.5",this.bl(hAW2*hO252*100,pAW*Po.ccdf(2,lT)*100,r,ip.has?ip.aW*.6:null,0,noise(sd,"AWO",5),24,70),"Away win in a goal-filled game.",["Away strength in attack"]));
-
-  let pW1=0;for(let a=0;a<=8;a++)pW1+=Po.jp(a+1,a,L.h,L.a);
-  P.push(mk("HOME_WIN_BY_1","Home Win by 1",this.bl(hHW2*100*.6,pW1*100,r,null,0,noise(sd,"W1",5),28,68),"Tight home win by one goal.",["One-goal margins most frequent"]));
-  let pW2=0;for(let a=0;a<=6;a++)for(let hh=a+2;hh<=8;hh++)pW2+=Po.jp(hh,a,L.h,L.a);
-  P.push(mk("HOME_WIN_BY_2_PLUS","Home Win by 2+",this.bl(hHW2*100*.4,pW2*100,r,null,0,noise(sd,"W2",5),18,64),"Home to win comfortably.",["Quality gap needed"]));
-  let pA1=0;for(let hh=0;hh<=8;hh++)pA1+=Po.jp(hh,hh+1,L.h,L.a);
-  P.push(mk("AWAY_WIN_BY_1","Away Win by 1",this.bl(hAW2*100*.6,pA1*100,r,null,0,noise(sd,"A1",5),22,64),"Away nick it by one.",["Close away wins common"]));
-  let pA2=0;for(let hh=0;hh<=6;hh++)for(let a=hh+2;a<=8;a++)pA2+=Po.jp(hh,a,L.h,L.a);
-  P.push(mk("AWAY_WIN_BY_2_PLUS","Away Win by 2+",this.bl(hAW2*100*.4,pA2*100,r,null,0,noise(sd,"A2",5),14,58),"Away to win by two or more.",["Dominant away display required"]));
-
+  P.push(mk("HOME_WIN_BTTS","Home Win & BTTS",this.bl(hHW2*hBt2*100,pHW*Po.pBt(L.h,L.a)*100,r,ip.has?ip.hW*.55:null,0,noise(sd,"HWB",5),34,76),"Home win, both score.",["Both capable"]));
+  P.push(mk("AWAY_WIN_BTTS","Away Win & BTTS",this.bl(hAW2*hBt2*100,pAW*Po.pBt(L.h,L.a)*100,r,ip.has?ip.aW*.55:null,0,noise(sd,"AWB",5),28,70),"Away win, home consolation.",["Both can score"]));
+  P.push(mk("HOME_WIN_OVER_2.5","Home Win & Over 2.5",this.bl(hHW2*hO252*100,pHW*Po.ccdf(2,lT)*100,r,ip.has?ip.hW*.6:null,0,noise(sd,"HWO",5),30,74),"Home win, plenty of goals.",["Open game"]));
+  P.push(mk("AWAY_WIN_OVER_2.5","Away Win & Over 2.5",this.bl(hAW2*hO252*100,pAW*Po.ccdf(2,lT)*100,r,ip.has?ip.aW*.6:null,0,noise(sd,"AWO",5),24,70),"Away win, goals galore.",["Attack strength"]));
+  let pW1=0;for(let a=0;a<=8;a++)pW1+=Po.jp(a+1,a,L.h,L.a);P.push(mk("HOME_WIN_BY_1","Home Win by 1",this.bl(hHW2*100*.6,pW1*100,r,null,0,noise(sd,"W1",5),28,68),"Tight home win.",["Most frequent margin"]));
+  let pW2=0;for(let a=0;a<=6;a++)for(let hh=a+2;hh<=8;hh++)pW2+=Po.jp(hh,a,L.h,L.a);P.push(mk("HOME_WIN_BY_2_PLUS","Home Win by 2+",this.bl(hHW2*100*.4,pW2*100,r,null,0,noise(sd,"W2",5),18,64),"Comfortable home win.",["Quality gap"]));
+  let pA1=0;for(let hh=0;hh<=8;hh++)pA1+=Po.jp(hh,hh+1,L.h,L.a);P.push(mk("AWAY_WIN_BY_1","Away Win by 1",this.bl(hAW2*100*.6,pA1*100,r,null,0,noise(sd,"A1",5),22,64),"Away nick it by one.",["Close wins common"]));
+  let pA2=0;for(let hh=0;hh<=6;hh++)for(let a=hh+2;a<=8;a++)pA2+=Po.jp(hh,a,L.h,L.a);P.push(mk("AWAY_WIN_BY_2_PLUS","Away Win by 2+",this.bl(hAW2*100*.4,pA2*100,r,null,0,noise(sd,"A2",5),14,58),"Away win by two+.",["Dominant display"]));
   const htL2=L.h*.45+L.a*.45,shL=L.h*.55+L.a*.55;
-  P.push(mk("FIRST_HALF_OVER_0.5","1H Over 0.5",clamp(Math.round((1-Po.pmf(0,htL2))*100+noise(sd,"1H5",5)),52,82),"At least one first-half goal.",["Fast starts typical"]));
-  P.push(mk("FIRST_HALF_OVER_1.5","1H Over 1.5",clamp(Math.round(Po.ccdf(1,htL2)*100+noise(sd,"1H15",5)),28,68),"Two or more first-half goals.",["Attacking starts"]));
-  P.push(mk("SECOND_HALF_OVER_0.5","2H Over 0.5",clamp(Math.round((1-Po.pmf(0,shL))*100+noise(sd,"2H5",4)),62,88),"At least one second-half goal.",["Teams open up late"]));
-  P.push(mk("GOAL_RANGE_0_1","Goals 0-1",clamp(Math.round(Po.cdf(1,lT)*100+noise(sd,"R01",5)),18,68),"Very low-scoring — defences dominate.",["Defensive sides"]));
-  P.push(mk("GOAL_RANGE_2_3","Goals 2-3",clamp(Math.round((Po.cdf(3,lT)-Po.cdf(1,lT))*100+noise(sd,"R23",5)),36,74),"Most common scoring band.",["Competitive matches"]));
-  P.push(mk("GOAL_RANGE_4_PLUS","Goals 4+",clamp(Math.round(Po.ccdf(3,lT)*100+noise(sd,"R4",5)),14,70),"Four or more goals — a goal-fest.",["High-scoring trend"]));
-  P.push(mk("OVER_8.5_CORNERS","Over 8.5 Corners",clamp(62+noise(sd,"CRN",6),52,74),"Nine or more corners.",["High-tempo football"]));
-  P.push(mk("OVER_3.5_CARDS","Over 3.5 Cards",clamp(55+noise(sd,"CRD",7),46,68),"Four or more cards.",["Physical match expected"]));
-
+  P.push(mk("FIRST_HALF_OVER_0.5","1H Over 0.5",clamp(Math.round((1-Po.pmf(0,htL2))*100+noise(sd,"1H5",5)),52,82),"Goal before half-time.",["Fast starts"]));
+  P.push(mk("SECOND_HALF_OVER_0.5","2H Over 0.5",clamp(Math.round((1-Po.pmf(0,shL))*100+noise(sd,"2H5",4)),62,88),"Second-half goal.",["Teams open up"]));
+  P.push(mk("GOAL_RANGE_2_3","Goals 2-3",clamp(Math.round((Po.cdf(3,lT)-Po.cdf(1,lT))*100+noise(sd,"R23",5)),36,74),"Most common band.",["Sweet spot"]));
+  P.push(mk("OVER_8.5_CORNERS","Over 8.5 Corners",clamp(62+noise(sd,"CRN",6),52,74),"Nine or more corners.",["High-tempo"]));
+  P.push(mk("OVER_3.5_CARDS","Over 3.5 Cards",clamp(55+noise(sd,"CRD",7),46,68),"Four or more cards.",["Physical match"]));
   const lo=(id,nm,b,rng,l2,h2,an,re)=>mk(id,nm,clamp(b+noise(sd,id,rng),l2,h2),an,re);
-  P.push(lo("EARLY_GOAL_0_15","Goal First 15 Min",45,8,32,55,"Goal inside the first quarter.",["Fast-starting forwards"]));
-  P.push(lo("LATE_GOAL_75_PLUS","Goal After 75 Min",48,6,38,58,"Late drama as teams chase the game.",["Teams push forward late"]));
-  P.push(lo("HOME_SCORE_FIRST","Home Scores First",52,6,42,62,"Home side draw first blood.",["Home advantage early"]));
-  P.push(lo("AWAY_SCORE_FIRST","Away Scores First",46,6,36,56,"Away catch home cold.",["Counter-attacks"]));
-  P.push(lo("GOAL_BOTH_HALVES","Goal Both Halves",50,6,40,62,"Goals across both halves.",["Goal-active sides"]));
-  P.push(lo("COMEBACK_POSSIBLE","Comeback Possible",42,8,30,52,"A team coming from behind to win.",["Squad depth"]));
-  P.push(lo("PENALTY_AWARDED","Penalty Awarded",38,8,28,50,"Penalty kick in this match.",["Attacking play in the box"]));
-  P.push(lo("RED_CARD","Red Card",32,8,22,44,"A red card shown.",["Tense match expected"]));
+  P.push(lo("EARLY_GOAL_0_15","Goal First 15 Min",45,8,32,55,"Early goal.",["Fast starters"]));
+  P.push(lo("LATE_GOAL_75_PLUS","Goal After 75 Min",48,6,38,58,"Late drama.",["Push forward late"]));
+  P.push(lo("HOME_SCORE_FIRST","Home Scores First",52,6,42,62,"Home draw first blood.",["Home advantage early"]));
+  P.push(lo("AWAY_SCORE_FIRST","Away Scores First",46,6,36,56,"Away catch home cold.",["Counter-attack"]));
+  P.push(lo("GOAL_BOTH_HALVES","Goal Both Halves",50,6,40,62,"Goals both halves.",["Goal-active sides"]));
   return P;
 },
-
-filter(cat,pool,dMap){
-  const f=CF[cat];if(!f)return[];const used=new Set();
-  const cands=pool.map(m2=>{const ps=this.gen(m2,dMap[m2.id]).filter(p=>f.ids.has(p.id)&&p.confidence>=f.min).sort((a,b)=>b.confidence-a.confidence);return ps.length?{match:m2,ranked:ps.map(p=>({...p,matchItem:m2}))}:null}).filter(Boolean).sort((a,b)=>b.ranked[0].confidence-a.ranked[0].confidence);
-  const res=[];for(const mc of cands){if(res.length>=f.n)break;const ch=mc.ranked.find(p=>!used.has(p.id))||mc.ranked[0];res.push(ch);used.add(ch.id)}return res;
-}
+filter(cat,pool,dMap){const f=CF[cat];if(!f)return[];const used=new Set();const cands=pool.map(m2=>{const ps=this.gen(m2,dMap[m2.id]).filter(p=>f.ids.has(p.id)&&p.confidence>=f.min).sort((a,b)=>b.confidence-a.confidence);return ps.length?{match:m2,ranked:ps.map(p=>({...p,matchItem:m2}))}:null}).filter(Boolean).sort((a,b)=>b.ranked[0].confidence-a.ranked[0].confidence);const res=[];for(const mc of cands){if(res.length>=f.n)break;const ch=mc.ranked.find(p=>!used.has(p.id))||mc.ranked[0];res.push(ch);used.add(ch.id)}return res}
 };
 
 // ═══════════════════════════════════════════════════════════
 // §9  UI
 // ═══════════════════════════════════════════════════════════
-function dispDate(d){
-  const today=new Date();today.setHours(0,0,0,0);const c=new Date(d);c.setHours(0,0,0,0);
-  const diff=Math.round((c-today)/864e5);
-  const lbl=diff===0?'Today':diff===1?'Tomorrow':diff===-1?'Yesterday':d.toLocaleDateString('en',{weekday:'long'});
-  document.getElementById('dDay').textContent=lbl;
-  document.getElementById('dFull').textContent=d.toLocaleDateString('en',{day:'numeric',month:'long',year:'numeric'});
-}
+function dispDate(d){const today=new Date();today.setHours(0,0,0,0);const c=new Date(d);c.setHours(0,0,0,0);const diff=Math.round((c-today)/864e5);const lbl=diff===0?'Today':diff===1?'Tomorrow':diff===-1?'Yesterday':d.toLocaleDateString('en',{weekday:'long'});document.getElementById('dDay').textContent=lbl;document.getElementById('dFull').textContent=d.toLocaleDateString('en',{day:'numeric',month:'long',year:'numeric'})}
+function chgDate(off){curDate.setDate(curDate.getDate()+off);dispDate(curDate);loadForDate()}
+function buildTabs(){const el=document.getElementById('tabs');el.innerHTML='';for(const[k,f]of Object.entries(CF)){const b=document.createElement('button');b.className='cb'+(k===curCat?' a':'');b.innerHTML=(CL[k]||k)+(f.v?' <span class="vb">VIP</span>':'');b.onclick=()=>{curCat=k;document.querySelectorAll('.cb').forEach(x=>x.classList.remove('a'));b.classList.add('a');render()};el.appendChild(b)}}
+function showMeta(m){const el=document.getElementById('metaBar');if(!m){el.style.display='none';return}el.style.display='flex';el.innerHTML=`<div class="mi">⚽ <b>${m.totalMatches||0}</b> matches</div><div class="mi">📊 <b>${m.statsLoaded||0}</b> stats</div><div class="mi">🔋 <b>${m.readiness||0}%</b></div>`}
 
-function chgDate(off){
-  curDate.setDate(curDate.getDate()+off);
-  dispDate(curDate);
-  loadForDate();
-}
-
-async function loadForDate(force=false){
+async function loadForDate(){
   const main=document.getElementById('main');
-  main.innerHTML='<div class="ld"><div class="sp"></div><p>Loading predictions…</p></div>';
+  main.innerHTML='<div class="ld"><div class="sp"></div><p>Loading…</p></div>';
   showMeta(null);
-  bundle=await loadBundleForDate(curDate,force);
+  bundle=await loadBundleForDate(curDate);
   predC={};
-  if(!bundle||!bundle.matches.length){main.innerHTML='<div class="em"><div class="ic">📡</div><p>No data available.<br>Check your connection.</p><button onclick="loadForDate(true)">Retry</button></div>';return}
+  if(!bundle||!bundle.matches.length){main.innerHTML='<div class="em"><div class="ic">📡</div><p>No data available.</p><button onclick="loadForDate()">Retry</button></div>';return}
   showMeta(bundle.meta);updStatus();render();
 }
 
-function buildTabs(){
-  const el=document.getElementById('tabs');el.innerHTML='';
-  for(const[k,f]of Object.entries(CF)){
-    const b=document.createElement('button');b.className='cb'+(k===curCat?' a':'');
-    b.innerHTML=(CL[k]||k)+(f.v?' <span class="vb">VIP</span>':'');
-    b.onclick=()=>{curCat=k;document.querySelectorAll('.cb').forEach(x=>x.classList.remove('a'));b.classList.add('a');render()};
-    el.appendChild(b);
-  }
-}
-
-function showMeta(meta){
-  const el=document.getElementById('metaBar');
-  if(!meta){el.style.display='none';return}
-  el.style.display='flex';
-  el.innerHTML=`<div class="mi">⚽ <b>${meta.totalMatches||0}</b> matches</div><div class="mi">📊 <b>${meta.statsLoaded||0}</b> with stats</div><div class="mi">🔋 <b>${meta.readiness||0}%</b> ready</div>`;
-}
-
-function render(){
+async function render(){
   const main=document.getElementById('main');
-  if(!bundle||!bundle.matches.length){main.innerHTML='<div class="em"><div class="ic">⚽</div><p>No matches found.</p></div>';return}
+  if(!bundle||!bundle.matches.length){main.innerHTML='<div class="em"><div class="ic">⚽</div><p>No matches.</p></div>';return}
   const f=CF[curCat],ds=fmtD(curDate),ck=curCat+'_'+ds;
-  if(!predC[ck]){const t0=performance.now();predC[ck]=PE.filter(curCat,bundle.matches,bundle.details);LOG.info(`Preds: ${predC[ck].length} in ${Math.round(performance.now()-t0)}ms`)}
+  if(!predC[ck]){
+    const t0=performance.now();
+    predC[ck]=PE.filter(curCat,bundle.matches,bundle.details);
+    LOG.info(`Preds: ${predC[ck].length} in ${Math.round(performance.now()-t0)}ms`);
+    // Record for win-rate tracking
+    await WinRate.recordPredictions(ds,curCat,predC[ck]);
+  }
   const preds=predC[ck];
-  let html=`<div class="sh"><h2>⚡ ${CL[curCat]||curCat} ${f.v?'<span class="vb" style="font-size:10px">VIP</span>':''}</h2><span class="cnt">${preds.length} tip${preds.length!==1?'s':''}</span></div>`;
-  if(!preds.length){html+='<div class="em"><div class="ic">🔍</div><p>No predictions meet criteria today.</p></div>';main.innerHTML=html;return}
+
+  // Win-rate banner
+  let wrHtml=await WinRate.renderBanner();
+
+  let html=wrHtml;
+  html+=`<div class="sh"><h2>⚡ ${CL[curCat]||curCat} ${f.v?'<span class="vb" style="font-size:10px">VIP</span>':''}</h2><span class="cnt">${preds.length} tip${preds.length!==1?'s':''}</span></div>`;
+  if(!preds.length){html+='<div class="em"><div class="ic">🔍</div><p>No predictions meet criteria.</p></div>';main.innerHTML=html;return}
   for(let i=0;i<preds.length;i++){
     const pr=preds[i],mx=pr.matchItem||{};
     const home=mx.home?.name||mx.homeTeam?.name||mx.teams?.home?.name||'Home';
@@ -775,55 +686,35 @@ function tog(id){const e=document.getElementById(id);if(e)e.classList.toggle('op
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000)}
 function updStatus(){const d=document.getElementById('sDot'),t=document.getElementById('sTxt');if(navigator.onLine){d.className='dot on';t.textContent='Online'}else{d.className='dot off';t.textContent='Offline'}}
 
+// FIXED: Refresh uses cache — does NOT call /sync-fixtures or reset cache
 async function doRefresh(){
-  document.getElementById('rBtn').classList.add('spin');
-  Cache.reset();predC={};
-  try{await fetch(`${API}/sync-fixtures`,{signal:AbortSignal.timeout(10000)});LOG.net('sync-fixtures ok')}catch(e){LOG.info('sync skip:'+e.message)}
-  await loadForDate(true);
-  document.getElementById('rBtn').classList.remove('spin');
-  toast('🔄 Data refreshed');
+  const btn=document.getElementById('rBtn');btn.classList.add('spin');
+  predC={};// Only clear prediction cache to re-render, not data cache
+  await loadForDate();
+  btn.classList.remove('spin');
+  toast('✅ Refreshed from cache');
 }
 
 // ═══════════════════════════════════════════════════════════
-// §10  INIT — Loading screen decision flow
+// §10  INIT
 // ═══════════════════════════════════════════════════════════
-window.addEventListener('online',updStatus);
-window.addEventListener('offline',updStatus);
-
+window.addEventListener('online',updStatus);window.addEventListener('offline',updStatus);
 (async()=>{
   await Cache.init();
   if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>{});
-  dispDate(curDate);
-  buildTabs();
-  updStatus();
-
-  // Decision: show loading screen or go straight to app?
-  const needsLoad=await LoadCtrl.needsLoading();
-
-  if(needsLoad){
-    // COLD START — show branded loading screen with 4 chunked steps
-    LOG.info('Cold start — showing loading screen');
-    LoadCtrl.show();
-    startLoading();
-  }else{
-    // WARM START — instant from cache, no loading screen
-    LOG.info('Warm start — loading from cache');
+  dispDate(curDate);buildTabs();updStatus();
+  const needs=await LoadCtrl.needsLoading();
+  if(needs){LOG.info('Cold start');LoadCtrl.show();startLoading()}
+  else{
+    LOG.info('Warm start');
     document.getElementById('loadScreen').classList.add('hidden');
     document.getElementById('appContainer').classList.add('visible');
     loadingComplete=true;
-
-    // Load data from cache silently
     const ds=fmtD(curDate);
     const raw=Cache.memGet('bundle:'+ds)||(await Cache.diskGet('bundle:'+ds));
     bundle=parseBundle(raw);
-    if(bundle&&bundle.matches.length){
-      showMeta(bundle.meta);
-      render();
-    }else{
-      // Cache was valid but empty — fall back to loading screen
-      LoadCtrl.show();
-      startLoading();
-    }
+    if(bundle&&bundle.matches.length){showMeta(bundle.meta);render()}
+    else{LoadCtrl.show();startLoading()}
   }
 })();
 </script>
